@@ -1,0 +1,278 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "longhorn": "https://longhorn.io/vocab#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "k8s": "https://kubernetes.io/docs/concepts/",
+    "cncf": "https://www.cncf.io/projects/",
+
+    "Volume": {
+      "@id": "longhorn:Volume",
+      "@context": {
+        "name": "dcterms:title",
+        "size": {
+          "@id": "longhorn:size",
+          "@type": "xsd:string"
+        },
+        "numberOfReplicas": {
+          "@id": "longhorn:numberOfReplicas",
+          "@type": "xsd:integer"
+        },
+        "state": "longhorn:volumeState",
+        "robustness": "longhorn:volumeRobustness",
+        "frontend": "longhorn:volumeFrontend",
+        "accessMode": "longhorn:accessMode",
+        "dataLocality": "longhorn:dataLocality",
+        "replicaAutoBalance": "longhorn:replicaAutoBalance",
+        "encrypted": {
+          "@id": "longhorn:encrypted",
+          "@type": "xsd:boolean"
+        },
+        "migratable": {
+          "@id": "longhorn:migratable",
+          "@type": "xsd:boolean"
+        },
+        "backingImage": "longhorn:backingImage",
+        "currentImage": "longhorn:currentImage",
+        "nodeSelector": {
+          "@id": "longhorn:nodeSelector",
+          "@container": "@set"
+        },
+        "diskSelector": {
+          "@id": "longhorn:diskSelector",
+          "@container": "@set"
+        },
+        "replicas": {
+          "@id": "longhorn:replicas",
+          "@container": "@set"
+        },
+        "conditions": "longhorn:conditions",
+        "kubernetesStatus": "longhorn:kubernetesStatus"
+      },
+      "rdfs:label": "Longhorn Volume",
+      "rdfs:comment": "A Longhorn distributed block storage volume providing persistent storage for Kubernetes workloads with automatic replication.",
+      "skos:broader": "schema:Dataset",
+      "skos:exactMatch": "k8s:storage/persistent-volumes/"
+    },
+
+    "Replica": {
+      "@id": "longhorn:Replica",
+      "@context": {
+        "name": "dcterms:title",
+        "hostId": {
+          "@id": "longhorn:hostNode",
+          "@type": "@id"
+        },
+        "diskID": "longhorn:diskID",
+        "dataPath": "longhorn:dataPath",
+        "mode": "longhorn:replicaMode",
+        "running": {
+          "@id": "longhorn:running",
+          "@type": "xsd:boolean"
+        },
+        "failedAt": {
+          "@id": "longhorn:failedAt",
+          "@type": "xsd:dateTime"
+        }
+      },
+      "rdfs:label": "Longhorn Replica",
+      "rdfs:comment": "A replica of a Longhorn volume storing a complete copy of volume data on a specific node and disk.",
+      "skos:broader": "longhorn:Volume"
+    },
+
+    "Snapshot": {
+      "@id": "longhorn:Snapshot",
+      "@context": {
+        "name": "dcterms:title",
+        "created": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "size": {
+          "@id": "longhorn:snapshotSize",
+          "@type": "xsd:string"
+        },
+        "parent": "longhorn:parentSnapshot",
+        "removed": {
+          "@id": "longhorn:removed",
+          "@type": "xsd:boolean"
+        },
+        "usercreated": {
+          "@id": "longhorn:userCreated",
+          "@type": "xsd:boolean"
+        },
+        "labels": "longhorn:labels"
+      },
+      "rdfs:label": "Longhorn Snapshot",
+      "rdfs:comment": "A point-in-time snapshot of a Longhorn volume capturing the volume state at a specific moment.",
+      "skos:broader": "longhorn:Volume",
+      "skos:related": "schema:DigitalDocument"
+    },
+
+    "Backup": {
+      "@id": "longhorn:Backup",
+      "@context": {
+        "name": "dcterms:title",
+        "state": "longhorn:backupState",
+        "snapshotName": "longhorn:sourceSnapshot",
+        "url": {
+          "@id": "schema:url",
+          "@type": "@id"
+        },
+        "backupTargetName": "longhorn:backupTarget",
+        "volumeName": {
+          "@id": "longhorn:sourceVolume",
+          "@type": "@id"
+        },
+        "size": {
+          "@id": "longhorn:backupSize",
+          "@type": "xsd:string"
+        },
+        "created": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "labels": "longhorn:labels"
+      },
+      "rdfs:label": "Longhorn Backup",
+      "rdfs:comment": "A Longhorn volume backup stored in an external S3-compatible or NFS backup target.",
+      "skos:broader": "longhorn:Snapshot",
+      "skos:related": "schema:DataDownload"
+    },
+
+    "Node": {
+      "@id": "longhorn:Node",
+      "@context": {
+        "name": "dcterms:title",
+        "allowScheduling": {
+          "@id": "longhorn:allowScheduling",
+          "@type": "xsd:boolean"
+        },
+        "evictionRequested": {
+          "@id": "longhorn:evictionRequested",
+          "@type": "xsd:boolean"
+        },
+        "tags": {
+          "@id": "longhorn:nodeTags",
+          "@container": "@set"
+        },
+        "disks": "longhorn:disks",
+        "conditions": "longhorn:conditions"
+      },
+      "rdfs:label": "Longhorn Node",
+      "rdfs:comment": "A Kubernetes node participating in the Longhorn storage cluster that can host volume replicas.",
+      "skos:broader": "schema:ComputerServer",
+      "skos:related": "k8s:architecture/nodes/"
+    },
+
+    "DiskSpec": {
+      "@id": "longhorn:DiskSpec",
+      "@context": {
+        "path": "longhorn:diskPath",
+        "allowScheduling": {
+          "@id": "longhorn:allowScheduling",
+          "@type": "xsd:boolean"
+        },
+        "evictionRequested": {
+          "@id": "longhorn:evictionRequested",
+          "@type": "xsd:boolean"
+        },
+        "storageReserved": {
+          "@id": "longhorn:storageReserved",
+          "@type": "xsd:integer"
+        },
+        "tags": {
+          "@id": "longhorn:diskTags",
+          "@container": "@set"
+        }
+      },
+      "rdfs:label": "Longhorn Disk",
+      "rdfs:comment": "A disk or directory on a Longhorn node available for hosting volume replica data.",
+      "skos:broader": "longhorn:Node"
+    },
+
+    "RecurringJob": {
+      "@id": "longhorn:RecurringJob",
+      "@context": {
+        "name": "dcterms:title",
+        "task": "longhorn:jobTask",
+        "cron": "longhorn:cronExpression",
+        "retain": {
+          "@id": "longhorn:retentionCount",
+          "@type": "xsd:integer"
+        },
+        "concurrency": {
+          "@id": "longhorn:concurrency",
+          "@type": "xsd:integer"
+        },
+        "labels": "longhorn:labels",
+        "groups": {
+          "@id": "longhorn:jobGroups",
+          "@container": "@set"
+        }
+      },
+      "rdfs:label": "Longhorn Recurring Job",
+      "rdfs:comment": "A scheduled recurring job for automated snapshot or backup operations on Longhorn volumes.",
+      "skos:broader": "schema:Action",
+      "skos:related": "longhorn:Volume"
+    },
+
+    "EngineImage": {
+      "@id": "longhorn:EngineImage",
+      "@context": {
+        "name": "dcterms:title",
+        "image": "longhorn:containerImage",
+        "state": "longhorn:engineImageState",
+        "default": {
+          "@id": "longhorn:isDefault",
+          "@type": "xsd:boolean"
+        }
+      },
+      "rdfs:label": "Longhorn Engine Image",
+      "rdfs:comment": "A container image for the Longhorn storage engine used to manage volume I/O operations.",
+      "skos:broader": "schema:SoftwareApplication"
+    },
+
+    "BackingImage": {
+      "@id": "longhorn:BackingImage",
+      "@context": {
+        "name": "dcterms:title",
+        "sourceType": "longhorn:sourceType",
+        "checksum": "longhorn:checksum",
+        "diskFileStatusMap": "longhorn:diskFileStatusMap"
+      },
+      "rdfs:label": "Longhorn Backing Image",
+      "rdfs:comment": "A pre-populated base image used as the data layer for Longhorn volumes, enabling fast volume provisioning from a known state.",
+      "skos:broader": "schema:ImageObject",
+      "skos:related": "longhorn:Volume"
+    },
+
+    "Setting": {
+      "@id": "longhorn:Setting",
+      "@context": {
+        "name": "dcterms:title",
+        "value": "longhorn:settingValue",
+        "definition": "longhorn:settingDefinition"
+      },
+      "rdfs:label": "Longhorn Setting",
+      "rdfs:comment": "A configurable system-wide setting for Longhorn cluster behavior and defaults.",
+      "skos:broader": "schema:PropertyValue"
+    },
+
+    "name": "dcterms:title",
+    "description": "dcterms:description",
+    "created": {
+      "@id": "dcterms:created",
+      "@type": "xsd:dateTime"
+    },
+    "modified": {
+      "@id": "dcterms:modified",
+      "@type": "xsd:dateTime"
+    },
+    "id": "dcterms:identifier"
+  }
+}

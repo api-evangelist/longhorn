@@ -1,0 +1,384 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://longhorn.io/schemas/volume.json",
+  "title": "Longhorn Volume",
+  "description": "Schema for Longhorn distributed block storage volumes. Longhorn volumes provide persistent block storage for Kubernetes workloads with automatic replication, snapshots, and backup to external storage targets.",
+  "type": "object",
+  "required": ["name", "size"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Unique name for the volume within the Longhorn namespace.",
+      "minLength": 1,
+      "maxLength": 63,
+      "pattern": "^[a-z0-9][a-z0-9\\-\\.]*[a-z0-9]$"
+    },
+    "size": {
+      "type": "string",
+      "description": "Size of the volume in bytes as a string, e.g. '10737418240' for 10 GiB.",
+      "pattern": "^[0-9]+$"
+    },
+    "numberOfReplicas": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 20,
+      "default": 3,
+      "description": "Number of data replicas maintained across Longhorn nodes. Higher values increase durability but consume more storage."
+    },
+    "state": {
+      "type": "string",
+      "enum": ["creating", "attached", "detached", "attaching", "detaching", "deleting"],
+      "description": "Current lifecycle state of the volume."
+    },
+    "robustness": {
+      "type": "string",
+      "enum": ["healthy", "degraded", "faulted", "unknown"],
+      "description": "Health status of the volume based on replica availability and data integrity."
+    },
+    "frontend": {
+      "type": "string",
+      "enum": ["blockdev", "iscsi", "nvmf"],
+      "default": "blockdev",
+      "description": "Frontend protocol used to expose the volume to workloads. blockdev is the most common."
+    },
+    "accessMode": {
+      "type": "string",
+      "enum": ["rwo", "rwx"],
+      "default": "rwo",
+      "description": "Volume access mode. rwo is ReadWriteOnce for a single pod; rwx is ReadWriteMany for multiple pods."
+    },
+    "dataLocality": {
+      "type": "string",
+      "enum": ["disabled", "best-effort", "strict-local"],
+      "default": "disabled",
+      "description": "Data locality policy. disabled places replicas freely; best-effort prefers the attached node; strict-local forces one replica on the attached node."
+    },
+    "replicaAutoBalance": {
+      "type": "string",
+      "enum": ["ignored", "disabled", "least-effort", "best-effort"],
+      "description": "Automatic rebalancing policy for distributing replicas evenly across nodes."
+    },
+    "encrypted": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the volume data is encrypted at rest using the configured encryption secret."
+    },
+    "migratable": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the volume supports live migration between nodes."
+    },
+    "backingImage": {
+      "type": "string",
+      "description": "Name of a backing image to use as pre-populated base data for this volume."
+    },
+    "currentImage": {
+      "type": "string",
+      "description": "Longhorn engine image currently in use by this volume."
+    },
+    "nodeSelector": {
+      "type": "array",
+      "description": "Node tags to restrict which nodes can host replicas of this volume.",
+      "items": {
+        "type": "string",
+        "description": "Node tag name."
+      }
+    },
+    "diskSelector": {
+      "type": "array",
+      "description": "Disk tags to restrict which disks can host replicas of this volume.",
+      "items": {
+        "type": "string",
+        "description": "Disk tag name."
+      }
+    },
+    "recurringJobSelector": {
+      "type": "array",
+      "description": "Recurring jobs and groups assigned to this volume for automated operations.",
+      "items": { "$ref": "#/$defs/RecurringJobRef" }
+    },
+    "replicas": {
+      "type": "array",
+      "description": "List of replica instances maintaining copies of this volume's data.",
+      "items": { "$ref": "#/$defs/Replica" }
+    },
+    "conditions": {
+      "type": "object",
+      "description": "Map of named health conditions for the volume.",
+      "additionalProperties": { "$ref": "#/$defs/Condition" }
+    },
+    "kubernetesStatus": {
+      "$ref": "#/$defs/KubernetesStatus",
+      "description": "Kubernetes PVC and PV binding status for this volume."
+    }
+  },
+  "$defs": {
+    "Replica": {
+      "type": "object",
+      "description": "A Longhorn replica storing a copy of volume data on a specific node and disk.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Unique name of the replica instance."
+        },
+        "hostId": {
+          "type": "string",
+          "description": "Kubernetes node name where this replica is located."
+        },
+        "diskID": {
+          "type": "string",
+          "description": "Disk identifier on the node where this replica's data is stored."
+        },
+        "dataPath": {
+          "type": "string",
+          "description": "Full file system path to the replica data directory on the node."
+        },
+        "mode": {
+          "type": "string",
+          "enum": ["RW", "WO", "ERR"],
+          "description": "Replica mode. RW means fully operational; WO means write-only during rebuilding; ERR means the replica has failed."
+        },
+        "running": {
+          "type": "boolean",
+          "description": "Whether the replica process is currently running."
+        },
+        "failedAt": {
+          "type": "string",
+          "description": "Timestamp when the replica last failed, if applicable."
+        }
+      }
+    },
+    "Snapshot": {
+      "type": "object",
+      "description": "A point-in-time snapshot of a Longhorn volume.",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Unique name of the snapshot within the volume."
+        },
+        "created": {
+          "type": "string",
+          "description": "Timestamp when the snapshot was created."
+        },
+        "size": {
+          "type": "string",
+          "description": "Storage consumed by this snapshot in bytes as a string."
+        },
+        "parent": {
+          "type": "string",
+          "description": "Name of the parent snapshot in the chain."
+        },
+        "removed": {
+          "type": "boolean",
+          "description": "Whether this snapshot has been marked for removal."
+        },
+        "usercreated": {
+          "type": "boolean",
+          "description": "Whether this snapshot was created manually. False indicates a system-created snapshot."
+        },
+        "labels": {
+          "type": "object",
+          "description": "Labels applied to this snapshot.",
+          "additionalProperties": {
+            "type": "string",
+            "description": "Label value."
+          }
+        }
+      }
+    },
+    "RecurringJobRef": {
+      "type": "object",
+      "description": "Reference to a recurring job or group assigned to a volume.",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the recurring job or group."
+        },
+        "isGroup": {
+          "type": "boolean",
+          "description": "Whether this reference is to a group rather than an individual job."
+        }
+      }
+    },
+    "RecurringJob": {
+      "type": "object",
+      "description": "A Longhorn recurring job for scheduling automated snapshot or backup operations.",
+      "required": ["name", "task", "cron", "retain"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Unique name of the recurring job.",
+          "maxLength": 63
+        },
+        "task": {
+          "type": "string",
+          "enum": [
+            "snapshot",
+            "snapshot-force-create",
+            "snapshot-cleanup",
+            "snapshot-delete",
+            "backup",
+            "backup-force-create",
+            "filesystem-trim"
+          ],
+          "description": "Type of operation this recurring job performs."
+        },
+        "cron": {
+          "type": "string",
+          "description": "Cron expression defining the schedule, e.g. '0 2 * * *' for 2:00 AM daily."
+        },
+        "retain": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of snapshots or backups to retain. Older items are automatically deleted."
+        },
+        "concurrency": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1,
+          "description": "Maximum number of volumes to process simultaneously when this job fires."
+        },
+        "labels": {
+          "type": "object",
+          "description": "Labels to apply to snapshots or backups created by this job.",
+          "additionalProperties": {
+            "type": "string",
+            "description": "Label value."
+          }
+        },
+        "groups": {
+          "type": "array",
+          "description": "Group names this job belongs to. Volumes assigned to the group will be processed.",
+          "items": {
+            "type": "string",
+            "description": "Group name."
+          }
+        }
+      }
+    },
+    "Node": {
+      "type": "object",
+      "description": "A Longhorn storage node participating in the cluster.",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Node identifier, matching the Kubernetes node name."
+        },
+        "allowScheduling": {
+          "type": "boolean",
+          "description": "Whether new replicas can be scheduled on this node."
+        },
+        "evictionRequested": {
+          "type": "boolean",
+          "description": "Whether replica eviction has been requested for this node."
+        },
+        "tags": {
+          "type": "array",
+          "description": "Tags applied to this node for workload placement affinity.",
+          "items": {
+            "type": "string",
+            "description": "Tag value."
+          }
+        },
+        "disks": {
+          "type": "object",
+          "description": "Map of disk configurations on this node keyed by disk name.",
+          "additionalProperties": { "$ref": "#/$defs/DiskSpec" }
+        },
+        "conditions": {
+          "type": "object",
+          "description": "Health conditions for the node.",
+          "additionalProperties": { "$ref": "#/$defs/Condition" }
+        }
+      }
+    },
+    "DiskSpec": {
+      "type": "object",
+      "description": "Configuration for a disk available for Longhorn replica storage.",
+      "required": ["path"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "File system path to the disk or directory used for Longhorn storage."
+        },
+        "allowScheduling": {
+          "type": "boolean",
+          "description": "Whether new replicas can be scheduled on this disk."
+        },
+        "evictionRequested": {
+          "type": "boolean",
+          "description": "Whether eviction of replicas from this disk has been requested."
+        },
+        "storageReserved": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Storage in bytes reserved for non-Longhorn use on this disk."
+        },
+        "tags": {
+          "type": "array",
+          "description": "Tags for disk affinity in volume and replica placement.",
+          "items": {
+            "type": "string",
+            "description": "Tag value."
+          }
+        }
+      }
+    },
+    "Condition": {
+      "type": "object",
+      "description": "A health condition for a Longhorn resource.",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["True", "False", "Unknown"],
+          "description": "Status of the condition."
+        },
+        "reason": {
+          "type": "string",
+          "description": "Machine-readable reason for the condition."
+        },
+        "message": {
+          "type": "string",
+          "description": "Human-readable message for the condition."
+        },
+        "lastProbeTime": {
+          "type": "string",
+          "description": "Timestamp of the last condition probe."
+        },
+        "lastTransitionTime": {
+          "type": "string",
+          "description": "Timestamp of the last condition transition."
+        }
+      }
+    },
+    "KubernetesStatus": {
+      "type": "object",
+      "description": "Kubernetes PVC and PV binding status for a Longhorn volume.",
+      "properties": {
+        "pvName": {
+          "type": "string",
+          "description": "Name of the Kubernetes PersistentVolume bound to this Longhorn volume."
+        },
+        "pvStatus": {
+          "type": "string",
+          "description": "Status of the PersistentVolume."
+        },
+        "pvcName": {
+          "type": "string",
+          "description": "Name of the Kubernetes PersistentVolumeClaim using this volume."
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Namespace of the PVC."
+        },
+        "lastPVCRefAt": {
+          "type": "string",
+          "description": "Timestamp when the PVC was last bound."
+        }
+      }
+    }
+  }
+}
