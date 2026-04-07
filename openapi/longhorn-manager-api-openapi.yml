@@ -78,7 +78,7 @@ paths:
   /v1/volumes:
     get:
       operationId: listVolumes
-      summary: List volumes
+      summary: Longhorn List volumes
       description: >-
         Returns a list of all Longhorn volumes in the cluster. Each volume
         entry includes its name, size, replication configuration, state,
@@ -96,7 +96,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       operationId: createVolume
-      summary: Create a volume
+      summary: Longhorn Create a volume
       description: >-
         Creates a new Longhorn volume with the specified configuration. The
         volume will be created in a detached state. It must be attached to a
@@ -124,7 +124,7 @@ paths:
   /v1/volumes/{volumeName}:
     get:
       operationId: getVolume
-      summary: Get a volume
+      summary: Longhorn Get a volume
       description: >-
         Returns detailed information about a specific volume including its
         state, replicas, engine, size, access mode, recurring jobs, and
@@ -146,7 +146,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteVolume
-      summary: Delete a volume
+      summary: Longhorn Delete a volume
       description: >-
         Deletes a Longhorn volume and all of its replicas. The volume must be
         in a detached state before it can be deleted. All snapshots and backups
@@ -165,7 +165,7 @@ paths:
   /v1/volumes/{volumeName}?action=attach:
     post:
       operationId: attachVolume
-      summary: Attach a volume to a node
+      summary: Longhorn Attach a volume to a node
       description: >-
         Attaches a Longhorn volume to the specified node, making it available
         as a block device. The volume must be detached before it can be
@@ -196,7 +196,7 @@ paths:
   /v1/volumes/{volumeName}?action=detach:
     post:
       operationId: detachVolume
-      summary: Detach a volume from its node
+      summary: Longhorn Detach a volume from its node
       description: >-
         Detaches a Longhorn volume from the node it is currently attached to.
         The volume's data is preserved and it can be reattached to the same
@@ -231,7 +231,7 @@ paths:
   /v1/volumes/{volumeName}?action=expand:
     post:
       operationId: expandVolume
-      summary: Expand a volume
+      summary: Longhorn Expand a volume
       description: >-
         Expands a Longhorn volume to a new, larger size. The size must be
         greater than the current volume size. Online expansion is supported
@@ -267,7 +267,7 @@ paths:
   /v1/volumes/{volumeName}?action=snapshotCreate:
     post:
       operationId: createSnapshot
-      summary: Create a snapshot
+      summary: Longhorn Create a snapshot
       description: >-
         Creates a point-in-time snapshot of a Longhorn volume. The volume
         must be attached when the snapshot is created. Snapshots are stored
@@ -297,7 +297,7 @@ paths:
   /v1/volumes/{volumeName}?action=snapshotList:
     get:
       operationId: listSnapshots
-      summary: List snapshots for a volume
+      summary: Longhorn List snapshots for a volume
       description: >-
         Returns a list of all snapshots for the specified volume. Each entry
         includes the snapshot name, creation time, size, parent, labels,
@@ -320,7 +320,7 @@ paths:
   /v1/volumes/{volumeName}?action=snapshotDelete:
     post:
       operationId: deleteSnapshot
-      summary: Delete a snapshot
+      summary: Longhorn Delete a snapshot
       description: >-
         Marks a snapshot for deletion. The snapshot data is reclaimed
         asynchronously. Deleting a snapshot merges its changed blocks with
@@ -355,7 +355,7 @@ paths:
   /v1/volumes/{volumeName}?action=snapshotRevert:
     post:
       operationId: revertSnapshot
-      summary: Revert a volume to a snapshot
+      summary: Longhorn Revert a volume to a snapshot
       description: >-
         Reverts the contents of a volume to the state captured in a specific
         snapshot. The volume must be detached before a revert operation.
@@ -390,7 +390,7 @@ paths:
   /v1/volumes/{volumeName}?action=snapshotBackup:
     post:
       operationId: backupSnapshot
-      summary: Back up a snapshot
+      summary: Longhorn Back up a snapshot
       description: >-
         Triggers a backup of a specific snapshot to the configured external
         backup target (S3 or NFS). The backup is asynchronous; monitor the
@@ -419,7 +419,7 @@ paths:
   /v1/backupvolumes:
     get:
       operationId: listBackupVolumes
-      summary: List backup volumes
+      summary: Longhorn List backup volumes
       description: >-
         Returns a list of all backup volumes in the configured backup target.
         A backup volume contains one or more backups of a Longhorn volume.
@@ -438,7 +438,7 @@ paths:
   /v1/backupvolumes/{backupVolumeName}:
     get:
       operationId: getBackupVolume
-      summary: Get a backup volume
+      summary: Longhorn Get a backup volume
       description: >-
         Returns details of a specific backup volume from the backup store
         including the list of available backups and their metadata.
@@ -460,7 +460,7 @@ paths:
   /v1/backupvolumes/{backupVolumeName}/backups:
     get:
       operationId: listBackups
-      summary: List backups for a backup volume
+      summary: Longhorn List backups for a backup volume
       description: >-
         Returns a list of all backups stored for a specific backup volume.
         Each backup corresponds to a snapshot of the source Longhorn volume
@@ -481,7 +481,7 @@ paths:
   /v1/nodes:
     get:
       operationId: listNodes
-      summary: List nodes
+      summary: Longhorn List nodes
       description: >-
         Returns a list of all nodes in the Longhorn storage cluster. Each
         node entry includes its scheduling eligibility, disk configurations,
@@ -500,7 +500,7 @@ paths:
   /v1/nodes/{nodeId}:
     get:
       operationId: getNode
-      summary: Get a node
+      summary: Longhorn Get a node
       description: >-
         Returns detailed information about a specific node including all
         configured disks, their storage capacity, scheduling status, tags,
@@ -522,7 +522,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: updateNode
-      summary: Update a node
+      summary: Longhorn Update a node
       description: >-
         Updates a node's configuration including scheduling eligibility,
         disk configurations, eviction status, and node tags for workload
@@ -553,7 +553,7 @@ paths:
   /v1/engineimages:
     get:
       operationId: listEngineImages
-      summary: List engine images
+      summary: Longhorn List engine images
       description: >-
         Returns a list of all Longhorn engine images installed in the cluster.
         Engine images contain the Longhorn storage engine binary and are used
@@ -571,7 +571,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       operationId: createEngineImage
-      summary: Create an engine image
+      summary: Longhorn Create an engine image
       description: >-
         Deploys a new Longhorn engine image to the cluster by specifying
         an OCI image reference. Longhorn deploys the engine binary from this
@@ -604,7 +604,7 @@ paths:
   /v1/engineimages/{engineImageName}:
     get:
       operationId: getEngineImage
-      summary: Get an engine image
+      summary: Longhorn Get an engine image
       description: >-
         Returns details of a specific engine image including its deployment
         state, CLI API version, controller API version, and which nodes
@@ -626,7 +626,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteEngineImage
-      summary: Delete an engine image
+      summary: Longhorn Delete an engine image
       description: >-
         Removes an engine image from the cluster. The default engine image
         and images currently in use by volumes cannot be deleted.
@@ -646,7 +646,7 @@ paths:
   /v1/recurringjobs:
     get:
       operationId: listRecurringJobs
-      summary: List recurring jobs
+      summary: Longhorn List recurring jobs
       description: >-
         Returns a list of all recurring snapshot and backup jobs configured
         in Longhorn. Recurring jobs can be assigned to individual volumes or
@@ -664,7 +664,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       operationId: createRecurringJob
-      summary: Create a recurring job
+      summary: Longhorn Create a recurring job
       description: >-
         Creates a new recurring job for automated snapshot or backup operations.
         The job runs on the specified cron schedule and applies to all volumes
@@ -692,7 +692,7 @@ paths:
   /v1/recurringjobs/{recurringJobName}:
     get:
       operationId: getRecurringJob
-      summary: Get a recurring job
+      summary: Longhorn Get a recurring job
       description: >-
         Returns details of a specific recurring job including its schedule,
         task type, retention policy, labels, and group assignments.
@@ -713,7 +713,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: updateRecurringJob
-      summary: Update a recurring job
+      summary: Longhorn Update a recurring job
       description: >-
         Updates a recurring job's configuration including schedule, retention
         count, concurrency, and group assignments.
@@ -740,7 +740,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     delete:
       operationId: deleteRecurringJob
-      summary: Delete a recurring job
+      summary: Longhorn Delete a recurring job
       description: >-
         Deletes a recurring job. Volumes assigned to this job will no longer
         have automated snapshots or backups created by this schedule.
@@ -758,7 +758,7 @@ paths:
   /v1/settings:
     get:
       operationId: listSettings
-      summary: List all settings
+      summary: Longhorn List all settings
       description: >-
         Returns a list of all Longhorn system settings including backup target,
         default replica count, data locality, storage over-provisioning
@@ -777,7 +777,7 @@ paths:
   /v1/settings/{settingName}:
     get:
       operationId: getSetting
-      summary: Get a setting
+      summary: Longhorn Get a setting
       description: >-
         Returns the current value and metadata for a specific Longhorn setting.
         Settings include backup targets, replica counts, CPU and memory limits,
@@ -799,7 +799,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: updateSetting
-      summary: Update a setting
+      summary: Longhorn Update a setting
       description: >-
         Updates the value of a specific Longhorn system setting. Changes take
         effect immediately without requiring a restart.
@@ -833,7 +833,7 @@ paths:
   /v1/backingimages:
     get:
       operationId: listBackingImages
-      summary: List backing images
+      summary: Longhorn List backing images
       description: >-
         Returns a list of all backing images available in the cluster. Backing
         images are pre-populated disk images used as the base for new volumes.
@@ -850,7 +850,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       operationId: createBackingImage
-      summary: Create a backing image
+      summary: Longhorn Create a backing image
       description: >-
         Creates a new backing image by uploading or downloading an image file.
         The backing image is distributed to all nodes that need it for
@@ -877,7 +877,7 @@ paths:
   /v1/systembackups:
     get:
       operationId: listSystemBackups
-      summary: List system backups
+      summary: Longhorn List system backups
       description: >-
         Returns a list of all system-level backups. System backups capture
         the entire Longhorn configuration including all CRDs, settings, and
@@ -895,7 +895,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       operationId: createSystemBackup
-      summary: Create a system backup
+      summary: Longhorn Create a system backup
       description: >-
         Creates a new system-level backup of the Longhorn configuration.
         The backup is stored in the configured backup target and can be used
