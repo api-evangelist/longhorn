@@ -28,31 +28,26 @@ servers:
         default: '9500'
         description: Port on which Longhorn Manager serves the API.
 tags:
-  - name: Volumes
+  - name: BackingImages
     description: >-
-      Volume lifecycle management including creating, attaching, detaching,
-      expanding, and deleting volumes. Also includes volume actions such as
-      activating, canceling expansion, and managing replicas.
-  - name: Snapshots
-    description: >-
-      Snapshot operations for volumes including creating, listing, deleting,
-      reverting to, and purging snapshots. Snapshots capture the state of a
-      volume at a point in time and can be used as the basis for backups.
+      Backing image management for volumes that use pre-populated disk images
+      as their base data. Backing images are immutable and can be shared across
+      multiple volumes in the same namespace.
   - name: Backups
     description: >-
       Backup operations for storing volume snapshots to external storage targets
       such as S3-compatible storage or NFS. Backups can be restored to new
       volumes for disaster recovery.
-  - name: Nodes
-    description: >-
-      Node management for the Longhorn storage cluster including listing nodes,
-      updating disk configurations, enabling or disabling scheduling, and
-      managing node tags for workload placement.
   - name: EngineImages
     description: >-
       Engine image management for the Longhorn storage engine. Engine images
       are OCI images containing the Longhorn engine binary and are used to
       upgrade or manage storage engine versions.
+  - name: Nodes
+    description: >-
+      Node management for the Longhorn storage cluster including listing nodes,
+      updating disk configurations, enabling or disabling scheduling, and
+      managing node tags for workload placement.
   - name: RecurringJobs
     description: >-
       Recurring job management for scheduling automated snapshot and backup
@@ -63,15 +58,20 @@ tags:
       System-wide Longhorn settings management including backup targets,
       replica counts, node scheduling policies, data locality settings,
       and storage over-provisioning configuration.
-  - name: BackingImages
+  - name: Snapshots
     description: >-
-      Backing image management for volumes that use pre-populated disk images
-      as their base data. Backing images are immutable and can be shared across
-      multiple volumes in the same namespace.
+      Snapshot operations for volumes including creating, listing, deleting,
+      reverting to, and purging snapshots. Snapshots capture the state of a
+      volume at a point in time and can be used as the basis for backups.
   - name: SystemBackups
     description: >-
       System-level backup and restore operations for the entire Longhorn
       configuration including all volumes, settings, and resource definitions.
+  - name: Volumes
+    description: >-
+      Volume lifecycle management including creating, attaching, detaching,
+      expanding, and deleting volumes. Also includes volume actions such as
+      activating, canceling expansion, and managing replicas.
 security:
   - bearerAuth: []
 paths:
