@@ -44,7 +44,7 @@ apis:
       - Snapshots
       - Volume Management
 common:
-  - type: JSON-LD
+  - type: JSONLD
     url: json-ld/longhorn-context.jsonld
     name: Longhorn JSON-LD Context
     description: Linked data context mapping Longhorn resources to standard vocabularies.
@@ -60,7 +60,7 @@ common:
     name: Longhorn Documentation
     description: Official Longhorn documentation.
     url: https://longhorn.io/docs/
-  - type: Getting Started
+  - type: GettingStarted
     name: Longhorn Quick Installation
     description: Quick installation guide for deploying Longhorn on Kubernetes.
     url: https://longhorn.io/docs/1.11.1/deploy/install/
@@ -68,11 +68,11 @@ common:
     name: Longhorn Blog
     description: Official Longhorn blog with release announcements and articles.
     url: https://longhorn.io/blog/
-  - type: Change Log
+  - type: ChangeLog
     name: Longhorn Releases
     description: Release history and changelogs for Longhorn.
     url: https://github.com/longhorn/longhorn/releases
-  - type: GitHub Organization
+  - type: GitHubOrganization
     name: Longhorn GitHub Organization
     description: GitHub organization hosting all Longhorn source code.
     url: https://github.com/longhorn
