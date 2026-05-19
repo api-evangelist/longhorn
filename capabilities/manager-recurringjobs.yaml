@@ -1,0 +1,197 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Longhorn Manager API — RecurringJobs
+  description: 'Longhorn Manager API — RecurringJobs. 5 operations. Lead operation: Longhorn List recurring jobs. Self-contained
+    Naftiko capability covering one Longhorn business surface.'
+  tags:
+  - Longhorn
+  - RecurringJobs
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    LONGHORN_API_KEY: LONGHORN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: manager-recurringjobs
+    baseUri: http://{longhornManagerHost}:{longhornManagerPort}
+    description: Longhorn Manager API — RecurringJobs business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-recurringjobs
+      path: /v1/recurringjobs
+      operations:
+      - name: listrecurringjobs
+        method: GET
+        description: Longhorn List recurring jobs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createrecurringjob
+        method: POST
+        description: Longhorn Create a recurring job
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-recurringjobs-recurringJobName
+      path: /v1/recurringjobs/{recurringJobName}
+      operations:
+      - name: getrecurringjob
+        method: GET
+        description: Longhorn Get a recurring job
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updaterecurringjob
+        method: PUT
+        description: Longhorn Update a recurring job
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleterecurringjob
+        method: DELETE
+        description: Longhorn Delete a recurring job
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.LONGHORN_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: manager-recurringjobs-rest
+    port: 8080
+    description: REST adapter for Longhorn Manager API — RecurringJobs. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v1/recurringjobs
+      name: v1-recurringjobs
+      description: REST surface for v1-recurringjobs.
+      operations:
+      - method: GET
+        name: listrecurringjobs
+        description: Longhorn List recurring jobs
+        call: manager-recurringjobs.listrecurringjobs
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createrecurringjob
+        description: Longhorn Create a recurring job
+        call: manager-recurringjobs.createrecurringjob
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/recurringjobs/{recurringjobname}
+      name: v1-recurringjobs-recurringjobname
+      description: REST surface for v1-recurringjobs-recurringJobName.
+      operations:
+      - method: GET
+        name: getrecurringjob
+        description: Longhorn Get a recurring job
+        call: manager-recurringjobs.getrecurringjob
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updaterecurringjob
+        description: Longhorn Update a recurring job
+        call: manager-recurringjobs.updaterecurringjob
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleterecurringjob
+        description: Longhorn Delete a recurring job
+        call: manager-recurringjobs.deleterecurringjob
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: manager-recurringjobs-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Longhorn Manager API — RecurringJobs. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: longhorn-list-recurring-jobs
+      description: Longhorn List recurring jobs
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: manager-recurringjobs.listrecurringjobs
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: longhorn-create-recurring-job
+      description: Longhorn Create a recurring job
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: manager-recurringjobs.createrecurringjob
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: longhorn-get-recurring-job
+      description: Longhorn Get a recurring job
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: manager-recurringjobs.getrecurringjob
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: longhorn-update-recurring-job
+      description: Longhorn Update a recurring job
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: manager-recurringjobs.updaterecurringjob
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: longhorn-delete-recurring-job
+      description: Longhorn Delete a recurring job
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: manager-recurringjobs.deleterecurringjob
+      outputParameters:
+      - type: object
+        mapping: $.

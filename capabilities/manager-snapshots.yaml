@@ -1,0 +1,196 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Longhorn Manager API — Snapshots
+  description: 'Longhorn Manager API — Snapshots. 4 operations. Lead operation: Longhorn Create a snapshot. Self-contained
+    Naftiko capability covering one Longhorn business surface.'
+  tags:
+  - Longhorn
+  - Snapshots
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    LONGHORN_API_KEY: LONGHORN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: manager-snapshots
+    baseUri: http://{longhornManagerHost}:{longhornManagerPort}
+    description: Longhorn Manager API — Snapshots business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-volumes-volumeName}?action=snapshotCreate
+      path: /v1/volumes/{volumeName}?action=snapshotCreate
+      operations:
+      - name: createsnapshot
+        method: POST
+        description: Longhorn Create a snapshot
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-volumes-volumeName}?action=snapshotDelete
+      path: /v1/volumes/{volumeName}?action=snapshotDelete
+      operations:
+      - name: deletesnapshot
+        method: POST
+        description: Longhorn Delete a snapshot
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-volumes-volumeName}?action=snapshotList
+      path: /v1/volumes/{volumeName}?action=snapshotList
+      operations:
+      - name: listsnapshots
+        method: GET
+        description: Longhorn List snapshots for a volume
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-volumes-volumeName}?action=snapshotRevert
+      path: /v1/volumes/{volumeName}?action=snapshotRevert
+      operations:
+      - name: revertsnapshot
+        method: POST
+        description: Longhorn Revert a volume to a snapshot
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.LONGHORN_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: manager-snapshots-rest
+    port: 8080
+    description: REST adapter for Longhorn Manager API — Snapshots. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v1/volumes/volumename-action-snapshotcreate
+      name: v1-volumes-volumename-action-snapshotcreate
+      description: REST surface for v1-volumes-volumeName}?action=snapshotCreate.
+      operations:
+      - method: POST
+        name: createsnapshot
+        description: Longhorn Create a snapshot
+        call: manager-snapshots.createsnapshot
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/volumes/volumename-action-snapshotdelete
+      name: v1-volumes-volumename-action-snapshotdelete
+      description: REST surface for v1-volumes-volumeName}?action=snapshotDelete.
+      operations:
+      - method: POST
+        name: deletesnapshot
+        description: Longhorn Delete a snapshot
+        call: manager-snapshots.deletesnapshot
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/volumes/volumename-action-snapshotlist
+      name: v1-volumes-volumename-action-snapshotlist
+      description: REST surface for v1-volumes-volumeName}?action=snapshotList.
+      operations:
+      - method: GET
+        name: listsnapshots
+        description: Longhorn List snapshots for a volume
+        call: manager-snapshots.listsnapshots
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/volumes/volumename-action-snapshotrevert
+      name: v1-volumes-volumename-action-snapshotrevert
+      description: REST surface for v1-volumes-volumeName}?action=snapshotRevert.
+      operations:
+      - method: POST
+        name: revertsnapshot
+        description: Longhorn Revert a volume to a snapshot
+        call: manager-snapshots.revertsnapshot
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: manager-snapshots-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Longhorn Manager API — Snapshots. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: longhorn-create-snapshot
+      description: Longhorn Create a snapshot
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: manager-snapshots.createsnapshot
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: longhorn-delete-snapshot
+      description: Longhorn Delete a snapshot
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: manager-snapshots.deletesnapshot
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: longhorn-list-snapshots-volume
+      description: Longhorn List snapshots for a volume
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: manager-snapshots.listsnapshots
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: longhorn-revert-volume-snapshot
+      description: Longhorn Revert a volume to a snapshot
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: manager-snapshots.revertsnapshot
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,288 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Longhorn Manager API — Volumes
+  description: 'Longhorn Manager API — Volumes. 7 operations. Lead operation: Longhorn List volumes. Self-contained Naftiko
+    capability covering one Longhorn business surface.'
+  tags:
+  - Longhorn
+  - Volumes
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    LONGHORN_API_KEY: LONGHORN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: manager-volumes
+    baseUri: http://{longhornManagerHost}:{longhornManagerPort}
+    description: Longhorn Manager API — Volumes business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-volumes
+      path: /v1/volumes
+      operations:
+      - name: listvolumes
+        method: GET
+        description: Longhorn List volumes
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createvolume
+        method: POST
+        description: Longhorn Create a volume
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-volumes-volumeName
+      path: /v1/volumes/{volumeName}
+      operations:
+      - name: getvolume
+        method: GET
+        description: Longhorn Get a volume
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deletevolume
+        method: DELETE
+        description: Longhorn Delete a volume
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-volumes-volumeName}?action=attach
+      path: /v1/volumes/{volumeName}?action=attach
+      operations:
+      - name: attachvolume
+        method: POST
+        description: Longhorn Attach a volume to a node
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-volumes-volumeName}?action=detach
+      path: /v1/volumes/{volumeName}?action=detach
+      operations:
+      - name: detachvolume
+        method: POST
+        description: Longhorn Detach a volume from its node
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: v1-volumes-volumeName}?action=expand
+      path: /v1/volumes/{volumeName}?action=expand
+      operations:
+      - name: expandvolume
+        method: POST
+        description: Longhorn Expand a volume
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.LONGHORN_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: manager-volumes-rest
+    port: 8080
+    description: REST adapter for Longhorn Manager API — Volumes. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v1/volumes
+      name: v1-volumes
+      description: REST surface for v1-volumes.
+      operations:
+      - method: GET
+        name: listvolumes
+        description: Longhorn List volumes
+        call: manager-volumes.listvolumes
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createvolume
+        description: Longhorn Create a volume
+        call: manager-volumes.createvolume
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/volumes/{volumename}
+      name: v1-volumes-volumename
+      description: REST surface for v1-volumes-volumeName.
+      operations:
+      - method: GET
+        name: getvolume
+        description: Longhorn Get a volume
+        call: manager-volumes.getvolume
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletevolume
+        description: Longhorn Delete a volume
+        call: manager-volumes.deletevolume
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/volumes/volumename-action-attach
+      name: v1-volumes-volumename-action-attach
+      description: REST surface for v1-volumes-volumeName}?action=attach.
+      operations:
+      - method: POST
+        name: attachvolume
+        description: Longhorn Attach a volume to a node
+        call: manager-volumes.attachvolume
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/volumes/volumename-action-detach
+      name: v1-volumes-volumename-action-detach
+      description: REST surface for v1-volumes-volumeName}?action=detach.
+      operations:
+      - method: POST
+        name: detachvolume
+        description: Longhorn Detach a volume from its node
+        call: manager-volumes.detachvolume
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/volumes/volumename-action-expand
+      name: v1-volumes-volumename-action-expand
+      description: REST surface for v1-volumes-volumeName}?action=expand.
+      operations:
+      - method: POST
+        name: expandvolume
+        description: Longhorn Expand a volume
+        call: manager-volumes.expandvolume
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: manager-volumes-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Longhorn Manager API — Volumes. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: longhorn-list-volumes
+      description: Longhorn List volumes
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: manager-volumes.listvolumes
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: longhorn-create-volume
+      description: Longhorn Create a volume
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: manager-volumes.createvolume
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: longhorn-get-volume
+      description: Longhorn Get a volume
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: manager-volumes.getvolume
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: longhorn-delete-volume
+      description: Longhorn Delete a volume
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: manager-volumes.deletevolume
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: longhorn-attach-volume-node
+      description: Longhorn Attach a volume to a node
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: manager-volumes.attachvolume
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: longhorn-detach-volume-its-node
+      description: Longhorn Detach a volume from its node
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: manager-volumes.detachvolume
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: longhorn-expand-volume
+      description: Longhorn Expand a volume
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: manager-volumes.expandvolume
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
