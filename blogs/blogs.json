@@ -2,12 +2,20 @@
   "repo": "longhorn",
   "feeds": [
     {
-      "source": "https://longhorn.io/blog/",
+      "source": "https://longhorn.io/blog/index.xml",
       "feed_url": "https://longhorn.io/blog/index.xml",
-      "title": "The Longhorn Blog on Longhorn",
-      "saved": 0
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
+      "source": "https://longhorn.io/docs/1.11.1/deploy/install/",
+      "feed_url": "https://longhorn.io/docs/1.11.1/deploy/install/index.xml",
+      "title": "",
+      "saved": 0,
+      "method": "discovered"
     }
   ],
-  "fetched": "2026-05-17T20:20:35Z",
+  "fetched": "2026-06-01T23:35:02Z",
   "post_count": 16
 }
