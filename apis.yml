@@ -6,7 +6,7 @@ description: >-
   availability. Longhorn supports snapshots, backups to S3-compatible storage, disaster recovery, and recurring backup
   schedules.
 url: https://longhorn.io
-image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
   - Backup
   - Block Storage
