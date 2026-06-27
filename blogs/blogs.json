@@ -9,6 +9,13 @@
       "method": "feed"
     },
     {
+      "source": "https://longhorn.io/docs/1.11.1/deploy/install/index.xml",
+      "feed_url": "https://longhorn.io/docs/1.11.1/deploy/install/index.xml",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
       "source": "https://longhorn.io/docs/1.11.1/deploy/install/",
       "feed_url": "https://longhorn.io/docs/1.11.1/deploy/install/index.xml",
       "title": "",
@@ -17,5 +24,5 @@
     }
   ],
   "post_count": 16,
-  "fetched": "2026-06-14T20:42:17Z"
+  "fetched": "2026-06-27T12:03:07Z"
 }
