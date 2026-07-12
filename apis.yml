@@ -41,6 +41,10 @@ apis:
       - Snapshots
       - Volume Management
 common:
+  - type: DomainSecurity
+    url: security/longhorn-domain-security.yml
+  - type: Authentication
+    url: authentication/longhorn-authentication.yml
   - type: JSONLD
     url: json-ld/longhorn-context.jsonld
     name: Longhorn JSON-LD Context

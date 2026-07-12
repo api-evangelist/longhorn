@@ -1,0 +1,14 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/longhorn-manager-api-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: Kubernetes service account token for authenticating with the Longhorn Manager
+    API. Typically passed via the Kubernetes API proxy.
+  sources:
+  - openapi/longhorn-manager-api-openapi.yml
