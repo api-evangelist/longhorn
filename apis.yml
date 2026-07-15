@@ -41,6 +41,8 @@ apis:
       - Snapshots
       - Volume Management
 common:
+  - type: AgenticAccess
+    url: agentic-access/longhorn-agentic-access.yml
   - type: DomainSecurity
     url: security/longhorn-domain-security.yml
   - type: Authentication
