@@ -1,0 +1,380 @@
+openapi: 3.1.0
+info:
+  title: Longhorn Manager BackingImages Backups API
+  description: The Longhorn Manager REST API provides programmatic access to all Longhorn storage management operations. The API follows the Rancher REST API specification and is served by the Longhorn Manager service, typically accessible within a Kubernetes cluster at port 9500 or via the longhorn-backend service. It provides full lifecycle management for volumes, snapshots, backups, nodes, disks, engine images, recurring jobs, and system settings. The API is used by the Longhorn UI and can be accessed directly for automation and integration. The schema is discoverable at /v1/schemas.
+  version: '1.11'
+  contact:
+    name: Longhorn Community
+    url: https://longhorn.io/community/
+servers:
+- url: http://{longhornManagerHost}:{longhornManagerPort}
+  description: Longhorn Manager API server (in-cluster via service or port-forward)
+  variables:
+    longhornManagerHost:
+      default: longhorn-backend
+      description: Hostname or service name for the Longhorn Manager.
+    longhornManagerPort:
+      default: '9500'
+      description: Port on which Longhorn Manager serves the API.
+security:
+- bearerAuth: []
+tags:
+- name: Backups
+  description: Backup operations for storing volume snapshots to external storage targets such as S3-compatible storage or NFS. Backups can be restored to new volumes for disaster recovery.
+paths:
+  /v1/volumes/{volumeName}?action=snapshotBackup:
+    post:
+      operationId: backupSnapshot
+      summary: Longhorn Back up a snapshot
+      description: Triggers a backup of a specific snapshot to the configured external backup target (S3 or NFS). The backup is asynchronous; monitor the backup resource to track progress.
+      tags:
+      - Backups
+      parameters:
+      - $ref: '#/components/parameters/volumeName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackupInput'
+      responses:
+        '200':
+          description: Backup initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Volume'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /v1/backupvolumes:
+    get:
+      operationId: listBackupVolumes
+      summary: Longhorn List backup volumes
+      description: Returns a list of all backup volumes in the configured backup target. A backup volume contains one or more backups of a Longhorn volume. This endpoint queries the external backup store.
+      tags:
+      - Backups
+      responses:
+        '200':
+          description: Backup volume list retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackupVolumeCollection'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /v1/backupvolumes/{backupVolumeName}:
+    get:
+      operationId: getBackupVolume
+      summary: Longhorn Get a backup volume
+      description: Returns details of a specific backup volume from the backup store including the list of available backups and their metadata.
+      tags:
+      - Backups
+      parameters:
+      - $ref: '#/components/parameters/backupVolumeName'
+      responses:
+        '200':
+          description: Backup volume details retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackupVolume'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /v1/backupvolumes/{backupVolumeName}/backups:
+    get:
+      operationId: listBackups
+      summary: Longhorn List backups for a backup volume
+      description: Returns a list of all backups stored for a specific backup volume. Each backup corresponds to a snapshot of the source Longhorn volume at the time the backup was created.
+      tags:
+      - Backups
+      parameters:
+      - $ref: '#/components/parameters/backupVolumeName'
+      responses:
+        '200':
+          description: Backup list retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackupCollection'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    BackupInput:
+      type: object
+      description: Input for backing up a snapshot to external storage.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the snapshot to back up.
+        labels:
+          type: object
+          description: Labels to apply to the backup.
+          additionalProperties:
+            type: string
+    APIError:
+      type: object
+      description: API error response.
+      properties:
+        type:
+          type: string
+          description: Error type identifier.
+        status:
+          type: integer
+          description: HTTP status code.
+        code:
+          type: string
+          description: Machine-readable error code.
+        message:
+          type: string
+          description: Human-readable error message.
+    BackupVolume:
+      type: object
+      description: A backup volume in the external backup store corresponding to a Longhorn volume.
+      properties:
+        id:
+          type: string
+          description: Identifier of the backup volume, typically matching the source volume name.
+        name:
+          type: string
+          description: Name of the backup volume.
+        size:
+          type: string
+          description: Total size of all backups in this backup volume.
+        created:
+          type: string
+          description: Timestamp of the first backup.
+        lastBackupName:
+          type: string
+          description: Name of the most recent backup.
+        lastBackupAt:
+          type: string
+          description: Timestamp of the most recent backup.
+        backingImageName:
+          type: string
+          description: Name of the backing image used by the source volume, if any.
+    Replica:
+      type: object
+      description: A Longhorn replica instance storing a copy of volume data on a node.
+      properties:
+        name:
+          type: string
+          description: Unique name of the replica.
+        hostId:
+          type: string
+          description: Node where this replica is located.
+        diskID:
+          type: string
+          description: Disk on the node where this replica stores data.
+        diskPath:
+          type: string
+          description: File system path on the disk for this replica's data.
+        dataPath:
+          type: string
+          description: Full path to the replica data directory.
+        mode:
+          type: string
+          enum:
+          - RW
+          - WO
+          - ERR
+          description: Replica mode. RW is read-write; WO is write-only during rebuild; ERR is error state.
+        running:
+          type: boolean
+          description: Whether the replica process is currently running.
+        failedAt:
+          type: string
+          description: Timestamp when the replica last failed, if applicable.
+    BackupVolumeCollection:
+      type: object
+      description: A collection of backup volumes.
+      properties:
+        data:
+          type: array
+          description: List of backup volume resources.
+          items:
+            $ref: '#/components/schemas/BackupVolume'
+    Volume:
+      type: object
+      description: A Longhorn volume representing a block storage device that can be attached to Kubernetes nodes. Longhorn creates a dedicated storage controller and the configured number of replicas across nodes.
+      properties:
+        id:
+          type: string
+          description: Unique name/identifier of the volume.
+        name:
+          type: string
+          description: Name of the volume.
+        size:
+          type: string
+          description: Size of the volume in bytes as a string.
+        numberOfReplicas:
+          type: integer
+          description: Number of replicas maintained for this volume.
+        state:
+          type: string
+          enum:
+          - creating
+          - attached
+          - detached
+          - attaching
+          - detaching
+          - deleting
+          description: Current state of the volume.
+        robustness:
+          type: string
+          enum:
+          - healthy
+          - degraded
+          - faulted
+          - unknown
+          description: Health state of the volume based on replica status.
+        frontend:
+          type: string
+          enum:
+          - blockdev
+          - iscsi
+          - nvmf
+          description: Frontend type used to expose the volume to workloads.
+        accessMode:
+          type: string
+          enum:
+          - rwo
+          - rwx
+          description: Volume access mode. rwo is ReadWriteOnce; rwx is ReadWriteMany.
+        migratable:
+          type: boolean
+          description: Whether the volume can be migrated live between nodes.
+        encrypted:
+          type: boolean
+          description: Whether the volume data is encrypted at rest.
+        dataLocality:
+          type: string
+          enum:
+          - disabled
+          - best-effort
+          - strict-local
+          description: Data locality policy controlling replica placement relative to the attached node.
+        snapshotDataIntegrity:
+          type: string
+          description: Setting for snapshot data integrity checking.
+        replicaAutoBalance:
+          type: string
+          description: Auto-balance policy for replica placement.
+        currentImage:
+          type: string
+          description: Engine image currently in use by this volume.
+        baseImage:
+          type: string
+          description: Backing image used as the base for this volume, if any.
+        conditions:
+          type: object
+          description: Health conditions for the volume.
+          additionalProperties:
+            type: object
+        replicas:
+          type: array
+          description: List of replica instances for this volume.
+          items:
+            $ref: '#/components/schemas/Replica'
+        recurringJobSelector:
+          type: array
+          description: Recurring jobs assigned to this volume.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Name of the recurring job.
+              isGroup:
+                type: boolean
+                description: Whether this is a group reference.
+        kubernetesStatus:
+          type: object
+          description: Kubernetes PVC/PV binding status for this volume.
+    Backup:
+      type: object
+      description: A backup stored in the external backup target for a Longhorn volume snapshot.
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the backup.
+        name:
+          type: string
+          description: Name of the backup.
+        snapshotName:
+          type: string
+          description: Name of the snapshot this backup was created from.
+        snapshotCreated:
+          type: string
+          description: Timestamp when the source snapshot was created.
+        created:
+          type: string
+          description: Timestamp when the backup was completed.
+        size:
+          type: string
+          description: Size of the backup data in bytes.
+        labels:
+          type: object
+          description: Labels associated with this backup.
+          additionalProperties:
+            type: string
+        url:
+          type: string
+          description: URL of this backup in the backup store.
+    BackupCollection:
+      type: object
+      description: A collection of backup resources.
+      properties:
+        data:
+          type: array
+          description: List of backup resources.
+          items:
+            $ref: '#/components/schemas/Backup'
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
+    BadRequest:
+      description: The request was malformed or contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
+  parameters:
+    backupVolumeName:
+      name: backupVolumeName
+      in: path
+      required: true
+      description: Name of the backup volume in the backup store.
+      schema:
+        type: string
+    volumeName:
+      name: volumeName
+      in: path
+      required: true
+      description: Name of the Longhorn volume.
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Kubernetes service account token for authenticating with the Longhorn Manager API. Typically passed via the Kubernetes API proxy.
+externalDocs:
+  description: Longhorn Documentation
+  url: https://longhorn.io/docs/

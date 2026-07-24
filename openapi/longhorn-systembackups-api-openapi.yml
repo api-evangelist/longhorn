@@ -1,0 +1,143 @@
+openapi: 3.1.0
+info:
+  title: Longhorn Manager BackingImages SystemBackups API
+  description: The Longhorn Manager REST API provides programmatic access to all Longhorn storage management operations. The API follows the Rancher REST API specification and is served by the Longhorn Manager service, typically accessible within a Kubernetes cluster at port 9500 or via the longhorn-backend service. It provides full lifecycle management for volumes, snapshots, backups, nodes, disks, engine images, recurring jobs, and system settings. The API is used by the Longhorn UI and can be accessed directly for automation and integration. The schema is discoverable at /v1/schemas.
+  version: '1.11'
+  contact:
+    name: Longhorn Community
+    url: https://longhorn.io/community/
+servers:
+- url: http://{longhornManagerHost}:{longhornManagerPort}
+  description: Longhorn Manager API server (in-cluster via service or port-forward)
+  variables:
+    longhornManagerHost:
+      default: longhorn-backend
+      description: Hostname or service name for the Longhorn Manager.
+    longhornManagerPort:
+      default: '9500'
+      description: Port on which Longhorn Manager serves the API.
+security:
+- bearerAuth: []
+tags:
+- name: SystemBackups
+  description: System-level backup and restore operations for the entire Longhorn configuration including all volumes, settings, and resource definitions.
+paths:
+  /v1/systembackups:
+    get:
+      operationId: listSystemBackups
+      summary: Longhorn List system backups
+      description: Returns a list of all system-level backups. System backups capture the entire Longhorn configuration including all CRDs, settings, and metadata to enable full cluster restoration.
+      tags:
+      - SystemBackups
+      responses:
+        '200':
+          description: System backup list retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemBackupCollection'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createSystemBackup
+      summary: Longhorn Create a system backup
+      description: Creates a new system-level backup of the Longhorn configuration. The backup is stored in the configured backup target and can be used to restore the entire Longhorn installation.
+      tags:
+      - SystemBackups
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Optional name for the system backup.
+      responses:
+        '200':
+          description: System backup initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemBackup'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    SystemBackupCollection:
+      type: object
+      description: A collection of system backup resources.
+      properties:
+        data:
+          type: array
+          description: List of system backup resources.
+          items:
+            $ref: '#/components/schemas/SystemBackup'
+    SystemBackup:
+      type: object
+      description: A system-level backup of the entire Longhorn configuration.
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the system backup.
+        name:
+          type: string
+          description: Name of the system backup.
+        state:
+          type: string
+          enum:
+          - generating
+          - uploading
+          - ready
+          - error
+          - deleting
+          description: Current state of the system backup.
+        version:
+          type: string
+          description: Longhorn version at the time this backup was created.
+        managerImage:
+          type: string
+          description: Longhorn Manager image used when this backup was created.
+        createdAt:
+          type: string
+          description: Timestamp when the system backup was created.
+    APIError:
+      type: object
+      description: API error response.
+      properties:
+        type:
+          type: string
+          description: Error type identifier.
+        status:
+          type: integer
+          description: HTTP status code.
+        code:
+          type: string
+          description: Machine-readable error code.
+        message:
+          type: string
+          description: Human-readable error message.
+  responses:
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
+    BadRequest:
+      description: The request was malformed or contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Kubernetes service account token for authenticating with the Longhorn Manager API. Typically passed via the Kubernetes API proxy.
+externalDocs:
+  description: Longhorn Documentation
+  url: https://longhorn.io/docs/

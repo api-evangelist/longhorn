@@ -1,0 +1,187 @@
+openapi: 3.1.0
+info:
+  title: Longhorn Manager BackingImages Settings API
+  description: The Longhorn Manager REST API provides programmatic access to all Longhorn storage management operations. The API follows the Rancher REST API specification and is served by the Longhorn Manager service, typically accessible within a Kubernetes cluster at port 9500 or via the longhorn-backend service. It provides full lifecycle management for volumes, snapshots, backups, nodes, disks, engine images, recurring jobs, and system settings. The API is used by the Longhorn UI and can be accessed directly for automation and integration. The schema is discoverable at /v1/schemas.
+  version: '1.11'
+  contact:
+    name: Longhorn Community
+    url: https://longhorn.io/community/
+servers:
+- url: http://{longhornManagerHost}:{longhornManagerPort}
+  description: Longhorn Manager API server (in-cluster via service or port-forward)
+  variables:
+    longhornManagerHost:
+      default: longhorn-backend
+      description: Hostname or service name for the Longhorn Manager.
+    longhornManagerPort:
+      default: '9500'
+      description: Port on which Longhorn Manager serves the API.
+security:
+- bearerAuth: []
+tags:
+- name: Settings
+  description: System-wide Longhorn settings management including backup targets, replica counts, node scheduling policies, data locality settings, and storage over-provisioning configuration.
+paths:
+  /v1/settings:
+    get:
+      operationId: listSettings
+      summary: Longhorn List all settings
+      description: Returns a list of all Longhorn system settings including backup target, default replica count, data locality, storage over-provisioning percentage, and all other configurable system parameters.
+      tags:
+      - Settings
+      responses:
+        '200':
+          description: Settings list retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SettingCollection'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /v1/settings/{settingName}:
+    get:
+      operationId: getSetting
+      summary: Longhorn Get a setting
+      description: Returns the current value and metadata for a specific Longhorn setting. Settings include backup targets, replica counts, CPU and memory limits, node scheduling policies, and many other system parameters.
+      tags:
+      - Settings
+      parameters:
+      - $ref: '#/components/parameters/settingName'
+      responses:
+        '200':
+          description: Setting retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Setting'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateSetting
+      summary: Longhorn Update a setting
+      description: Updates the value of a specific Longhorn system setting. Changes take effect immediately without requiring a restart.
+      tags:
+      - Settings
+      parameters:
+      - $ref: '#/components/parameters/settingName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - value
+              properties:
+                value:
+                  type: string
+                  description: New value for the setting.
+      responses:
+        '200':
+          description: Setting updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Setting'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    SettingCollection:
+      type: object
+      description: A collection of Longhorn settings.
+      properties:
+        data:
+          type: array
+          description: List of setting resources.
+          items:
+            $ref: '#/components/schemas/Setting'
+    APIError:
+      type: object
+      description: API error response.
+      properties:
+        type:
+          type: string
+          description: Error type identifier.
+        status:
+          type: integer
+          description: HTTP status code.
+        code:
+          type: string
+          description: Machine-readable error code.
+        message:
+          type: string
+          description: Human-readable error message.
+    Setting:
+      type: object
+      description: A Longhorn system setting with its current value and metadata.
+      properties:
+        id:
+          type: string
+          description: Setting key identifier.
+        name:
+          type: string
+          description: Display name of the setting.
+        value:
+          type: string
+          description: Current value of the setting.
+        definition:
+          type: object
+          description: Setting definition including description, type, and constraints.
+          properties:
+            description:
+              type: string
+              description: Human-readable description of the setting.
+            type:
+              type: string
+              description: Data type of the setting value.
+            required:
+              type: boolean
+              description: Whether this setting is required.
+            readOnly:
+              type: boolean
+              description: Whether this setting is read-only.
+            options:
+              type: array
+              description: Allowed values for enum-type settings.
+              items:
+                type: string
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
+    BadRequest:
+      description: The request was malformed or contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
+  parameters:
+    settingName:
+      name: settingName
+      in: path
+      required: true
+      description: Key name of the Longhorn setting.
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Kubernetes service account token for authenticating with the Longhorn Manager API. Typically passed via the Kubernetes API proxy.
+externalDocs:
+  description: Longhorn Documentation
+  url: https://longhorn.io/docs/

@@ -1,0 +1,271 @@
+openapi: 3.1.0
+info:
+  title: Longhorn Manager BackingImages RecurringJobs API
+  description: The Longhorn Manager REST API provides programmatic access to all Longhorn storage management operations. The API follows the Rancher REST API specification and is served by the Longhorn Manager service, typically accessible within a Kubernetes cluster at port 9500 or via the longhorn-backend service. It provides full lifecycle management for volumes, snapshots, backups, nodes, disks, engine images, recurring jobs, and system settings. The API is used by the Longhorn UI and can be accessed directly for automation and integration. The schema is discoverable at /v1/schemas.
+  version: '1.11'
+  contact:
+    name: Longhorn Community
+    url: https://longhorn.io/community/
+servers:
+- url: http://{longhornManagerHost}:{longhornManagerPort}
+  description: Longhorn Manager API server (in-cluster via service or port-forward)
+  variables:
+    longhornManagerHost:
+      default: longhorn-backend
+      description: Hostname or service name for the Longhorn Manager.
+    longhornManagerPort:
+      default: '9500'
+      description: Port on which Longhorn Manager serves the API.
+security:
+- bearerAuth: []
+tags:
+- name: RecurringJobs
+  description: Recurring job management for scheduling automated snapshot and backup operations on a cron-based schedule. Recurring jobs can be applied to individual volumes or all volumes via groups.
+paths:
+  /v1/recurringjobs:
+    get:
+      operationId: listRecurringJobs
+      summary: Longhorn List recurring jobs
+      description: Returns a list of all recurring snapshot and backup jobs configured in Longhorn. Recurring jobs can be assigned to individual volumes or to groups that apply to multiple volumes.
+      tags:
+      - RecurringJobs
+      responses:
+        '200':
+          description: Recurring job list retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecurringJobCollection'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createRecurringJob
+      summary: Longhorn Create a recurring job
+      description: Creates a new recurring job for automated snapshot or backup operations. The job runs on the specified cron schedule and applies to all volumes that have this job in their recurring job list or that belong to the job's group.
+      tags:
+      - RecurringJobs
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecurringJobCreateInput'
+      responses:
+        '200':
+          description: Recurring job created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecurringJob'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /v1/recurringjobs/{recurringJobName}:
+    get:
+      operationId: getRecurringJob
+      summary: Longhorn Get a recurring job
+      description: Returns details of a specific recurring job including its schedule, task type, retention policy, labels, and group assignments.
+      tags:
+      - RecurringJobs
+      parameters:
+      - $ref: '#/components/parameters/recurringJobName'
+      responses:
+        '200':
+          description: Recurring job details retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecurringJob'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateRecurringJob
+      summary: Longhorn Update a recurring job
+      description: Updates a recurring job's configuration including schedule, retention count, concurrency, and group assignments.
+      tags:
+      - RecurringJobs
+      parameters:
+      - $ref: '#/components/parameters/recurringJobName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecurringJobCreateInput'
+      responses:
+        '200':
+          description: Recurring job updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecurringJob'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    delete:
+      operationId: deleteRecurringJob
+      summary: Longhorn Delete a recurring job
+      description: Deletes a recurring job. Volumes assigned to this job will no longer have automated snapshots or backups created by this schedule.
+      tags:
+      - RecurringJobs
+      parameters:
+      - $ref: '#/components/parameters/recurringJobName'
+      responses:
+        '204':
+          description: Recurring job deleted successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
+    BadRequest:
+      description: The request was malformed or contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
+  parameters:
+    recurringJobName:
+      name: recurringJobName
+      in: path
+      required: true
+      description: Name of the recurring job.
+      schema:
+        type: string
+  schemas:
+    APIError:
+      type: object
+      description: API error response.
+      properties:
+        type:
+          type: string
+          description: Error type identifier.
+        status:
+          type: integer
+          description: HTTP status code.
+        code:
+          type: string
+          description: Machine-readable error code.
+        message:
+          type: string
+          description: Human-readable error message.
+    RecurringJobCollection:
+      type: object
+      description: A collection of recurring job resources.
+      properties:
+        data:
+          type: array
+          description: List of recurring job resources.
+          items:
+            $ref: '#/components/schemas/RecurringJob'
+    RecurringJob:
+      type: object
+      description: A Longhorn recurring job for automated snapshot and backup scheduling.
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the recurring job.
+        name:
+          type: string
+          description: Name of the recurring job.
+        task:
+          type: string
+          enum:
+          - snapshot
+          - snapshot-force-create
+          - snapshot-cleanup
+          - snapshot-delete
+          - backup
+          - backup-force-create
+          - filesystem-trim
+          description: Type of task to perform when the job fires.
+        cron:
+          type: string
+          description: Cron expression for the job schedule, e.g. "0 2 * * *" for 2am daily.
+        retain:
+          type: integer
+          minimum: 0
+          description: Number of snapshots or backups to retain. Older ones are deleted.
+        concurrency:
+          type: integer
+          minimum: 1
+          description: Maximum number of volumes processed simultaneously.
+        labels:
+          type: object
+          description: Labels applied to snapshots or backups created by this job.
+          additionalProperties:
+            type: string
+        groups:
+          type: array
+          description: Group names this recurring job belongs to.
+          items:
+            type: string
+    RecurringJobCreateInput:
+      type: object
+      description: Input for creating or updating a recurring job.
+      required:
+      - name
+      - task
+      - cron
+      - retain
+      properties:
+        name:
+          type: string
+          description: Unique name for the recurring job.
+        task:
+          type: string
+          enum:
+          - snapshot
+          - snapshot-force-create
+          - snapshot-cleanup
+          - snapshot-delete
+          - backup
+          - backup-force-create
+          - filesystem-trim
+          description: Type of task to perform.
+        cron:
+          type: string
+          description: Cron expression for the schedule.
+        retain:
+          type: integer
+          minimum: 0
+          description: Number of items to retain.
+        concurrency:
+          type: integer
+          minimum: 1
+          description: Number of concurrent volumes to process.
+        labels:
+          type: object
+          description: Labels to apply to created snapshots or backups.
+          additionalProperties:
+            type: string
+        groups:
+          type: array
+          description: Group names for this job.
+          items:
+            type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Kubernetes service account token for authenticating with the Longhorn Manager API. Typically passed via the Kubernetes API proxy.
+externalDocs:
+  description: Longhorn Documentation
+  url: https://longhorn.io/docs/

@@ -1,0 +1,241 @@
+openapi: 3.1.0
+info:
+  title: Longhorn Manager BackingImages Snapshots API
+  description: The Longhorn Manager REST API provides programmatic access to all Longhorn storage management operations. The API follows the Rancher REST API specification and is served by the Longhorn Manager service, typically accessible within a Kubernetes cluster at port 9500 or via the longhorn-backend service. It provides full lifecycle management for volumes, snapshots, backups, nodes, disks, engine images, recurring jobs, and system settings. The API is used by the Longhorn UI and can be accessed directly for automation and integration. The schema is discoverable at /v1/schemas.
+  version: '1.11'
+  contact:
+    name: Longhorn Community
+    url: https://longhorn.io/community/
+servers:
+- url: http://{longhornManagerHost}:{longhornManagerPort}
+  description: Longhorn Manager API server (in-cluster via service or port-forward)
+  variables:
+    longhornManagerHost:
+      default: longhorn-backend
+      description: Hostname or service name for the Longhorn Manager.
+    longhornManagerPort:
+      default: '9500'
+      description: Port on which Longhorn Manager serves the API.
+security:
+- bearerAuth: []
+tags:
+- name: Snapshots
+  description: Snapshot operations for volumes including creating, listing, deleting, reverting to, and purging snapshots. Snapshots capture the state of a volume at a point in time and can be used as the basis for backups.
+paths:
+  /v1/volumes/{volumeName}?action=snapshotCreate:
+    post:
+      operationId: createSnapshot
+      summary: Longhorn Create a snapshot
+      description: Creates a point-in-time snapshot of a Longhorn volume. The volume must be attached when the snapshot is created. Snapshots are stored in the volume's replica data directories and consume incremental space for changed blocks.
+      tags:
+      - Snapshots
+      parameters:
+      - $ref: '#/components/parameters/volumeName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SnapshotCreateInput'
+      responses:
+        '200':
+          description: Snapshot created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Snapshot'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /v1/volumes/{volumeName}?action=snapshotList:
+    get:
+      operationId: listSnapshots
+      summary: Longhorn List snapshots for a volume
+      description: Returns a list of all snapshots for the specified volume. Each entry includes the snapshot name, creation time, size, parent, labels, and whether it has been removed or backed up.
+      tags:
+      - Snapshots
+      parameters:
+      - $ref: '#/components/parameters/volumeName'
+      responses:
+        '200':
+          description: Snapshot list retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SnapshotListOutput'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /v1/volumes/{volumeName}?action=snapshotDelete:
+    post:
+      operationId: deleteSnapshot
+      summary: Longhorn Delete a snapshot
+      description: Marks a snapshot for deletion. The snapshot data is reclaimed asynchronously. Deleting a snapshot merges its changed blocks with the next snapshot in the chain. The volume must be attached.
+      tags:
+      - Snapshots
+      parameters:
+      - $ref: '#/components/parameters/volumeName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              properties:
+                name:
+                  type: string
+                  description: Name of the snapshot to delete.
+      responses:
+        '200':
+          description: Snapshot deletion initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Snapshot'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /v1/volumes/{volumeName}?action=snapshotRevert:
+    post:
+      operationId: revertSnapshot
+      summary: Longhorn Revert a volume to a snapshot
+      description: Reverts the contents of a volume to the state captured in a specific snapshot. The volume must be detached before a revert operation. All data written after the snapshot was created will be lost.
+      tags:
+      - Snapshots
+      parameters:
+      - $ref: '#/components/parameters/volumeName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              properties:
+                name:
+                  type: string
+                  description: Name of the snapshot to revert to.
+      responses:
+        '200':
+          description: Volume revert initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Snapshot'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    SnapshotListOutput:
+      type: object
+      description: Output from listing snapshots of a volume.
+      properties:
+        data:
+          type: array
+          description: List of snapshot objects.
+          items:
+            $ref: '#/components/schemas/Snapshot'
+    SnapshotCreateInput:
+      type: object
+      description: Input for creating a volume snapshot.
+      properties:
+        name:
+          type: string
+          description: Optional explicit name for the snapshot. Generated if omitted.
+        labels:
+          type: object
+          description: Labels to apply to the new snapshot.
+          additionalProperties:
+            type: string
+    APIError:
+      type: object
+      description: API error response.
+      properties:
+        type:
+          type: string
+          description: Error type identifier.
+        status:
+          type: integer
+          description: HTTP status code.
+        code:
+          type: string
+          description: Machine-readable error code.
+        message:
+          type: string
+          description: Human-readable error message.
+    Snapshot:
+      type: object
+      description: A point-in-time snapshot of a Longhorn volume.
+      properties:
+        id:
+          type: string
+          description: Snapshot identifier.
+        name:
+          type: string
+          description: Name of the snapshot.
+        created:
+          type: string
+          description: Timestamp when the snapshot was created.
+        size:
+          type: string
+          description: Size of data stored in this snapshot in bytes.
+        parent:
+          type: string
+          description: Name of the parent snapshot in the chain.
+        children:
+          type: object
+          description: Map of child snapshot names.
+        removed:
+          type: boolean
+          description: Whether this snapshot has been marked for removal.
+        usercreated:
+          type: boolean
+          description: Whether this snapshot was manually created (vs. system-created).
+        labels:
+          type: object
+          description: Labels attached to this snapshot.
+          additionalProperties:
+            type: string
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
+    BadRequest:
+      description: The request was malformed or contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
+  parameters:
+    volumeName:
+      name: volumeName
+      in: path
+      required: true
+      description: Name of the Longhorn volume.
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Kubernetes service account token for authenticating with the Longhorn Manager API. Typically passed via the Kubernetes API proxy.
+externalDocs:
+  description: Longhorn Documentation
+  url: https://longhorn.io/docs/

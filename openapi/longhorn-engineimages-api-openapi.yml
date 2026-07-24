@@ -1,0 +1,206 @@
+openapi: 3.1.0
+info:
+  title: Longhorn Manager BackingImages EngineImages API
+  description: The Longhorn Manager REST API provides programmatic access to all Longhorn storage management operations. The API follows the Rancher REST API specification and is served by the Longhorn Manager service, typically accessible within a Kubernetes cluster at port 9500 or via the longhorn-backend service. It provides full lifecycle management for volumes, snapshots, backups, nodes, disks, engine images, recurring jobs, and system settings. The API is used by the Longhorn UI and can be accessed directly for automation and integration. The schema is discoverable at /v1/schemas.
+  version: '1.11'
+  contact:
+    name: Longhorn Community
+    url: https://longhorn.io/community/
+servers:
+- url: http://{longhornManagerHost}:{longhornManagerPort}
+  description: Longhorn Manager API server (in-cluster via service or port-forward)
+  variables:
+    longhornManagerHost:
+      default: longhorn-backend
+      description: Hostname or service name for the Longhorn Manager.
+    longhornManagerPort:
+      default: '9500'
+      description: Port on which Longhorn Manager serves the API.
+security:
+- bearerAuth: []
+tags:
+- name: EngineImages
+  description: Engine image management for the Longhorn storage engine. Engine images are OCI images containing the Longhorn engine binary and are used to upgrade or manage storage engine versions.
+paths:
+  /v1/engineimages:
+    get:
+      operationId: listEngineImages
+      summary: Longhorn List engine images
+      description: Returns a list of all Longhorn engine images installed in the cluster. Engine images contain the Longhorn storage engine binary and are used to manage volume upgrade and compatibility.
+      tags:
+      - EngineImages
+      responses:
+        '200':
+          description: Engine image list retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EngineImageCollection'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createEngineImage
+      summary: Longhorn Create an engine image
+      description: Deploys a new Longhorn engine image to the cluster by specifying an OCI image reference. Longhorn deploys the engine binary from this image to all nodes via a DaemonSet.
+      tags:
+      - EngineImages
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - image
+              properties:
+                image:
+                  type: string
+                  description: OCI image reference for the Longhorn engine image.
+      responses:
+        '200':
+          description: Engine image deployment initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EngineImage'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /v1/engineimages/{engineImageName}:
+    get:
+      operationId: getEngineImage
+      summary: Longhorn Get an engine image
+      description: Returns details of a specific engine image including its deployment state, CLI API version, controller API version, and which nodes have the image deployed.
+      tags:
+      - EngineImages
+      parameters:
+      - $ref: '#/components/parameters/engineImageName'
+      responses:
+        '200':
+          description: Engine image details retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EngineImage'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteEngineImage
+      summary: Longhorn Delete an engine image
+      description: Removes an engine image from the cluster. The default engine image and images currently in use by volumes cannot be deleted.
+      tags:
+      - EngineImages
+      parameters:
+      - $ref: '#/components/parameters/engineImageName'
+      responses:
+        '204':
+          description: Engine image deleted successfully.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
+    BadRequest:
+      description: The request was malformed or contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
+  schemas:
+    APIError:
+      type: object
+      description: API error response.
+      properties:
+        type:
+          type: string
+          description: Error type identifier.
+        status:
+          type: integer
+          description: HTTP status code.
+        code:
+          type: string
+          description: Machine-readable error code.
+        message:
+          type: string
+          description: Human-readable error message.
+    EngineImageCollection:
+      type: object
+      description: A collection of engine image resources.
+      properties:
+        data:
+          type: array
+          description: List of engine image resources.
+          items:
+            $ref: '#/components/schemas/EngineImage'
+    EngineImage:
+      type: object
+      description: A Longhorn engine image providing the storage engine binary.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the engine image resource.
+        name:
+          type: string
+          description: Name of the engine image resource.
+        image:
+          type: string
+          description: OCI image reference for this engine image.
+        state:
+          type: string
+          enum:
+          - deploying
+          - ready
+          - incompatible
+          - error
+          description: Current deployment state of the engine image.
+        default:
+          type: boolean
+          description: Whether this is the default engine image used for new volumes.
+        cliAPIVersion:
+          type: integer
+          description: CLI API version supported by this engine image.
+        cliAPIMinVersion:
+          type: integer
+          description: Minimum CLI API version supported by this engine image.
+        controllerAPIVersion:
+          type: integer
+          description: Controller API version supported by this engine image.
+        nodesDeployed:
+          type: array
+          description: List of nodes where this engine image is deployed.
+          items:
+            type: string
+  parameters:
+    engineImageName:
+      name: engineImageName
+      in: path
+      required: true
+      description: Name of the engine image resource.
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Kubernetes service account token for authenticating with the Longhorn Manager API. Typically passed via the Kubernetes API proxy.
+externalDocs:
+  description: Longhorn Documentation
+  url: https://longhorn.io/docs/

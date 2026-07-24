@@ -1,0 +1,464 @@
+openapi: 3.1.0
+info:
+  title: Longhorn Manager BackingImages Volumes API
+  description: The Longhorn Manager REST API provides programmatic access to all Longhorn storage management operations. The API follows the Rancher REST API specification and is served by the Longhorn Manager service, typically accessible within a Kubernetes cluster at port 9500 or via the longhorn-backend service. It provides full lifecycle management for volumes, snapshots, backups, nodes, disks, engine images, recurring jobs, and system settings. The API is used by the Longhorn UI and can be accessed directly for automation and integration. The schema is discoverable at /v1/schemas.
+  version: '1.11'
+  contact:
+    name: Longhorn Community
+    url: https://longhorn.io/community/
+servers:
+- url: http://{longhornManagerHost}:{longhornManagerPort}
+  description: Longhorn Manager API server (in-cluster via service or port-forward)
+  variables:
+    longhornManagerHost:
+      default: longhorn-backend
+      description: Hostname or service name for the Longhorn Manager.
+    longhornManagerPort:
+      default: '9500'
+      description: Port on which Longhorn Manager serves the API.
+security:
+- bearerAuth: []
+tags:
+- name: Volumes
+  description: Volume lifecycle management including creating, attaching, detaching, expanding, and deleting volumes. Also includes volume actions such as activating, canceling expansion, and managing replicas.
+paths:
+  /v1/volumes:
+    get:
+      operationId: listVolumes
+      summary: Longhorn List volumes
+      description: Returns a list of all Longhorn volumes in the cluster. Each volume entry includes its name, size, replication configuration, state, access mode, attached node, snapshot count, and associated recurring jobs.
+      tags:
+      - Volumes
+      responses:
+        '200':
+          description: Volume list retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VolumeCollection'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createVolume
+      summary: Longhorn Create a volume
+      description: Creates a new Longhorn volume with the specified configuration. The volume will be created in a detached state. It must be attached to a node before data can be written. Longhorn creates the specified number of replicas distributed across available nodes.
+      tags:
+      - Volumes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VolumeCreateInput'
+      responses:
+        '200':
+          description: Volume created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Volume'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /v1/volumes/{volumeName}:
+    get:
+      operationId: getVolume
+      summary: Longhorn Get a volume
+      description: Returns detailed information about a specific volume including its state, replicas, engine, size, access mode, recurring jobs, and current operation status.
+      tags:
+      - Volumes
+      parameters:
+      - $ref: '#/components/parameters/volumeName'
+      responses:
+        '200':
+          description: Volume details retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Volume'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteVolume
+      summary: Longhorn Delete a volume
+      description: Deletes a Longhorn volume and all of its replicas. The volume must be in a detached state before it can be deleted. All snapshots and backups associated with the volume will also be deleted.
+      tags:
+      - Volumes
+      parameters:
+      - $ref: '#/components/parameters/volumeName'
+      responses:
+        '204':
+          description: Volume deleted successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /v1/volumes/{volumeName}?action=attach:
+    post:
+      operationId: attachVolume
+      summary: Longhorn Attach a volume to a node
+      description: Attaches a Longhorn volume to the specified node, making it available as a block device. The volume must be detached before it can be attached to a different node.
+      tags:
+      - Volumes
+      parameters:
+      - $ref: '#/components/parameters/volumeName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VolumeAttachInput'
+      responses:
+        '200':
+          description: Volume attachment initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Volume'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /v1/volumes/{volumeName}?action=detach:
+    post:
+      operationId: detachVolume
+      summary: Longhorn Detach a volume from its node
+      description: Detaches a Longhorn volume from the node it is currently attached to. The volume's data is preserved and it can be reattached to the same or a different node afterward.
+      tags:
+      - Volumes
+      parameters:
+      - $ref: '#/components/parameters/volumeName'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hostId:
+                  type: string
+                  description: Node ID to detach from. If omitted, detaches from the current node.
+      responses:
+        '200':
+          description: Volume detachment initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Volume'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /v1/volumes/{volumeName}?action=expand:
+    post:
+      operationId: expandVolume
+      summary: Longhorn Expand a volume
+      description: Expands a Longhorn volume to a new, larger size. The size must be greater than the current volume size. Online expansion is supported for volumes attached to nodes; the file system may need to be resized separately after the volume is expanded.
+      tags:
+      - Volumes
+      parameters:
+      - $ref: '#/components/parameters/volumeName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - size
+              properties:
+                size:
+                  type: string
+                  description: New size for the volume in bytes as a string, e.g. "10737418240" for 10 GiB.
+      responses:
+        '200':
+          description: Volume expansion initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Volume'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    VolumeCreateInput:
+      type: object
+      description: Input for creating a new Longhorn volume.
+      required:
+      - name
+      - size
+      properties:
+        name:
+          type: string
+          description: Unique name for the new volume.
+          minLength: 1
+          maxLength: 63
+        size:
+          type: string
+          description: Size of the volume in bytes as a string, e.g. "10737418240" for 10 GiB.
+        numberOfReplicas:
+          type: integer
+          minimum: 1
+          description: Number of replicas to maintain. Defaults to the system default (typically 3).
+        dataLocality:
+          type: string
+          enum:
+          - disabled
+          - best-effort
+          - strict-local
+          description: Data locality policy for replica placement.
+        accessMode:
+          type: string
+          enum:
+          - rwo
+          - rwx
+          description: Access mode for the volume.
+        encrypted:
+          type: boolean
+          description: Whether to encrypt the volume data at rest.
+        backingImage:
+          type: string
+          description: Name of a backing image to use as base data for this volume.
+        nodeSelector:
+          type: array
+          description: Node tags to restrict which nodes host replicas.
+          items:
+            type: string
+        diskSelector:
+          type: array
+          description: Disk tags to restrict which disks host replicas.
+          items:
+            type: string
+        recurringJobSelector:
+          type: array
+          description: Recurring jobs to assign to this volume.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Name of the recurring job or group.
+              isGroup:
+                type: boolean
+                description: Whether this references a group.
+    APIError:
+      type: object
+      description: API error response.
+      properties:
+        type:
+          type: string
+          description: Error type identifier.
+        status:
+          type: integer
+          description: HTTP status code.
+        code:
+          type: string
+          description: Machine-readable error code.
+        message:
+          type: string
+          description: Human-readable error message.
+    VolumeAttachInput:
+      type: object
+      description: Input for attaching a volume to a node.
+      required:
+      - hostId
+      properties:
+        hostId:
+          type: string
+          description: Kubernetes node name to attach the volume to.
+        disableFrontend:
+          type: boolean
+          description: Whether to attach without exposing a frontend device. Used for backup operations.
+        attachedBy:
+          type: string
+          description: Identifier of the entity requesting the attachment.
+    Replica:
+      type: object
+      description: A Longhorn replica instance storing a copy of volume data on a node.
+      properties:
+        name:
+          type: string
+          description: Unique name of the replica.
+        hostId:
+          type: string
+          description: Node where this replica is located.
+        diskID:
+          type: string
+          description: Disk on the node where this replica stores data.
+        diskPath:
+          type: string
+          description: File system path on the disk for this replica's data.
+        dataPath:
+          type: string
+          description: Full path to the replica data directory.
+        mode:
+          type: string
+          enum:
+          - RW
+          - WO
+          - ERR
+          description: Replica mode. RW is read-write; WO is write-only during rebuild; ERR is error state.
+        running:
+          type: boolean
+          description: Whether the replica process is currently running.
+        failedAt:
+          type: string
+          description: Timestamp when the replica last failed, if applicable.
+    Volume:
+      type: object
+      description: A Longhorn volume representing a block storage device that can be attached to Kubernetes nodes. Longhorn creates a dedicated storage controller and the configured number of replicas across nodes.
+      properties:
+        id:
+          type: string
+          description: Unique name/identifier of the volume.
+        name:
+          type: string
+          description: Name of the volume.
+        size:
+          type: string
+          description: Size of the volume in bytes as a string.
+        numberOfReplicas:
+          type: integer
+          description: Number of replicas maintained for this volume.
+        state:
+          type: string
+          enum:
+          - creating
+          - attached
+          - detached
+          - attaching
+          - detaching
+          - deleting
+          description: Current state of the volume.
+        robustness:
+          type: string
+          enum:
+          - healthy
+          - degraded
+          - faulted
+          - unknown
+          description: Health state of the volume based on replica status.
+        frontend:
+          type: string
+          enum:
+          - blockdev
+          - iscsi
+          - nvmf
+          description: Frontend type used to expose the volume to workloads.
+        accessMode:
+          type: string
+          enum:
+          - rwo
+          - rwx
+          description: Volume access mode. rwo is ReadWriteOnce; rwx is ReadWriteMany.
+        migratable:
+          type: boolean
+          description: Whether the volume can be migrated live between nodes.
+        encrypted:
+          type: boolean
+          description: Whether the volume data is encrypted at rest.
+        dataLocality:
+          type: string
+          enum:
+          - disabled
+          - best-effort
+          - strict-local
+          description: Data locality policy controlling replica placement relative to the attached node.
+        snapshotDataIntegrity:
+          type: string
+          description: Setting for snapshot data integrity checking.
+        replicaAutoBalance:
+          type: string
+          description: Auto-balance policy for replica placement.
+        currentImage:
+          type: string
+          description: Engine image currently in use by this volume.
+        baseImage:
+          type: string
+          description: Backing image used as the base for this volume, if any.
+        conditions:
+          type: object
+          description: Health conditions for the volume.
+          additionalProperties:
+            type: object
+        replicas:
+          type: array
+          description: List of replica instances for this volume.
+          items:
+            $ref: '#/components/schemas/Replica'
+        recurringJobSelector:
+          type: array
+          description: Recurring jobs assigned to this volume.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Name of the recurring job.
+              isGroup:
+                type: boolean
+                description: Whether this is a group reference.
+        kubernetesStatus:
+          type: object
+          description: Kubernetes PVC/PV binding status for this volume.
+    VolumeCollection:
+      type: object
+      description: A paginated collection of Volume resources.
+      properties:
+        type:
+          type: string
+          const: collection
+          description: Collection type identifier.
+        resourceType:
+          type: string
+          const: volume
+          description: Resource type for items in this collection.
+        data:
+          type: array
+          description: List of volume resources.
+          items:
+            $ref: '#/components/schemas/Volume'
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
+    BadRequest:
+      description: The request was malformed or contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
+  parameters:
+    volumeName:
+      name: volumeName
+      in: path
+      required: true
+      description: Name of the Longhorn volume.
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Kubernetes service account token for authenticating with the Longhorn Manager API. Typically passed via the Kubernetes API proxy.
+externalDocs:
+  description: Longhorn Documentation
+  url: https://longhorn.io/docs/

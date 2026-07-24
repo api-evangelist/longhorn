@@ -1,0 +1,161 @@
+openapi: 3.1.0
+info:
+  title: Longhorn Manager BackingImages API
+  description: The Longhorn Manager REST API provides programmatic access to all Longhorn storage management operations. The API follows the Rancher REST API specification and is served by the Longhorn Manager service, typically accessible within a Kubernetes cluster at port 9500 or via the longhorn-backend service. It provides full lifecycle management for volumes, snapshots, backups, nodes, disks, engine images, recurring jobs, and system settings. The API is used by the Longhorn UI and can be accessed directly for automation and integration. The schema is discoverable at /v1/schemas.
+  version: '1.11'
+  contact:
+    name: Longhorn Community
+    url: https://longhorn.io/community/
+servers:
+- url: http://{longhornManagerHost}:{longhornManagerPort}
+  description: Longhorn Manager API server (in-cluster via service or port-forward)
+  variables:
+    longhornManagerHost:
+      default: longhorn-backend
+      description: Hostname or service name for the Longhorn Manager.
+    longhornManagerPort:
+      default: '9500'
+      description: Port on which Longhorn Manager serves the API.
+security:
+- bearerAuth: []
+tags:
+- name: BackingImages
+  description: Backing image management for volumes that use pre-populated disk images as their base data. Backing images are immutable and can be shared across multiple volumes in the same namespace.
+paths:
+  /v1/backingimages:
+    get:
+      operationId: listBackingImages
+      summary: Longhorn List backing images
+      description: Returns a list of all backing images available in the cluster. Backing images are pre-populated disk images used as the base for new volumes.
+      tags:
+      - BackingImages
+      responses:
+        '200':
+          description: Backing image list retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackingImageCollection'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createBackingImage
+      summary: Longhorn Create a backing image
+      description: Creates a new backing image by uploading or downloading an image file. The backing image is distributed to all nodes that need it for volume creation.
+      tags:
+      - BackingImages
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackingImageCreateInput'
+      responses:
+        '200':
+          description: Backing image created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackingImage'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    BackingImageCreateInput:
+      type: object
+      description: Input for creating a new backing image.
+      required:
+      - name
+      - sourceType
+      properties:
+        name:
+          type: string
+          description: Unique name for the backing image.
+        sourceType:
+          type: string
+          enum:
+          - download
+          - upload
+          - export-from-volume
+          description: Source type for the backing image data.
+        parameters:
+          type: object
+          description: Source-specific parameters, such as the download URL.
+          additionalProperties:
+            type: string
+        checksum:
+          type: string
+          description: Expected SHA512 checksum for verifying the backing image data.
+    BackingImage:
+      type: object
+      description: A Longhorn backing image providing pre-populated base data for volumes.
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the backing image.
+        name:
+          type: string
+          description: Name of the backing image.
+        sourceType:
+          type: string
+          enum:
+          - download
+          - upload
+          - export-from-volume
+          - restore
+          - clone
+          description: How the backing image data was sourced.
+        size:
+          type: integer
+          description: Size of the backing image in bytes.
+        checksum:
+          type: string
+          description: SHA512 checksum of the backing image data for integrity verification.
+    APIError:
+      type: object
+      description: API error response.
+      properties:
+        type:
+          type: string
+          description: Error type identifier.
+        status:
+          type: integer
+          description: HTTP status code.
+        code:
+          type: string
+          description: Machine-readable error code.
+        message:
+          type: string
+          description: Human-readable error message.
+    BackingImageCollection:
+      type: object
+      description: A collection of backing image resources.
+      properties:
+        data:
+          type: array
+          description: List of backing image resources.
+          items:
+            $ref: '#/components/schemas/BackingImage'
+  responses:
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
+    BadRequest:
+      description: The request was malformed or contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Kubernetes service account token for authenticating with the Longhorn Manager API. Typically passed via the Kubernetes API proxy.
+externalDocs:
+  description: Longhorn Documentation
+  url: https://longhorn.io/docs/
