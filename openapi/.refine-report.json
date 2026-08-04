@@ -1,0 +1,30 @@
+{
+  "provider": "longhorn",
+  "sources": [
+    "longhorn-backingimages-api-openapi.yml",
+    "longhorn-backups-api-openapi.yml",
+    "longhorn-engineimages-api-openapi.yml",
+    "longhorn-nodes-api-openapi.yml",
+    "longhorn-recurringjobs-api-openapi.yml",
+    "longhorn-settings-api-openapi.yml",
+    "longhorn-snapshots-api-openapi.yml",
+    "longhorn-systembackups-api-openapi.yml",
+    "longhorn-volumes-api-openapi.yml"
+  ],
+  "outputs": [
+    "longhorn-backingimages-api-openapi.yml",
+    "longhorn-backups-api-openapi.yml",
+    "longhorn-engineimages-api-openapi.yml",
+    "longhorn-nodes-api-openapi.yml",
+    "longhorn-recurringjobs-api-openapi.yml",
+    "longhorn-settings-api-openapi.yml",
+    "longhorn-snapshots-api-openapi.yml",
+    "longhorn-systembackups-api-openapi.yml",
+    "longhorn-volumes-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
