@@ -186,6 +186,17 @@ apis:
   - type: JSONSchema
     url: json-schema/longhorn-volume-schema.json
 common:
+  - type: IssueTracker
+    url: https://github.com/longhorn/longhorn/issues
+  - type: SecurityPolicy
+    url: https://github.com/longhorn/longhorn/blob/master/SECURITY.md
+  - type: CodeOfConduct
+    url: https://github.com/longhorn/longhorn/blob/master/CODE_OF_CONDUCT.md
+  - type: ContributionGuide
+    url: https://github.com/longhorn/longhorn/blob/master/CONTRIBUTING.md
+  - type: License
+    name: Apache-2.0
+    url: https://github.com/longhorn/longhorn/blob/master/LICENSE
   - type: AgenticAccess
     url: agentic-access/longhorn-agentic-access.yml
   - type: DomainSecurity
