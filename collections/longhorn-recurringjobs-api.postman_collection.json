@@ -1,0 +1,1268 @@
+{
+  "item": [
+    {
+      "id": "8844606c-5d80-4087-b8af-fcb53dd4bf8f",
+      "name": "RecurringJobs",
+      "description": {
+        "content": "Recurring job management for scheduling automated snapshot and backup operations on a cron-based schedule. Recurring jobs can be applied to individual volumes or all volumes via groups.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0529b2e8-a192-46a0-9e6f-7c2c5bfedc7e",
+          "name": "Longhorn List recurring jobs",
+          "request": {
+            "name": "Longhorn List recurring jobs",
+            "description": {
+              "content": "Returns a list of all recurring snapshot and backup jobs configured in Longhorn. Recurring jobs can be assigned to individual volumes or to groups that apply to multiple volumes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "recurringjobs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Hostname or service name for the Longhorn Manager.",
+                  "type": "any",
+                  "value": "{{longhornManagerHost}}",
+                  "key": "longhornManagerHost"
+                },
+                {
+                  "description": "Port on which Longhorn Manager serves the API.",
+                  "type": "any",
+                  "value": "{{longhornManagerPort}}",
+                  "key": "longhornManagerPort"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "220cc3c8-ddb5-4baa-bfc9-0df063734225",
+              "name": "Recurring job list retrieved successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "recurringjobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"task\": \"snapshot-force-create\",\n      \"cron\": \"string\",\n      \"retain\": 6650,\n      \"concurrency\": 8166,\n      \"labels\": {\n        \"key_0\": \"string\"\n      },\n      \"groups\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"task\": \"backup-force-create\",\n      \"cron\": \"string\",\n      \"retain\": 5636,\n      \"concurrency\": 812,\n      \"labels\": {\n        \"key_0\": \"string\"\n      },\n      \"groups\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bc2106ae-ccb8-4a00-a5e8-7df26d5bb190",
+              "name": "Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "recurringjobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"status\": 8017,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a9e974cb-318d-4172-8b06-0198fe6b52ce",
+          "name": "Longhorn Create a recurring job",
+          "request": {
+            "name": "Longhorn Create a recurring job",
+            "description": {
+              "content": "Creates a new recurring job for automated snapshot or backup operations. The job runs on the specified cron schedule and applies to all volumes that have this job in their recurring job list or that belong to the job's group.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "recurringjobs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Hostname or service name for the Longhorn Manager.",
+                  "type": "any",
+                  "value": "{{longhornManagerHost}}",
+                  "key": "longhornManagerHost"
+                },
+                {
+                  "description": "Port on which Longhorn Manager serves the API.",
+                  "type": "any",
+                  "value": "{{longhornManagerPort}}",
+                  "key": "longhornManagerPort"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"task\": \"<string>\",\n  \"cron\": \"<string>\",\n  \"retain\": \"<integer>\",\n  \"concurrency\": \"<integer>\",\n  \"labels\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"groups\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e051a226-4aa6-4918-9e79-ea6a4ff9ffce",
+              "name": "Recurring job created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "recurringjobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"task\": \"<string>\",\n  \"cron\": \"<string>\",\n  \"retain\": \"<integer>\",\n  \"concurrency\": \"<integer>\",\n  \"labels\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"groups\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"task\": \"snapshot-cleanup\",\n  \"cron\": \"string\",\n  \"retain\": 7553,\n  \"concurrency\": 7313,\n  \"labels\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": \"string\"\n  },\n  \"groups\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "af501112-4409-464d-93e0-0af2540b8031",
+              "name": "The request was malformed or contained invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "recurringjobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"task\": \"<string>\",\n  \"cron\": \"<string>\",\n  \"retain\": \"<integer>\",\n  \"concurrency\": \"<integer>\",\n  \"labels\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"groups\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"status\": 8017,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a9e9cec8-2c73-4171-90fc-f6126786cd56",
+              "name": "Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "recurringjobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"task\": \"<string>\",\n  \"cron\": \"<string>\",\n  \"retain\": \"<integer>\",\n  \"concurrency\": \"<integer>\",\n  \"labels\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"groups\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"status\": 8017,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "97235715-9f72-4f18-894b-39a0cccbbb4c",
+          "name": "Longhorn Get a recurring job",
+          "request": {
+            "name": "Longhorn Get a recurring job",
+            "description": {
+              "content": "Returns details of a specific recurring job including its schedule, task type, retention policy, labels, and group assignments.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "recurringjobs",
+                ":recurringJobName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "recurringJobName",
+                  "description": "(Required) Name of the recurring job."
+                },
+                {
+                  "description": "Hostname or service name for the Longhorn Manager.",
+                  "type": "any",
+                  "value": "{{longhornManagerHost}}",
+                  "key": "longhornManagerHost"
+                },
+                {
+                  "description": "Port on which Longhorn Manager serves the API.",
+                  "type": "any",
+                  "value": "{{longhornManagerPort}}",
+                  "key": "longhornManagerPort"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f729c7e3-4a51-43ce-82a1-f15e3db12b6b",
+              "name": "Recurring job details retrieved successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "recurringjobs",
+                    ":recurringJobName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "recurringJobName",
+                      "description": "(Required) Name of the recurring job."
+                    },
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"task\": \"snapshot-cleanup\",\n  \"cron\": \"string\",\n  \"retain\": 7553,\n  \"concurrency\": 7313,\n  \"labels\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": \"string\"\n  },\n  \"groups\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "039f4d38-ff77-455e-b1d5-98c7348c6430",
+              "name": "Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "recurringjobs",
+                    ":recurringJobName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "recurringJobName",
+                      "description": "(Required) Name of the recurring job."
+                    },
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"status\": 8017,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "00c73951-e1c6-4e39-9787-d16090f3dc77",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "recurringjobs",
+                    ":recurringJobName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "recurringJobName",
+                      "description": "(Required) Name of the recurring job."
+                    },
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"status\": 8017,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5f857639-07ae-45b2-b97d-4e97f2344f9a",
+          "name": "Longhorn Update a recurring job",
+          "request": {
+            "name": "Longhorn Update a recurring job",
+            "description": {
+              "content": "Updates a recurring job's configuration including schedule, retention count, concurrency, and group assignments.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "recurringjobs",
+                ":recurringJobName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "recurringJobName",
+                  "description": "(Required) Name of the recurring job."
+                },
+                {
+                  "description": "Hostname or service name for the Longhorn Manager.",
+                  "type": "any",
+                  "value": "{{longhornManagerHost}}",
+                  "key": "longhornManagerHost"
+                },
+                {
+                  "description": "Port on which Longhorn Manager serves the API.",
+                  "type": "any",
+                  "value": "{{longhornManagerPort}}",
+                  "key": "longhornManagerPort"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"task\": \"<string>\",\n  \"cron\": \"<string>\",\n  \"retain\": \"<integer>\",\n  \"concurrency\": \"<integer>\",\n  \"labels\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"groups\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ff022890-1ede-43ac-aaf8-d716c3bf5e9c",
+              "name": "Recurring job updated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "recurringjobs",
+                    ":recurringJobName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "recurringJobName",
+                      "description": "(Required) Name of the recurring job."
+                    },
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"task\": \"<string>\",\n  \"cron\": \"<string>\",\n  \"retain\": \"<integer>\",\n  \"concurrency\": \"<integer>\",\n  \"labels\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"groups\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"task\": \"snapshot-cleanup\",\n  \"cron\": \"string\",\n  \"retain\": 7553,\n  \"concurrency\": 7313,\n  \"labels\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": \"string\"\n  },\n  \"groups\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "18577a86-0162-4243-9179-993ca98d7f91",
+              "name": "The request was malformed or contained invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "recurringjobs",
+                    ":recurringJobName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "recurringJobName",
+                      "description": "(Required) Name of the recurring job."
+                    },
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"task\": \"<string>\",\n  \"cron\": \"<string>\",\n  \"retain\": \"<integer>\",\n  \"concurrency\": \"<integer>\",\n  \"labels\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"groups\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"status\": 8017,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f0aa4919-6d97-4f6f-b6e5-b3f1c4273144",
+              "name": "Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "recurringjobs",
+                    ":recurringJobName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "recurringJobName",
+                      "description": "(Required) Name of the recurring job."
+                    },
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"task\": \"<string>\",\n  \"cron\": \"<string>\",\n  \"retain\": \"<integer>\",\n  \"concurrency\": \"<integer>\",\n  \"labels\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"groups\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"status\": 8017,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1b5a56f8-c5e6-4de1-800b-d896744d4017",
+          "name": "Longhorn Delete a recurring job",
+          "request": {
+            "name": "Longhorn Delete a recurring job",
+            "description": {
+              "content": "Deletes a recurring job. Volumes assigned to this job will no longer have automated snapshots or backups created by this schedule.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "recurringjobs",
+                ":recurringJobName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "recurringJobName",
+                  "description": "(Required) Name of the recurring job."
+                },
+                {
+                  "description": "Hostname or service name for the Longhorn Manager.",
+                  "type": "any",
+                  "value": "{{longhornManagerHost}}",
+                  "key": "longhornManagerHost"
+                },
+                {
+                  "description": "Port on which Longhorn Manager serves the API.",
+                  "type": "any",
+                  "value": "{{longhornManagerPort}}",
+                  "key": "longhornManagerPort"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7d9e7951-0416-45b1-aa78-b0d2bfc36f85",
+              "name": "Recurring job deleted successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "recurringjobs",
+                    ":recurringJobName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "recurringJobName",
+                      "description": "(Required) Name of the recurring job."
+                    },
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6cc3fd60-d321-4d43-b348-f4c4da37ce83",
+              "name": "Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "recurringjobs",
+                    ":recurringJobName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "recurringJobName",
+                      "description": "(Required) Name of the recurring job."
+                    },
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"status\": 8017,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9c8d2f0b-242b-43fa-94d3-cfe3a333644a",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "recurringjobs",
+                    ":recurringJobName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "recurringJobName",
+                      "description": "(Required) Name of the recurring job."
+                    },
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"status\": 8017,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Hostname or service name for the Longhorn Manager.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "longhorn-backend",
+      "key": "longhornManagerHost"
+    },
+    {
+      "description": {
+        "content": "Port on which Longhorn Manager serves the API.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "9500",
+      "key": "longhornManagerPort"
+    },
+    {
+      "type": "string",
+      "value": "http://{{longhornManagerHost}}:{{longhornManagerPort}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d0e5f654-1b95-457a-b93b-c125f6b1b363",
+    "name": "Longhorn Manager BackingImages RecurringJobs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Longhorn Manager REST API provides programmatic access to all Longhorn storage management operations. The API follows the Rancher REST API specification and is served by the Longhorn Manager service, typically accessible within a Kubernetes cluster at port 9500 or via the longhorn-backend service. It provides full lifecycle management for volumes, snapshots, backups, nodes, disks, engine images, recurring jobs, and system settings. The API is used by the Longhorn UI and can be accessed directly for automation and integration. The schema is discoverable at /v1/schemas.\n\nContact Support:\n Name: Longhorn Community",
+      "type": "text/plain"
+    }
+  }
+}

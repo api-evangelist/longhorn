@@ -1,0 +1,77 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Longhorn Manager BackingImages Nodes API",
+    "version": "1.11"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Nodes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Longhorn List nodes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{longhornManagerHost}:{longhornManagerPort}/v1/nodes"
+          },
+          "docs": "Returns a list of all nodes in the Longhorn storage cluster. Each node entry includes its scheduling eligibility, disk configurations, conditions, tags, and current state."
+        },
+        {
+          "info": {
+            "name": "Longhorn Get a node",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{longhornManagerHost}:{longhornManagerPort}/v1/nodes/:nodeId",
+            "params": [
+              {
+                "name": "nodeId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the Longhorn node (typically the Kubernetes node name)."
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a specific node including all configured disks, their storage capacity, scheduling status, tags, and health conditions."
+        },
+        {
+          "info": {
+            "name": "Longhorn Update a node",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://{longhornManagerHost}:{longhornManagerPort}/v1/nodes/:nodeId",
+            "params": [
+              {
+                "name": "nodeId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the Longhorn node (typically the Kubernetes node name)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a node's configuration including scheduling eligibility, disk configurations, eviction status, and node tags for workload placement affinity."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

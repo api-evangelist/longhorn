@@ -1,0 +1,50 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Longhorn Manager BackingImages API",
+    "version": "1.11"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "BackingImages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Longhorn List backing images",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{longhornManagerHost}:{longhornManagerPort}/v1/backingimages"
+          },
+          "docs": "Returns a list of all backing images available in the cluster. Backing images are pre-populated disk images used as the base for new volumes."
+        },
+        {
+          "info": {
+            "name": "Longhorn Create a backing image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{longhornManagerHost}:{longhornManagerPort}/v1/backingimages",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new backing image by uploading or downloading an image file. The backing image is distributed to all nodes that need it for volume creation."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

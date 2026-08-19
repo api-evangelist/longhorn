@@ -1,0 +1,479 @@
+{
+  "item": [
+    {
+      "id": "c54316e3-f942-4032-9a18-5ed08216c152",
+      "name": "SystemBackups",
+      "description": {
+        "content": "System-level backup and restore operations for the entire Longhorn configuration including all volumes, settings, and resource definitions.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ef7c2ca9-9de7-4720-a06b-9b1d18a1bd3d",
+          "name": "Longhorn List system backups",
+          "request": {
+            "name": "Longhorn List system backups",
+            "description": {
+              "content": "Returns a list of all system-level backups. System backups capture the entire Longhorn configuration including all CRDs, settings, and metadata to enable full cluster restoration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "systembackups"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Hostname or service name for the Longhorn Manager.",
+                  "type": "any",
+                  "value": "{{longhornManagerHost}}",
+                  "key": "longhornManagerHost"
+                },
+                {
+                  "description": "Port on which Longhorn Manager serves the API.",
+                  "type": "any",
+                  "value": "{{longhornManagerPort}}",
+                  "key": "longhornManagerPort"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "225662bb-86e0-44e8-b9a3-9f3fc22de3b8",
+              "name": "System backup list retrieved successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "systembackups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"state\": \"error\",\n      \"version\": \"string\",\n      \"managerImage\": \"string\",\n      \"createdAt\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"state\": \"error\",\n      \"version\": \"string\",\n      \"managerImage\": \"string\",\n      \"createdAt\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "50ccb64b-7716-4a02-b9c9-585a9c2046e9",
+              "name": "Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "systembackups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"status\": 9009,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8e6c8563-c978-4efa-97e2-737d93d37f13",
+          "name": "Longhorn Create a system backup",
+          "request": {
+            "name": "Longhorn Create a system backup",
+            "description": {
+              "content": "Creates a new system-level backup of the Longhorn configuration. The backup is stored in the configured backup target and can be used to restore the entire Longhorn installation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "systembackups"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Hostname or service name for the Longhorn Manager.",
+                  "type": "any",
+                  "value": "{{longhornManagerHost}}",
+                  "key": "longhornManagerHost"
+                },
+                {
+                  "description": "Port on which Longhorn Manager serves the API.",
+                  "type": "any",
+                  "value": "{{longhornManagerPort}}",
+                  "key": "longhornManagerPort"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e7281151-43bb-4d48-88d6-b324f6d6a49f",
+              "name": "System backup initiated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "systembackups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"state\": \"deleting\",\n  \"version\": \"string\",\n  \"managerImage\": \"string\",\n  \"createdAt\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7d1543a1-fd92-4884-b17d-684e8e71f909",
+              "name": "The request was malformed or contained invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "systembackups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"status\": 9009,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0133ae3e-81b9-4173-8e2f-58016535b3e7",
+              "name": "Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "systembackups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"status\": 9009,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Hostname or service name for the Longhorn Manager.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "longhorn-backend",
+      "key": "longhornManagerHost"
+    },
+    {
+      "description": {
+        "content": "Port on which Longhorn Manager serves the API.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "9500",
+      "key": "longhornManagerPort"
+    },
+    {
+      "type": "string",
+      "value": "http://{{longhornManagerHost}}:{{longhornManagerPort}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "56e8e14c-d8c8-46c3-abcb-b6e560992851",
+    "name": "Longhorn Manager BackingImages SystemBackups API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Longhorn Manager REST API provides programmatic access to all Longhorn storage management operations. The API follows the Rancher REST API specification and is served by the Longhorn Manager service, typically accessible within a Kubernetes cluster at port 9500 or via the longhorn-backend service. It provides full lifecycle management for volumes, snapshots, backups, nodes, disks, engine images, recurring jobs, and system settings. The API is used by the Longhorn UI and can be accessed directly for automation and integration. The schema is discoverable at /v1/schemas.\n\nContact Support:\n Name: Longhorn Community",
+      "type": "text/plain"
+    }
+  }
+}

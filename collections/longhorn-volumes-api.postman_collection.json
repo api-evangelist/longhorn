@@ -1,0 +1,1919 @@
+{
+  "item": [
+    {
+      "id": "e2e02475-c098-4d46-bab7-b252700ad7e2",
+      "name": "Volumes",
+      "description": {
+        "content": "Volume lifecycle management including creating, attaching, detaching, expanding, and deleting volumes. Also includes volume actions such as activating, canceling expansion, and managing replicas.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "37d9da2b-3bab-4bdc-90ae-738740e0fd7b",
+          "name": "Longhorn List volumes",
+          "request": {
+            "name": "Longhorn List volumes",
+            "description": {
+              "content": "Returns a list of all Longhorn volumes in the cluster. Each volume entry includes its name, size, replication configuration, state, access mode, attached node, snapshot count, and associated recurring jobs.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "volumes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Hostname or service name for the Longhorn Manager.",
+                  "type": "any",
+                  "value": "{{longhornManagerHost}}",
+                  "key": "longhornManagerHost"
+                },
+                {
+                  "description": "Port on which Longhorn Manager serves the API.",
+                  "type": "any",
+                  "value": "{{longhornManagerPort}}",
+                  "key": "longhornManagerPort"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e636a4d1-0edd-4ca0-8e97-f02bd9b9131a",
+              "name": "Volume list retrieved successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "volumes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"resourceType\": \"string\",\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"size\": \"string\",\n      \"numberOfReplicas\": 4716,\n      \"state\": \"detached\",\n      \"robustness\": \"degraded\",\n      \"frontend\": \"blockdev\",\n      \"accessMode\": \"rwo\",\n      \"migratable\": true,\n      \"encrypted\": false,\n      \"dataLocality\": \"best-effort\",\n      \"snapshotDataIntegrity\": \"string\",\n      \"replicaAutoBalance\": \"string\",\n      \"currentImage\": \"string\",\n      \"baseImage\": \"string\",\n      \"conditions\": {\n        \"key_0\": {}\n      },\n      \"replicas\": [\n        {\n          \"name\": \"string\",\n          \"hostId\": \"string\",\n          \"diskID\": \"string\",\n          \"diskPath\": \"string\",\n          \"dataPath\": \"string\",\n          \"mode\": \"RW\",\n          \"running\": true,\n          \"failedAt\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"hostId\": \"string\",\n          \"diskID\": \"string\",\n          \"diskPath\": \"string\",\n          \"dataPath\": \"string\",\n          \"mode\": \"ERR\",\n          \"running\": false,\n          \"failedAt\": \"string\"\n        }\n      ],\n      \"recurringJobSelector\": [\n        {\n          \"name\": \"string\",\n          \"isGroup\": true\n        },\n        {\n          \"name\": \"string\",\n          \"isGroup\": true\n        }\n      ],\n      \"kubernetesStatus\": {}\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"size\": \"string\",\n      \"numberOfReplicas\": 8797,\n      \"state\": \"detached\",\n      \"robustness\": \"faulted\",\n      \"frontend\": \"iscsi\",\n      \"accessMode\": \"rwx\",\n      \"migratable\": false,\n      \"encrypted\": true,\n      \"dataLocality\": \"strict-local\",\n      \"snapshotDataIntegrity\": \"string\",\n      \"replicaAutoBalance\": \"string\",\n      \"currentImage\": \"string\",\n      \"baseImage\": \"string\",\n      \"conditions\": {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {}\n      },\n      \"replicas\": [\n        {\n          \"name\": \"string\",\n          \"hostId\": \"string\",\n          \"diskID\": \"string\",\n          \"diskPath\": \"string\",\n          \"dataPath\": \"string\",\n          \"mode\": \"WO\",\n          \"running\": false,\n          \"failedAt\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"hostId\": \"string\",\n          \"diskID\": \"string\",\n          \"diskPath\": \"string\",\n          \"dataPath\": \"string\",\n          \"mode\": \"ERR\",\n          \"running\": true,\n          \"failedAt\": \"string\"\n        }\n      ],\n      \"recurringJobSelector\": [\n        {\n          \"name\": \"string\",\n          \"isGroup\": false\n        },\n        {\n          \"name\": \"string\",\n          \"isGroup\": false\n        }\n      ],\n      \"kubernetesStatus\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "233e8d32-fe09-41a7-8229-97b0bf9ca18b",
+              "name": "Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "volumes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"status\": 5719,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1584a267-87f8-4199-8121-bda3b4b28750",
+          "name": "Longhorn Create a volume",
+          "request": {
+            "name": "Longhorn Create a volume",
+            "description": {
+              "content": "Creates a new Longhorn volume with the specified configuration. The volume will be created in a detached state. It must be attached to a node before data can be written. Longhorn creates the specified number of replicas distributed across available nodes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "volumes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Hostname or service name for the Longhorn Manager.",
+                  "type": "any",
+                  "value": "{{longhornManagerHost}}",
+                  "key": "longhornManagerHost"
+                },
+                {
+                  "description": "Port on which Longhorn Manager serves the API.",
+                  "type": "any",
+                  "value": "{{longhornManagerPort}}",
+                  "key": "longhornManagerPort"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"size\": \"<string>\",\n  \"numberOfReplicas\": \"<integer>\",\n  \"dataLocality\": \"<string>\",\n  \"accessMode\": \"<string>\",\n  \"encrypted\": \"<boolean>\",\n  \"backingImage\": \"<string>\",\n  \"nodeSelector\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"diskSelector\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"recurringJobSelector\": [\n    {\n      \"name\": \"<string>\",\n      \"isGroup\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"isGroup\": \"<boolean>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b2757fb3-d872-4dc7-a7b7-325f4296ae34",
+              "name": "Volume created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "volumes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"size\": \"<string>\",\n  \"numberOfReplicas\": \"<integer>\",\n  \"dataLocality\": \"<string>\",\n  \"accessMode\": \"<string>\",\n  \"encrypted\": \"<boolean>\",\n  \"backingImage\": \"<string>\",\n  \"nodeSelector\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"diskSelector\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"recurringJobSelector\": [\n    {\n      \"name\": \"<string>\",\n      \"isGroup\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"isGroup\": \"<boolean>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"size\": \"string\",\n  \"numberOfReplicas\": 7882,\n  \"state\": \"attaching\",\n  \"robustness\": \"healthy\",\n  \"frontend\": \"blockdev\",\n  \"accessMode\": \"rwx\",\n  \"migratable\": false,\n  \"encrypted\": false,\n  \"dataLocality\": \"disabled\",\n  \"snapshotDataIntegrity\": \"string\",\n  \"replicaAutoBalance\": \"string\",\n  \"currentImage\": \"string\",\n  \"baseImage\": \"string\",\n  \"conditions\": {\n    \"key_0\": {}\n  },\n  \"replicas\": [\n    {\n      \"name\": \"string\",\n      \"hostId\": \"string\",\n      \"diskID\": \"string\",\n      \"diskPath\": \"string\",\n      \"dataPath\": \"string\",\n      \"mode\": \"RW\",\n      \"running\": true,\n      \"failedAt\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"hostId\": \"string\",\n      \"diskID\": \"string\",\n      \"diskPath\": \"string\",\n      \"dataPath\": \"string\",\n      \"mode\": \"RW\",\n      \"running\": true,\n      \"failedAt\": \"string\"\n    }\n  ],\n  \"recurringJobSelector\": [\n    {\n      \"name\": \"string\",\n      \"isGroup\": true\n    },\n    {\n      \"name\": \"string\",\n      \"isGroup\": false\n    }\n  ],\n  \"kubernetesStatus\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a9f47c2c-54d7-46b6-9dcb-b031569757dc",
+              "name": "The request was malformed or contained invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "volumes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"size\": \"<string>\",\n  \"numberOfReplicas\": \"<integer>\",\n  \"dataLocality\": \"<string>\",\n  \"accessMode\": \"<string>\",\n  \"encrypted\": \"<boolean>\",\n  \"backingImage\": \"<string>\",\n  \"nodeSelector\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"diskSelector\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"recurringJobSelector\": [\n    {\n      \"name\": \"<string>\",\n      \"isGroup\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"isGroup\": \"<boolean>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"status\": 5719,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "97cd8083-ae51-414e-b840-377ffb813e97",
+              "name": "Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "volumes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"size\": \"<string>\",\n  \"numberOfReplicas\": \"<integer>\",\n  \"dataLocality\": \"<string>\",\n  \"accessMode\": \"<string>\",\n  \"encrypted\": \"<boolean>\",\n  \"backingImage\": \"<string>\",\n  \"nodeSelector\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"diskSelector\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"recurringJobSelector\": [\n    {\n      \"name\": \"<string>\",\n      \"isGroup\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"isGroup\": \"<boolean>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"status\": 5719,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "64be4809-7374-49f0-aabf-aa360551f29b",
+          "name": "Longhorn Get a volume",
+          "request": {
+            "name": "Longhorn Get a volume",
+            "description": {
+              "content": "Returns detailed information about a specific volume including its state, replicas, engine, size, access mode, recurring jobs, and current operation status.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "volumes",
+                ":volumeName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "volumeName",
+                  "description": "(Required) Name of the Longhorn volume."
+                },
+                {
+                  "description": "Hostname or service name for the Longhorn Manager.",
+                  "type": "any",
+                  "value": "{{longhornManagerHost}}",
+                  "key": "longhornManagerHost"
+                },
+                {
+                  "description": "Port on which Longhorn Manager serves the API.",
+                  "type": "any",
+                  "value": "{{longhornManagerPort}}",
+                  "key": "longhornManagerPort"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a99ba362-f712-4b04-9874-a8e991522276",
+              "name": "Volume details retrieved successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "volumes",
+                    ":volumeName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "volumeName",
+                      "description": "(Required) Name of the Longhorn volume."
+                    },
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"size\": \"string\",\n  \"numberOfReplicas\": 7882,\n  \"state\": \"attaching\",\n  \"robustness\": \"healthy\",\n  \"frontend\": \"blockdev\",\n  \"accessMode\": \"rwx\",\n  \"migratable\": false,\n  \"encrypted\": false,\n  \"dataLocality\": \"disabled\",\n  \"snapshotDataIntegrity\": \"string\",\n  \"replicaAutoBalance\": \"string\",\n  \"currentImage\": \"string\",\n  \"baseImage\": \"string\",\n  \"conditions\": {\n    \"key_0\": {}\n  },\n  \"replicas\": [\n    {\n      \"name\": \"string\",\n      \"hostId\": \"string\",\n      \"diskID\": \"string\",\n      \"diskPath\": \"string\",\n      \"dataPath\": \"string\",\n      \"mode\": \"RW\",\n      \"running\": true,\n      \"failedAt\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"hostId\": \"string\",\n      \"diskID\": \"string\",\n      \"diskPath\": \"string\",\n      \"dataPath\": \"string\",\n      \"mode\": \"RW\",\n      \"running\": true,\n      \"failedAt\": \"string\"\n    }\n  ],\n  \"recurringJobSelector\": [\n    {\n      \"name\": \"string\",\n      \"isGroup\": true\n    },\n    {\n      \"name\": \"string\",\n      \"isGroup\": false\n    }\n  ],\n  \"kubernetesStatus\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a7dd371-b523-4e78-918c-a327ce884f68",
+              "name": "Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "volumes",
+                    ":volumeName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "volumeName",
+                      "description": "(Required) Name of the Longhorn volume."
+                    },
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"status\": 5719,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "380064e8-393b-480e-88e7-32a876577cf5",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "volumes",
+                    ":volumeName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "volumeName",
+                      "description": "(Required) Name of the Longhorn volume."
+                    },
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"status\": 5719,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9e15ef0f-daa2-4446-a570-f496bb98356d",
+          "name": "Longhorn Delete a volume",
+          "request": {
+            "name": "Longhorn Delete a volume",
+            "description": {
+              "content": "Deletes a Longhorn volume and all of its replicas. The volume must be in a detached state before it can be deleted. All snapshots and backups associated with the volume will also be deleted.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "volumes",
+                ":volumeName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "volumeName",
+                  "description": "(Required) Name of the Longhorn volume."
+                },
+                {
+                  "description": "Hostname or service name for the Longhorn Manager.",
+                  "type": "any",
+                  "value": "{{longhornManagerHost}}",
+                  "key": "longhornManagerHost"
+                },
+                {
+                  "description": "Port on which Longhorn Manager serves the API.",
+                  "type": "any",
+                  "value": "{{longhornManagerPort}}",
+                  "key": "longhornManagerPort"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "56b3a297-4a13-43b6-b6db-39c20efdd135",
+              "name": "Volume deleted successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "volumes",
+                    ":volumeName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "volumeName",
+                      "description": "(Required) Name of the Longhorn volume."
+                    },
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d7119925-d3df-479c-8b89-e8f3c58137a0",
+              "name": "Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "volumes",
+                    ":volumeName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "volumeName",
+                      "description": "(Required) Name of the Longhorn volume."
+                    },
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"status\": 5719,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e5af4430-00c9-417a-9c22-205f5a53a57a",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "volumes",
+                    ":volumeName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "volumeName",
+                      "description": "(Required) Name of the Longhorn volume."
+                    },
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"status\": 5719,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5f3e0369-f62d-4c7c-8759-438995b38956",
+          "name": "Longhorn Attach a volume to a node",
+          "request": {
+            "name": "Longhorn Attach a volume to a node",
+            "description": {
+              "content": "Attaches a Longhorn volume to the specified node, making it available as a block device. The volume must be detached before it can be attached to a different node.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "volumes",
+                "{{volumeName}}"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "action",
+                  "value": "attach"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Hostname or service name for the Longhorn Manager.",
+                  "type": "any",
+                  "value": "{{longhornManagerHost}}",
+                  "key": "longhornManagerHost"
+                },
+                {
+                  "description": "Port on which Longhorn Manager serves the API.",
+                  "type": "any",
+                  "value": "{{longhornManagerPort}}",
+                  "key": "longhornManagerPort"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"hostId\": \"<string>\",\n  \"disableFrontend\": \"<boolean>\",\n  \"attachedBy\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6fe66d6a-cda9-48af-9612-347690322fbe",
+              "name": "Volume attachment initiated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "volumes",
+                    "{{volumeName}}"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"hostId\": \"<string>\",\n  \"disableFrontend\": \"<boolean>\",\n  \"attachedBy\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"size\": \"string\",\n  \"numberOfReplicas\": 7882,\n  \"state\": \"attaching\",\n  \"robustness\": \"healthy\",\n  \"frontend\": \"blockdev\",\n  \"accessMode\": \"rwx\",\n  \"migratable\": false,\n  \"encrypted\": false,\n  \"dataLocality\": \"disabled\",\n  \"snapshotDataIntegrity\": \"string\",\n  \"replicaAutoBalance\": \"string\",\n  \"currentImage\": \"string\",\n  \"baseImage\": \"string\",\n  \"conditions\": {\n    \"key_0\": {}\n  },\n  \"replicas\": [\n    {\n      \"name\": \"string\",\n      \"hostId\": \"string\",\n      \"diskID\": \"string\",\n      \"diskPath\": \"string\",\n      \"dataPath\": \"string\",\n      \"mode\": \"RW\",\n      \"running\": true,\n      \"failedAt\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"hostId\": \"string\",\n      \"diskID\": \"string\",\n      \"diskPath\": \"string\",\n      \"dataPath\": \"string\",\n      \"mode\": \"RW\",\n      \"running\": true,\n      \"failedAt\": \"string\"\n    }\n  ],\n  \"recurringJobSelector\": [\n    {\n      \"name\": \"string\",\n      \"isGroup\": true\n    },\n    {\n      \"name\": \"string\",\n      \"isGroup\": false\n    }\n  ],\n  \"kubernetesStatus\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5c8fadc7-c484-4a2d-8896-9bf6a648841c",
+              "name": "The request was malformed or contained invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "volumes",
+                    "{{volumeName}}"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"hostId\": \"<string>\",\n  \"disableFrontend\": \"<boolean>\",\n  \"attachedBy\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"status\": 5719,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "27e674e2-cf65-4d85-974d-4df7af52bcaa",
+              "name": "Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "volumes",
+                    "{{volumeName}}"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"hostId\": \"<string>\",\n  \"disableFrontend\": \"<boolean>\",\n  \"attachedBy\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"status\": 5719,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f99ab5f9-24ce-43ec-ac24-779af29d437b",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "volumes",
+                    "{{volumeName}}"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"hostId\": \"<string>\",\n  \"disableFrontend\": \"<boolean>\",\n  \"attachedBy\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"status\": 5719,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5a63a571-88eb-4e70-ba8d-3ebc75d1e3db",
+          "name": "Longhorn Detach a volume from its node",
+          "request": {
+            "name": "Longhorn Detach a volume from its node",
+            "description": {
+              "content": "Detaches a Longhorn volume from the node it is currently attached to. The volume's data is preserved and it can be reattached to the same or a different node afterward.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "volumes",
+                "{{volumeName}}"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "action",
+                  "value": "detach"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Hostname or service name for the Longhorn Manager.",
+                  "type": "any",
+                  "value": "{{longhornManagerHost}}",
+                  "key": "longhornManagerHost"
+                },
+                {
+                  "description": "Port on which Longhorn Manager serves the API.",
+                  "type": "any",
+                  "value": "{{longhornManagerPort}}",
+                  "key": "longhornManagerPort"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"hostId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "92c4282e-f350-4b7d-bbcd-006ebafdd260",
+              "name": "Volume detachment initiated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "volumes",
+                    "{{volumeName}}"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"hostId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"size\": \"string\",\n  \"numberOfReplicas\": 7882,\n  \"state\": \"attaching\",\n  \"robustness\": \"healthy\",\n  \"frontend\": \"blockdev\",\n  \"accessMode\": \"rwx\",\n  \"migratable\": false,\n  \"encrypted\": false,\n  \"dataLocality\": \"disabled\",\n  \"snapshotDataIntegrity\": \"string\",\n  \"replicaAutoBalance\": \"string\",\n  \"currentImage\": \"string\",\n  \"baseImage\": \"string\",\n  \"conditions\": {\n    \"key_0\": {}\n  },\n  \"replicas\": [\n    {\n      \"name\": \"string\",\n      \"hostId\": \"string\",\n      \"diskID\": \"string\",\n      \"diskPath\": \"string\",\n      \"dataPath\": \"string\",\n      \"mode\": \"RW\",\n      \"running\": true,\n      \"failedAt\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"hostId\": \"string\",\n      \"diskID\": \"string\",\n      \"diskPath\": \"string\",\n      \"dataPath\": \"string\",\n      \"mode\": \"RW\",\n      \"running\": true,\n      \"failedAt\": \"string\"\n    }\n  ],\n  \"recurringJobSelector\": [\n    {\n      \"name\": \"string\",\n      \"isGroup\": true\n    },\n    {\n      \"name\": \"string\",\n      \"isGroup\": false\n    }\n  ],\n  \"kubernetesStatus\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "82584fc3-c540-424a-898e-d3ef22d01487",
+              "name": "The request was malformed or contained invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "volumes",
+                    "{{volumeName}}"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"hostId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"status\": 5719,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d637819c-8184-4b42-9b24-b479d9af2b39",
+              "name": "Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "volumes",
+                    "{{volumeName}}"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"hostId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"status\": 5719,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d1674bdd-e862-4b0e-9914-1cf480fa455d",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "volumes",
+                    "{{volumeName}}"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"hostId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"status\": 5719,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6e01d3a2-f26d-4e4a-a149-9076c73448f8",
+          "name": "Longhorn Expand a volume",
+          "request": {
+            "name": "Longhorn Expand a volume",
+            "description": {
+              "content": "Expands a Longhorn volume to a new, larger size. The size must be greater than the current volume size. Online expansion is supported for volumes attached to nodes; the file system may need to be resized separately after the volume is expanded.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "volumes",
+                "{{volumeName}}"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "action",
+                  "value": "expand"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Hostname or service name for the Longhorn Manager.",
+                  "type": "any",
+                  "value": "{{longhornManagerHost}}",
+                  "key": "longhornManagerHost"
+                },
+                {
+                  "description": "Port on which Longhorn Manager serves the API.",
+                  "type": "any",
+                  "value": "{{longhornManagerPort}}",
+                  "key": "longhornManagerPort"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"size\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "edf3f224-0eee-48b4-a07b-f9ee0f9d4635",
+              "name": "Volume expansion initiated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "volumes",
+                    "{{volumeName}}"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"size\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"size\": \"string\",\n  \"numberOfReplicas\": 7882,\n  \"state\": \"attaching\",\n  \"robustness\": \"healthy\",\n  \"frontend\": \"blockdev\",\n  \"accessMode\": \"rwx\",\n  \"migratable\": false,\n  \"encrypted\": false,\n  \"dataLocality\": \"disabled\",\n  \"snapshotDataIntegrity\": \"string\",\n  \"replicaAutoBalance\": \"string\",\n  \"currentImage\": \"string\",\n  \"baseImage\": \"string\",\n  \"conditions\": {\n    \"key_0\": {}\n  },\n  \"replicas\": [\n    {\n      \"name\": \"string\",\n      \"hostId\": \"string\",\n      \"diskID\": \"string\",\n      \"diskPath\": \"string\",\n      \"dataPath\": \"string\",\n      \"mode\": \"RW\",\n      \"running\": true,\n      \"failedAt\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"hostId\": \"string\",\n      \"diskID\": \"string\",\n      \"diskPath\": \"string\",\n      \"dataPath\": \"string\",\n      \"mode\": \"RW\",\n      \"running\": true,\n      \"failedAt\": \"string\"\n    }\n  ],\n  \"recurringJobSelector\": [\n    {\n      \"name\": \"string\",\n      \"isGroup\": true\n    },\n    {\n      \"name\": \"string\",\n      \"isGroup\": false\n    }\n  ],\n  \"kubernetesStatus\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "32981f7c-e99c-44bb-ad3d-eb40dcf365e3",
+              "name": "The request was malformed or contained invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "volumes",
+                    "{{volumeName}}"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"size\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"status\": 5719,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ff2c75f2-6fa1-4a35-aa43-d869a89fedbf",
+              "name": "Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "volumes",
+                    "{{volumeName}}"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname or service name for the Longhorn Manager.",
+                      "type": "any",
+                      "value": "{{longhornManagerHost}}",
+                      "key": "longhornManagerHost"
+                    },
+                    {
+                      "description": "Port on which Longhorn Manager serves the API.",
+                      "type": "any",
+                      "value": "{{longhornManagerPort}}",
+                      "key": "longhornManagerPort"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"size\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"status\": 5719,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Hostname or service name for the Longhorn Manager.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "longhorn-backend",
+      "key": "longhornManagerHost"
+    },
+    {
+      "description": {
+        "content": "Port on which Longhorn Manager serves the API.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "9500",
+      "key": "longhornManagerPort"
+    },
+    {
+      "type": "string",
+      "value": "http://{{longhornManagerHost}}:{{longhornManagerPort}}",
+      "key": "baseUrl"
+    },
+    {
+      "disabled": false,
+      "description": {
+        "content": "(Required) Name of the Longhorn volume.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "<string>",
+      "key": "volumeName"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "7ef84fc8-5e2f-44be-a8ae-648a055a4d71",
+    "name": "Longhorn Manager BackingImages Volumes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Longhorn Manager REST API provides programmatic access to all Longhorn storage management operations. The API follows the Rancher REST API specification and is served by the Longhorn Manager service, typically accessible within a Kubernetes cluster at port 9500 or via the longhorn-backend service. It provides full lifecycle management for volumes, snapshots, backups, nodes, disks, engine images, recurring jobs, and system settings. The API is used by the Longhorn UI and can be accessed directly for automation and integration. The schema is discoverable at /v1/schemas.\n\nContact Support:\n Name: Longhorn Community",
+      "type": "text/plain"
+    }
+  }
+}

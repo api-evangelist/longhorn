@@ -1,0 +1,157 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Longhorn Manager BackingImages Volumes API",
+    "version": "1.11"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Volumes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Longhorn List volumes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{longhornManagerHost}:{longhornManagerPort}/v1/volumes"
+          },
+          "docs": "Returns a list of all Longhorn volumes in the cluster. Each volume entry includes its name, size, replication configuration, state, access mode, attached node, snapshot count, and associated recurring jobs."
+        },
+        {
+          "info": {
+            "name": "Longhorn Create a volume",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{longhornManagerHost}:{longhornManagerPort}/v1/volumes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new Longhorn volume with the specified configuration. The volume will be created in a detached state. It must be attached to a node before data can be written. Longhorn creates the specified number of replicas distributed across available nodes."
+        },
+        {
+          "info": {
+            "name": "Longhorn Get a volume",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{longhornManagerHost}:{longhornManagerPort}/v1/volumes/:volumeName",
+            "params": [
+              {
+                "name": "volumeName",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Longhorn volume."
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a specific volume including its state, replicas, engine, size, access mode, recurring jobs, and current operation status."
+        },
+        {
+          "info": {
+            "name": "Longhorn Delete a volume",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{longhornManagerHost}:{longhornManagerPort}/v1/volumes/:volumeName",
+            "params": [
+              {
+                "name": "volumeName",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Longhorn volume."
+              }
+            ]
+          },
+          "docs": "Deletes a Longhorn volume and all of its replicas. The volume must be in a detached state before it can be deleted. All snapshots and backups associated with the volume will also be deleted."
+        },
+        {
+          "info": {
+            "name": "Longhorn Attach a volume to a node",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{longhornManagerHost}:{longhornManagerPort}/v1/volumes/:volumeName?action=attach",
+            "params": [
+              {
+                "name": "volumeName",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Longhorn volume."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Attaches a Longhorn volume to the specified node, making it available as a block device. The volume must be detached before it can be attached to a different node."
+        },
+        {
+          "info": {
+            "name": "Longhorn Detach a volume from its node",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{longhornManagerHost}:{longhornManagerPort}/v1/volumes/:volumeName?action=detach",
+            "params": [
+              {
+                "name": "volumeName",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Longhorn volume."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Detaches a Longhorn volume from the node it is currently attached to. The volume's data is preserved and it can be reattached to the same or a different node afterward."
+        },
+        {
+          "info": {
+            "name": "Longhorn Expand a volume",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{longhornManagerHost}:{longhornManagerPort}/v1/volumes/:volumeName?action=expand",
+            "params": [
+              {
+                "name": "volumeName",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Longhorn volume."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Expands a Longhorn volume to a new, larger size. The size must be greater than the current volume size. Online expansion is supported for volumes attached to nodes; the file system may need to be resized separately after the volume is expanded."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

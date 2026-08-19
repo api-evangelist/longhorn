@@ -1,0 +1,96 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Longhorn Manager BackingImages Backups API",
+    "version": "1.11"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Backups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Longhorn Back up a snapshot",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{longhornManagerHost}:{longhornManagerPort}/v1/volumes/:volumeName?action=snapshotBackup",
+            "params": [
+              {
+                "name": "volumeName",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Longhorn volume."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Triggers a backup of a specific snapshot to the configured external backup target (S3 or NFS). The backup is asynchronous; monitor the backup resource to track progress."
+        },
+        {
+          "info": {
+            "name": "Longhorn List backup volumes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{longhornManagerHost}:{longhornManagerPort}/v1/backupvolumes"
+          },
+          "docs": "Returns a list of all backup volumes in the configured backup target. A backup volume contains one or more backups of a Longhorn volume. This endpoint queries the external backup store."
+        },
+        {
+          "info": {
+            "name": "Longhorn Get a backup volume",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{longhornManagerHost}:{longhornManagerPort}/v1/backupvolumes/:backupVolumeName",
+            "params": [
+              {
+                "name": "backupVolumeName",
+                "value": "",
+                "type": "path",
+                "description": "Name of the backup volume in the backup store."
+              }
+            ]
+          },
+          "docs": "Returns details of a specific backup volume from the backup store including the list of available backups and their metadata."
+        },
+        {
+          "info": {
+            "name": "Longhorn List backups for a backup volume",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{longhornManagerHost}:{longhornManagerPort}/v1/backupvolumes/:backupVolumeName/backups",
+            "params": [
+              {
+                "name": "backupVolumeName",
+                "value": "",
+                "type": "path",
+                "description": "Name of the backup volume in the backup store."
+              }
+            ]
+          },
+          "docs": "Returns a list of all backups stored for a specific backup volume. Each backup corresponds to a snapshot of the source Longhorn volume at the time the backup was created."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

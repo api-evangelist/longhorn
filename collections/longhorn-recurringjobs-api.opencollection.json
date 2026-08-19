@@ -1,0 +1,111 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Longhorn Manager BackingImages RecurringJobs API",
+    "version": "1.11"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "RecurringJobs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Longhorn List recurring jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{longhornManagerHost}:{longhornManagerPort}/v1/recurringjobs"
+          },
+          "docs": "Returns a list of all recurring snapshot and backup jobs configured in Longhorn. Recurring jobs can be assigned to individual volumes or to groups that apply to multiple volumes."
+        },
+        {
+          "info": {
+            "name": "Longhorn Create a recurring job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{longhornManagerHost}:{longhornManagerPort}/v1/recurringjobs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new recurring job for automated snapshot or backup operations. The job runs on the specified cron schedule and applies to all volumes that have this job in their recurring job list or that belong to the job's group."
+        },
+        {
+          "info": {
+            "name": "Longhorn Get a recurring job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{longhornManagerHost}:{longhornManagerPort}/v1/recurringjobs/:recurringJobName",
+            "params": [
+              {
+                "name": "recurringJobName",
+                "value": "",
+                "type": "path",
+                "description": "Name of the recurring job."
+              }
+            ]
+          },
+          "docs": "Returns details of a specific recurring job including its schedule, task type, retention policy, labels, and group assignments."
+        },
+        {
+          "info": {
+            "name": "Longhorn Update a recurring job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://{longhornManagerHost}:{longhornManagerPort}/v1/recurringjobs/:recurringJobName",
+            "params": [
+              {
+                "name": "recurringJobName",
+                "value": "",
+                "type": "path",
+                "description": "Name of the recurring job."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a recurring job's configuration including schedule, retention count, concurrency, and group assignments."
+        },
+        {
+          "info": {
+            "name": "Longhorn Delete a recurring job",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{longhornManagerHost}:{longhornManagerPort}/v1/recurringjobs/:recurringJobName",
+            "params": [
+              {
+                "name": "recurringJobName",
+                "value": "",
+                "type": "path",
+                "description": "Name of the recurring job."
+              }
+            ]
+          },
+          "docs": "Deletes a recurring job. Volumes assigned to this job will no longer have automated snapshots or backups created by this schedule."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

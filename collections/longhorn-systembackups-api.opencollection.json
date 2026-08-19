@@ -1,0 +1,50 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Longhorn Manager BackingImages SystemBackups API",
+    "version": "1.11"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SystemBackups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Longhorn List system backups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{longhornManagerHost}:{longhornManagerPort}/v1/systembackups"
+          },
+          "docs": "Returns a list of all system-level backups. System backups capture the entire Longhorn configuration including all CRDs, settings, and metadata to enable full cluster restoration."
+        },
+        {
+          "info": {
+            "name": "Longhorn Create a system backup",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{longhornManagerHost}:{longhornManagerPort}/v1/systembackups",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new system-level backup of the Longhorn configuration. The backup is stored in the configured backup target and can be used to restore the entire Longhorn installation."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

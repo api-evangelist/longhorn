@@ -1,0 +1,112 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Longhorn Manager BackingImages Snapshots API",
+    "version": "1.11"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Snapshots",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Longhorn Create a snapshot",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{longhornManagerHost}:{longhornManagerPort}/v1/volumes/:volumeName?action=snapshotCreate",
+            "params": [
+              {
+                "name": "volumeName",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Longhorn volume."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a point-in-time snapshot of a Longhorn volume. The volume must be attached when the snapshot is created. Snapshots are stored in the volume's replica data directories and consume incremental space for changed blocks."
+        },
+        {
+          "info": {
+            "name": "Longhorn List snapshots for a volume",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{longhornManagerHost}:{longhornManagerPort}/v1/volumes/:volumeName?action=snapshotList",
+            "params": [
+              {
+                "name": "volumeName",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Longhorn volume."
+              }
+            ]
+          },
+          "docs": "Returns a list of all snapshots for the specified volume. Each entry includes the snapshot name, creation time, size, parent, labels, and whether it has been removed or backed up."
+        },
+        {
+          "info": {
+            "name": "Longhorn Delete a snapshot",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{longhornManagerHost}:{longhornManagerPort}/v1/volumes/:volumeName?action=snapshotDelete",
+            "params": [
+              {
+                "name": "volumeName",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Longhorn volume."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Marks a snapshot for deletion. The snapshot data is reclaimed asynchronously. Deleting a snapshot merges its changed blocks with the next snapshot in the chain. The volume must be attached."
+        },
+        {
+          "info": {
+            "name": "Longhorn Revert a volume to a snapshot",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{longhornManagerHost}:{longhornManagerPort}/v1/volumes/:volumeName?action=snapshotRevert",
+            "params": [
+              {
+                "name": "volumeName",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Longhorn volume."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Reverts the contents of a volume to the state captured in a specific snapshot. The volume must be detached before a revert operation. All data written after the snapshot was created will be lost."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

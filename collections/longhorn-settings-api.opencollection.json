@@ -1,0 +1,77 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Longhorn Manager BackingImages Settings API",
+    "version": "1.11"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Settings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Longhorn List all settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{longhornManagerHost}:{longhornManagerPort}/v1/settings"
+          },
+          "docs": "Returns a list of all Longhorn system settings including backup target, default replica count, data locality, storage over-provisioning percentage, and all other configurable system parameters."
+        },
+        {
+          "info": {
+            "name": "Longhorn Get a setting",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{longhornManagerHost}:{longhornManagerPort}/v1/settings/:settingName",
+            "params": [
+              {
+                "name": "settingName",
+                "value": "",
+                "type": "path",
+                "description": "Key name of the Longhorn setting."
+              }
+            ]
+          },
+          "docs": "Returns the current value and metadata for a specific Longhorn setting. Settings include backup targets, replica counts, CPU and memory limits, node scheduling policies, and many other system parameters."
+        },
+        {
+          "info": {
+            "name": "Longhorn Update a setting",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://{longhornManagerHost}:{longhornManagerPort}/v1/settings/:settingName",
+            "params": [
+              {
+                "name": "settingName",
+                "value": "",
+                "type": "path",
+                "description": "Key name of the Longhorn setting."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the value of a specific Longhorn system setting. Changes take effect immediately without requiring a restart."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
