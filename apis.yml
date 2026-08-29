@@ -6,6 +6,19 @@ description: >-
   availability. Longhorn supports snapshots, backups to S3-compatible storage, disaster recovery, and recurring backup
   schedules.
 url: https://longhorn.io
+deliveryModel:
+  model: self-hosted
+  license: Apache-2.0
+  open_source: true
+  commercial: false
+  callable_host: false
+  label: Self-hosted open source · you run it yourself
+  confidence: high
+  source:
+  - license
+  - openapi
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
