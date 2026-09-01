@@ -39,7 +39,7 @@ tags:
   - Cloud-Native
   - Incubating
   - Kubernetes
-  - Persistent Volumes
+  - PersistentVolumes
 tags_raw:
   - Backup
   - Block Storage
