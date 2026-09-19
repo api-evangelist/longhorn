@@ -111,6 +111,8 @@ apis:
     enabling or disabling scheduling, and managing node tags for workload placement.
   humanURL: https://longhorn.io/docs/
   tags:
+  - Node
+  tags_raw:
   - Nodes
   properties:
   - type: OpenAPI
