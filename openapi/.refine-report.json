@@ -1,15 +1,7 @@
 {
   "provider": "longhorn",
   "sources": [
-    "longhorn-backingimages-api-openapi.yml",
-    "longhorn-backups-api-openapi.yml",
-    "longhorn-engineimages-api-openapi.yml",
-    "longhorn-nodes-api-openapi.yml",
-    "longhorn-recurringjobs-api-openapi.yml",
-    "longhorn-settings-api-openapi.yml",
-    "longhorn-snapshots-api-openapi.yml",
-    "longhorn-systembackups-api-openapi.yml",
-    "longhorn-volumes-api-openapi.yml"
+    "_original/longhorn-manager-api-openapi.yml"
   ],
   "outputs": [
     "longhorn-backingimages-api-openapi.yml",
@@ -25,6 +17,20 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "longhorn-manager-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "longhorn-backingimages-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "longhorn-backups-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "longhorn-engineimages-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "longhorn-nodes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "longhorn-recurringjobs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "longhorn-settings-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "longhorn-snapshots-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "longhorn-systembackups-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "longhorn-volumes-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

@@ -1,7 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Longhorn Manager BackingImages Backups API
-  description: The Longhorn Manager REST API provides programmatic access to all Longhorn storage management operations. The API follows the Rancher REST API specification and is served by the Longhorn Manager service, typically accessible within a Kubernetes cluster at port 9500 or via the longhorn-backend service. It provides full lifecycle management for volumes, snapshots, backups, nodes, disks, engine images, recurring jobs, and system settings. The API is used by the Longhorn UI and can be accessed directly for automation and integration. The schema is discoverable at /v1/schemas.
+  title: Longhorn Manager Backups API
+  description: The Longhorn Manager REST API provides programmatic access to all Longhorn storage management operations.
   version: '1.11'
   contact:
     name: Longhorn Community
@@ -103,6 +103,21 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  parameters:
+    backupVolumeName:
+      name: backupVolumeName
+      in: path
+      required: true
+      description: Name of the backup volume in the backup store.
+      schema:
+        type: string
+    volumeName:
+      name: volumeName
+      in: path
+      required: true
+      description: Name of the Longhorn volume.
+      schema:
+        type: string
   schemas:
     BackupInput:
       type: object
@@ -118,22 +133,15 @@ components:
           description: Labels to apply to the backup.
           additionalProperties:
             type: string
-    APIError:
+    BackupCollection:
       type: object
-      description: API error response.
+      description: A collection of backup resources.
       properties:
-        type:
-          type: string
-          description: Error type identifier.
-        status:
-          type: integer
-          description: HTTP status code.
-        code:
-          type: string
-          description: Machine-readable error code.
-        message:
-          type: string
-          description: Human-readable error message.
+        data:
+          type: array
+          description: List of backup resources.
+          items:
+            $ref: '#/components/schemas/Backup'
     BackupVolume:
       type: object
       description: A backup volume in the external backup store corresponding to a Longhorn volume.
@@ -159,47 +167,36 @@ components:
         backingImageName:
           type: string
           description: Name of the backing image used by the source volume, if any.
-    Replica:
+    Backup:
       type: object
-      description: A Longhorn replica instance storing a copy of volume data on a node.
+      description: A backup stored in the external backup target for a Longhorn volume snapshot.
       properties:
+        id:
+          type: string
+          description: Unique identifier of the backup.
         name:
           type: string
-          description: Unique name of the replica.
-        hostId:
+          description: Name of the backup.
+        snapshotName:
           type: string
-          description: Node where this replica is located.
-        diskID:
+          description: Name of the snapshot this backup was created from.
+        snapshotCreated:
           type: string
-          description: Disk on the node where this replica stores data.
-        diskPath:
+          description: Timestamp when the source snapshot was created.
+        created:
           type: string
-          description: File system path on the disk for this replica's data.
-        dataPath:
+          description: Timestamp when the backup was completed.
+        size:
           type: string
-          description: Full path to the replica data directory.
-        mode:
+          description: Size of the backup data in bytes.
+        labels:
+          type: object
+          description: Labels associated with this backup.
+          additionalProperties:
+            type: string
+        url:
           type: string
-          enum:
-          - RW
-          - WO
-          - ERR
-          description: Replica mode. RW is read-write; WO is write-only during rebuild; ERR is error state.
-        running:
-          type: boolean
-          description: Whether the replica process is currently running.
-        failedAt:
-          type: string
-          description: Timestamp when the replica last failed, if applicable.
-    BackupVolumeCollection:
-      type: object
-      description: A collection of backup volumes.
-      properties:
-        data:
-          type: array
-          description: List of backup volume resources.
-          items:
-            $ref: '#/components/schemas/BackupVolume'
+          description: URL of this backup in the backup store.
     Volume:
       type: object
       description: A Longhorn volume representing a block storage device that can be attached to Kubernetes nodes. Longhorn creates a dedicated storage controller and the configured number of replicas across nodes.
@@ -297,54 +294,66 @@ components:
         kubernetesStatus:
           type: object
           description: Kubernetes PVC/PV binding status for this volume.
-    Backup:
+    Replica:
       type: object
-      description: A backup stored in the external backup target for a Longhorn volume snapshot.
+      description: A Longhorn replica instance storing a copy of volume data on a node.
       properties:
-        id:
-          type: string
-          description: Unique identifier of the backup.
         name:
           type: string
-          description: Name of the backup.
-        snapshotName:
+          description: Unique name of the replica.
+        hostId:
           type: string
-          description: Name of the snapshot this backup was created from.
-        snapshotCreated:
+          description: Node where this replica is located.
+        diskID:
           type: string
-          description: Timestamp when the source snapshot was created.
-        created:
+          description: Disk on the node where this replica stores data.
+        diskPath:
           type: string
-          description: Timestamp when the backup was completed.
-        size:
+          description: File system path on the disk for this replica's data.
+        dataPath:
           type: string
-          description: Size of the backup data in bytes.
-        labels:
-          type: object
-          description: Labels associated with this backup.
-          additionalProperties:
-            type: string
-        url:
+          description: Full path to the replica data directory.
+        mode:
           type: string
-          description: URL of this backup in the backup store.
-    BackupCollection:
+          enum:
+          - RW
+          - WO
+          - ERR
+          description: Replica mode. RW is read-write; WO is write-only during rebuild; ERR is error state.
+        running:
+          type: boolean
+          description: Whether the replica process is currently running.
+        failedAt:
+          type: string
+          description: Timestamp when the replica last failed, if applicable.
+    APIError:
       type: object
-      description: A collection of backup resources.
+      description: API error response.
+      properties:
+        type:
+          type: string
+          description: Error type identifier.
+        status:
+          type: integer
+          description: HTTP status code.
+        code:
+          type: string
+          description: Machine-readable error code.
+        message:
+          type: string
+          description: Human-readable error message.
+    BackupVolumeCollection:
+      type: object
+      description: A collection of backup volumes.
       properties:
         data:
           type: array
-          description: List of backup resources.
+          description: List of backup volume resources.
           items:
-            $ref: '#/components/schemas/Backup'
+            $ref: '#/components/schemas/BackupVolume'
   responses:
     NotFound:
       description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/APIError'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
       content:
         application/json:
           schema:
@@ -355,21 +364,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/APIError'
-  parameters:
-    backupVolumeName:
-      name: backupVolumeName
-      in: path
-      required: true
-      description: Name of the backup volume in the backup store.
-      schema:
-        type: string
-    volumeName:
-      name: volumeName
-      in: path
-      required: true
-      description: Name of the Longhorn volume.
-      schema:
-        type: string
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
   securitySchemes:
     bearerAuth:
       type: http
