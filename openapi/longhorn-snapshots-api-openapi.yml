@@ -133,17 +133,9 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  parameters:
-    volumeName:
-      name: volumeName
-      in: path
-      required: true
-      description: Name of the Longhorn volume.
-      schema:
-        type: string
   responses:
-    NotFound:
-      description: The requested resource was not found.
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
       content:
         application/json:
           schema:
@@ -154,50 +146,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/APIError'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
+    NotFound:
+      description: The requested resource was not found.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/APIError'
   schemas:
-    SnapshotListOutput:
-      type: object
-      description: Output from listing snapshots of a volume.
-      properties:
-        data:
-          type: array
-          description: List of snapshot objects.
-          items:
-            $ref: '#/components/schemas/Snapshot'
-    APIError:
-      type: object
-      description: API error response.
-      properties:
-        type:
-          type: string
-          description: Error type identifier.
-        status:
-          type: integer
-          description: HTTP status code.
-        code:
-          type: string
-          description: Machine-readable error code.
-        message:
-          type: string
-          description: Human-readable error message.
-    SnapshotCreateInput:
-      type: object
-      description: Input for creating a volume snapshot.
-      properties:
-        name:
-          type: string
-          description: Optional explicit name for the snapshot. Generated if omitted.
-        labels:
-          type: object
-          description: Labels to apply to the new snapshot.
-          additionalProperties:
-            type: string
     Snapshot:
       type: object
       description: A point-in-time snapshot of a Longhorn volume.
@@ -231,6 +186,51 @@ components:
           description: Labels attached to this snapshot.
           additionalProperties:
             type: string
+    APIError:
+      type: object
+      description: API error response.
+      properties:
+        type:
+          type: string
+          description: Error type identifier.
+        status:
+          type: integer
+          description: HTTP status code.
+        code:
+          type: string
+          description: Machine-readable error code.
+        message:
+          type: string
+          description: Human-readable error message.
+    SnapshotCreateInput:
+      type: object
+      description: Input for creating a volume snapshot.
+      properties:
+        name:
+          type: string
+          description: Optional explicit name for the snapshot. Generated if omitted.
+        labels:
+          type: object
+          description: Labels to apply to the new snapshot.
+          additionalProperties:
+            type: string
+    SnapshotListOutput:
+      type: object
+      description: Output from listing snapshots of a volume.
+      properties:
+        data:
+          type: array
+          description: List of snapshot objects.
+          items:
+            $ref: '#/components/schemas/Snapshot'
+  parameters:
+    volumeName:
+      name: volumeName
+      in: path
+      required: true
+      description: Name of the Longhorn volume.
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http

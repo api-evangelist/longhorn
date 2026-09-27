@@ -105,6 +105,14 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    engineImageName:
+      name: engineImageName
+      in: path
+      required: true
+      description: Name of the engine image resource.
+      schema:
+        type: string
   responses:
     NotFound:
       description: The requested resource was not found.
@@ -112,14 +120,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/APIError'
-    BadRequest:
-      description: The request was malformed or contained invalid parameters.
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/APIError'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
+    BadRequest:
+      description: The request was malformed or contained invalid parameters.
       content:
         application/json:
           schema:
@@ -134,6 +142,22 @@ components:
           description: List of engine image resources.
           items:
             $ref: '#/components/schemas/EngineImage'
+    APIError:
+      type: object
+      description: API error response.
+      properties:
+        type:
+          type: string
+          description: Error type identifier.
+        status:
+          type: integer
+          description: HTTP status code.
+        code:
+          type: string
+          description: Machine-readable error code.
+        message:
+          type: string
+          description: Human-readable error message.
     EngineImage:
       type: object
       description: A Longhorn engine image providing the storage engine binary.
@@ -172,30 +196,6 @@ components:
           description: List of nodes where this engine image is deployed.
           items:
             type: string
-    APIError:
-      type: object
-      description: API error response.
-      properties:
-        type:
-          type: string
-          description: Error type identifier.
-        status:
-          type: integer
-          description: HTTP status code.
-        code:
-          type: string
-          description: Machine-readable error code.
-        message:
-          type: string
-          description: Human-readable error message.
-  parameters:
-    engineImageName:
-      name: engineImageName
-      in: path
-      required: true
-      description: Name of the engine image resource.
-      schema:
-        type: string
   securitySchemes:
     bearerAuth:
       type: http

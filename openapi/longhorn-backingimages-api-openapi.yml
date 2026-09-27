@@ -63,31 +63,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    BackingImageCreateInput:
-      type: object
-      description: Input for creating a new backing image.
-      required:
-      - name
-      - sourceType
-      properties:
-        name:
-          type: string
-          description: Unique name for the backing image.
-        sourceType:
-          type: string
-          enum:
-          - download
-          - upload
-          - export-from-volume
-          description: Source type for the backing image data.
-        parameters:
-          type: object
-          description: Source-specific parameters, such as the download URL.
-          additionalProperties:
-            type: string
-        checksum:
-          type: string
-          description: Expected SHA512 checksum for verifying the backing image data.
     BackingImage:
       type: object
       description: A Longhorn backing image providing pre-populated base data for volumes.
@@ -113,6 +88,15 @@ components:
         checksum:
           type: string
           description: SHA512 checksum of the backing image data for integrity verification.
+    BackingImageCollection:
+      type: object
+      description: A collection of backing image resources.
+      properties:
+        data:
+          type: array
+          description: List of backing image resources.
+          items:
+            $ref: '#/components/schemas/BackingImage'
     APIError:
       type: object
       description: API error response.
@@ -129,24 +113,40 @@ components:
         message:
           type: string
           description: Human-readable error message.
-    BackingImageCollection:
+    BackingImageCreateInput:
       type: object
-      description: A collection of backing image resources.
+      description: Input for creating a new backing image.
+      required:
+      - name
+      - sourceType
       properties:
-        data:
-          type: array
-          description: List of backing image resources.
-          items:
-            $ref: '#/components/schemas/BackingImage'
+        name:
+          type: string
+          description: Unique name for the backing image.
+        sourceType:
+          type: string
+          enum:
+          - download
+          - upload
+          - export-from-volume
+          description: Source type for the backing image data.
+        parameters:
+          type: object
+          description: Source-specific parameters, such as the download URL.
+          additionalProperties:
+            type: string
+        checksum:
+          type: string
+          description: Expected SHA512 checksum for verifying the backing image data.
   responses:
-    BadRequest:
-      description: The request was malformed or contained invalid parameters.
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/APIError'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
+    BadRequest:
+      description: The request was malformed or contained invalid parameters.
       content:
         application/json:
           schema:

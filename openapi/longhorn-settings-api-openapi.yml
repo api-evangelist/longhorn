@@ -90,16 +90,34 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  parameters:
+    settingName:
+      name: settingName
+      in: path
+      required: true
+      description: Key name of the Longhorn setting.
+      schema:
+        type: string
+  responses:
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
+    BadRequest:
+      description: The request was malformed or contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
   schemas:
-    SettingCollection:
-      type: object
-      description: A collection of Longhorn settings.
-      properties:
-        data:
-          type: array
-          description: List of setting resources.
-          items:
-            $ref: '#/components/schemas/Setting'
     APIError:
       type: object
       description: API error response.
@@ -150,33 +168,15 @@ components:
               description: Allowed values for enum-type settings.
               items:
                 type: string
-  parameters:
-    settingName:
-      name: settingName
-      in: path
-      required: true
-      description: Key name of the Longhorn setting.
-      schema:
-        type: string
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/APIError'
-    BadRequest:
-      description: The request was malformed or contained invalid parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/APIError'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/APIError'
+    SettingCollection:
+      type: object
+      description: A collection of Longhorn settings.
+      properties:
+        data:
+          type: array
+          description: List of setting resources.
+          items:
+            $ref: '#/components/schemas/Setting'
   securitySchemes:
     bearerAuth:
       type: http

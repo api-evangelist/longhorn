@@ -103,36 +103,7 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  parameters:
-    backupVolumeName:
-      name: backupVolumeName
-      in: path
-      required: true
-      description: Name of the backup volume in the backup store.
-      schema:
-        type: string
-    volumeName:
-      name: volumeName
-      in: path
-      required: true
-      description: Name of the Longhorn volume.
-      schema:
-        type: string
   schemas:
-    BackupInput:
-      type: object
-      description: Input for backing up a snapshot to external storage.
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Name of the snapshot to back up.
-        labels:
-          type: object
-          description: Labels to apply to the backup.
-          additionalProperties:
-            type: string
     BackupCollection:
       type: object
       description: A collection of backup resources.
@@ -142,61 +113,6 @@ components:
           description: List of backup resources.
           items:
             $ref: '#/components/schemas/Backup'
-    BackupVolume:
-      type: object
-      description: A backup volume in the external backup store corresponding to a Longhorn volume.
-      properties:
-        id:
-          type: string
-          description: Identifier of the backup volume, typically matching the source volume name.
-        name:
-          type: string
-          description: Name of the backup volume.
-        size:
-          type: string
-          description: Total size of all backups in this backup volume.
-        created:
-          type: string
-          description: Timestamp of the first backup.
-        lastBackupName:
-          type: string
-          description: Name of the most recent backup.
-        lastBackupAt:
-          type: string
-          description: Timestamp of the most recent backup.
-        backingImageName:
-          type: string
-          description: Name of the backing image used by the source volume, if any.
-    Backup:
-      type: object
-      description: A backup stored in the external backup target for a Longhorn volume snapshot.
-      properties:
-        id:
-          type: string
-          description: Unique identifier of the backup.
-        name:
-          type: string
-          description: Name of the backup.
-        snapshotName:
-          type: string
-          description: Name of the snapshot this backup was created from.
-        snapshotCreated:
-          type: string
-          description: Timestamp when the source snapshot was created.
-        created:
-          type: string
-          description: Timestamp when the backup was completed.
-        size:
-          type: string
-          description: Size of the backup data in bytes.
-        labels:
-          type: object
-          description: Labels associated with this backup.
-          additionalProperties:
-            type: string
-        url:
-          type: string
-          description: URL of this backup in the backup store.
     Volume:
       type: object
       description: A Longhorn volume representing a block storage device that can be attached to Kubernetes nodes. Longhorn creates a dedicated storage controller and the configured number of replicas across nodes.
@@ -294,6 +210,47 @@ components:
         kubernetesStatus:
           type: object
           description: Kubernetes PVC/PV binding status for this volume.
+    BackupVolume:
+      type: object
+      description: A backup volume in the external backup store corresponding to a Longhorn volume.
+      properties:
+        id:
+          type: string
+          description: Identifier of the backup volume, typically matching the source volume name.
+        name:
+          type: string
+          description: Name of the backup volume.
+        size:
+          type: string
+          description: Total size of all backups in this backup volume.
+        created:
+          type: string
+          description: Timestamp of the first backup.
+        lastBackupName:
+          type: string
+          description: Name of the most recent backup.
+        lastBackupAt:
+          type: string
+          description: Timestamp of the most recent backup.
+        backingImageName:
+          type: string
+          description: Name of the backing image used by the source volume, if any.
+    APIError:
+      type: object
+      description: API error response.
+      properties:
+        type:
+          type: string
+          description: Error type identifier.
+        status:
+          type: integer
+          description: HTTP status code.
+        code:
+          type: string
+          description: Machine-readable error code.
+        message:
+          type: string
+          description: Human-readable error message.
     Replica:
       type: object
       description: A Longhorn replica instance storing a copy of volume data on a node.
@@ -326,22 +283,50 @@ components:
         failedAt:
           type: string
           description: Timestamp when the replica last failed, if applicable.
-    APIError:
+    Backup:
       type: object
-      description: API error response.
+      description: A backup stored in the external backup target for a Longhorn volume snapshot.
       properties:
-        type:
+        id:
           type: string
-          description: Error type identifier.
-        status:
-          type: integer
-          description: HTTP status code.
-        code:
+          description: Unique identifier of the backup.
+        name:
           type: string
-          description: Machine-readable error code.
-        message:
+          description: Name of the backup.
+        snapshotName:
           type: string
-          description: Human-readable error message.
+          description: Name of the snapshot this backup was created from.
+        snapshotCreated:
+          type: string
+          description: Timestamp when the source snapshot was created.
+        created:
+          type: string
+          description: Timestamp when the backup was completed.
+        size:
+          type: string
+          description: Size of the backup data in bytes.
+        labels:
+          type: object
+          description: Labels associated with this backup.
+          additionalProperties:
+            type: string
+        url:
+          type: string
+          description: URL of this backup in the backup store.
+    BackupInput:
+      type: object
+      description: Input for backing up a snapshot to external storage.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the snapshot to back up.
+        labels:
+          type: object
+          description: Labels to apply to the backup.
+          additionalProperties:
+            type: string
     BackupVolumeCollection:
       type: object
       description: A collection of backup volumes.
@@ -351,6 +336,21 @@ components:
           description: List of backup volume resources.
           items:
             $ref: '#/components/schemas/BackupVolume'
+  parameters:
+    backupVolumeName:
+      name: backupVolumeName
+      in: path
+      required: true
+      description: Name of the backup volume in the backup store.
+      schema:
+        type: string
+    volumeName:
+      name: volumeName
+      in: path
+      required: true
+      description: Name of the Longhorn volume.
+      schema:
+        type: string
   responses:
     NotFound:
       description: The requested resource was not found.
@@ -358,14 +358,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/APIError'
-    BadRequest:
-      description: The request was malformed or contained invalid parameters.
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/APIError'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
+    BadRequest:
+      description: The request was malformed or contained invalid parameters.
       content:
         application/json:
           schema:

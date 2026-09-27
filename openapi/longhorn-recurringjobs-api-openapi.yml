@@ -123,6 +123,31 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
+    RecurringJobCollection:
+      type: object
+      description: A collection of recurring job resources.
+      properties:
+        data:
+          type: array
+          description: List of recurring job resources.
+          items:
+            $ref: '#/components/schemas/RecurringJob'
+    APIError:
+      type: object
+      description: API error response.
+      properties:
+        type:
+          type: string
+          description: Error type identifier.
+        status:
+          type: integer
+          description: HTTP status code.
+        code:
+          type: string
+          description: Machine-readable error code.
+        message:
+          type: string
+          description: Human-readable error message.
     RecurringJob:
       type: object
       description: A Longhorn recurring job for automated snapshot and backup scheduling.
@@ -165,15 +190,6 @@ components:
           description: Group names this recurring job belongs to.
           items:
             type: string
-    RecurringJobCollection:
-      type: object
-      description: A collection of recurring job resources.
-      properties:
-        data:
-          type: array
-          description: List of recurring job resources.
-          items:
-            $ref: '#/components/schemas/RecurringJob'
     RecurringJobCreateInput:
       type: object
       description: Input for creating or updating a recurring job.
@@ -218,33 +234,9 @@ components:
           description: Group names for this job.
           items:
             type: string
-    APIError:
-      type: object
-      description: API error response.
-      properties:
-        type:
-          type: string
-          description: Error type identifier.
-        status:
-          type: integer
-          description: HTTP status code.
-        code:
-          type: string
-          description: Machine-readable error code.
-        message:
-          type: string
-          description: Human-readable error message.
-  parameters:
-    recurringJobName:
-      name: recurringJobName
-      in: path
-      required: true
-      description: Name of the recurring job.
-      schema:
-        type: string
   responses:
-    NotFound:
-      description: The requested resource was not found.
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
       content:
         application/json:
           schema:
@@ -255,12 +247,20 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/APIError'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
+    NotFound:
+      description: The requested resource was not found.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/APIError'
+  parameters:
+    recurringJobName:
+      name: recurringJobName
+      in: path
+      required: true
+      description: Name of the recurring job.
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http

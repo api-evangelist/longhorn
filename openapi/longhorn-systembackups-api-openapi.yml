@@ -66,7 +66,45 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
+    BadRequest:
+      description: The request was malformed or contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
   schemas:
+    SystemBackupCollection:
+      type: object
+      description: A collection of system backup resources.
+      properties:
+        data:
+          type: array
+          description: List of system backup resources.
+          items:
+            $ref: '#/components/schemas/SystemBackup'
+    APIError:
+      type: object
+      description: API error response.
+      properties:
+        type:
+          type: string
+          description: Error type identifier.
+        status:
+          type: integer
+          description: HTTP status code.
+        code:
+          type: string
+          description: Machine-readable error code.
+        message:
+          type: string
+          description: Human-readable error message.
     SystemBackup:
       type: object
       description: A system-level backup of the entire Longhorn configuration.
@@ -95,44 +133,6 @@ components:
         createdAt:
           type: string
           description: Timestamp when the system backup was created.
-    SystemBackupCollection:
-      type: object
-      description: A collection of system backup resources.
-      properties:
-        data:
-          type: array
-          description: List of system backup resources.
-          items:
-            $ref: '#/components/schemas/SystemBackup'
-    APIError:
-      type: object
-      description: API error response.
-      properties:
-        type:
-          type: string
-          description: Error type identifier.
-        status:
-          type: integer
-          description: HTTP status code.
-        code:
-          type: string
-          description: Machine-readable error code.
-        message:
-          type: string
-          description: Human-readable error message.
-  responses:
-    BadRequest:
-      description: The request was malformed or contained invalid parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/APIError'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/APIError'
   securitySchemes:
     bearerAuth:
       type: http
