@@ -122,16 +122,59 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    recurringJobName:
+      name: recurringJobName
+      in: path
+      required: true
+      description: Name of the recurring job.
+      schema:
+        type: string
   schemas:
-    RecurringJobCollection:
+    RecurringJobCreateInput:
       type: object
-      description: A collection of recurring job resources.
+      description: Input for creating or updating a recurring job.
+      required:
+      - name
+      - task
+      - cron
+      - retain
       properties:
-        data:
+        name:
+          type: string
+          description: Unique name for the recurring job.
+        task:
+          type: string
+          enum:
+          - snapshot
+          - snapshot-force-create
+          - snapshot-cleanup
+          - snapshot-delete
+          - backup
+          - backup-force-create
+          - filesystem-trim
+          description: Type of task to perform.
+        cron:
+          type: string
+          description: Cron expression for the schedule.
+        retain:
+          type: integer
+          minimum: 0
+          description: Number of items to retain.
+        concurrency:
+          type: integer
+          minimum: 1
+          description: Number of concurrent volumes to process.
+        labels:
+          type: object
+          description: Labels to apply to created snapshots or backups.
+          additionalProperties:
+            type: string
+        groups:
           type: array
-          description: List of recurring job resources.
+          description: Group names for this job.
           items:
-            $ref: '#/components/schemas/RecurringJob'
+            type: string
     APIError:
       type: object
       description: API error response.
@@ -190,57 +233,16 @@ components:
           description: Group names this recurring job belongs to.
           items:
             type: string
-    RecurringJobCreateInput:
+    RecurringJobCollection:
       type: object
-      description: Input for creating or updating a recurring job.
-      required:
-      - name
-      - task
-      - cron
-      - retain
+      description: A collection of recurring job resources.
       properties:
-        name:
-          type: string
-          description: Unique name for the recurring job.
-        task:
-          type: string
-          enum:
-          - snapshot
-          - snapshot-force-create
-          - snapshot-cleanup
-          - snapshot-delete
-          - backup
-          - backup-force-create
-          - filesystem-trim
-          description: Type of task to perform.
-        cron:
-          type: string
-          description: Cron expression for the schedule.
-        retain:
-          type: integer
-          minimum: 0
-          description: Number of items to retain.
-        concurrency:
-          type: integer
-          minimum: 1
-          description: Number of concurrent volumes to process.
-        labels:
-          type: object
-          description: Labels to apply to created snapshots or backups.
-          additionalProperties:
-            type: string
-        groups:
+        data:
           type: array
-          description: Group names for this job.
+          description: List of recurring job resources.
           items:
-            type: string
+            $ref: '#/components/schemas/RecurringJob'
   responses:
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/APIError'
     BadRequest:
       description: The request was malformed or contained invalid parameters.
       content:
@@ -253,14 +255,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/APIError'
-  parameters:
-    recurringJobName:
-      name: recurringJobName
-      in: path
-      required: true
-      description: Name of the recurring job.
-      schema:
-        type: string
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
   securitySchemes:
     bearerAuth:
       type: http

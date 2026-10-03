@@ -104,6 +104,102 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
+    BackupVolumeCollection:
+      type: object
+      description: A collection of backup volumes.
+      properties:
+        data:
+          type: array
+          description: List of backup volume resources.
+          items:
+            $ref: '#/components/schemas/BackupVolume'
+    Replica:
+      type: object
+      description: A Longhorn replica instance storing a copy of volume data on a node.
+      properties:
+        name:
+          type: string
+          description: Unique name of the replica.
+        hostId:
+          type: string
+          description: Node where this replica is located.
+        diskID:
+          type: string
+          description: Disk on the node where this replica stores data.
+        diskPath:
+          type: string
+          description: File system path on the disk for this replica's data.
+        dataPath:
+          type: string
+          description: Full path to the replica data directory.
+        mode:
+          type: string
+          enum:
+          - RW
+          - WO
+          - ERR
+          description: Replica mode. RW is read-write; WO is write-only during rebuild; ERR is error state.
+        running:
+          type: boolean
+          description: Whether the replica process is currently running.
+        failedAt:
+          type: string
+          description: Timestamp when the replica last failed, if applicable.
+    Backup:
+      type: object
+      description: A backup stored in the external backup target for a Longhorn volume snapshot.
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the backup.
+        name:
+          type: string
+          description: Name of the backup.
+        snapshotName:
+          type: string
+          description: Name of the snapshot this backup was created from.
+        snapshotCreated:
+          type: string
+          description: Timestamp when the source snapshot was created.
+        created:
+          type: string
+          description: Timestamp when the backup was completed.
+        size:
+          type: string
+          description: Size of the backup data in bytes.
+        labels:
+          type: object
+          description: Labels associated with this backup.
+          additionalProperties:
+            type: string
+        url:
+          type: string
+          description: URL of this backup in the backup store.
+    BackupVolume:
+      type: object
+      description: A backup volume in the external backup store corresponding to a Longhorn volume.
+      properties:
+        id:
+          type: string
+          description: Identifier of the backup volume, typically matching the source volume name.
+        name:
+          type: string
+          description: Name of the backup volume.
+        size:
+          type: string
+          description: Total size of all backups in this backup volume.
+        created:
+          type: string
+          description: Timestamp of the first backup.
+        lastBackupName:
+          type: string
+          description: Name of the most recent backup.
+        lastBackupAt:
+          type: string
+          description: Timestamp of the most recent backup.
+        backingImageName:
+          type: string
+          description: Name of the backing image used by the source volume, if any.
     BackupCollection:
       type: object
       description: A collection of backup resources.
@@ -210,31 +306,6 @@ components:
         kubernetesStatus:
           type: object
           description: Kubernetes PVC/PV binding status for this volume.
-    BackupVolume:
-      type: object
-      description: A backup volume in the external backup store corresponding to a Longhorn volume.
-      properties:
-        id:
-          type: string
-          description: Identifier of the backup volume, typically matching the source volume name.
-        name:
-          type: string
-          description: Name of the backup volume.
-        size:
-          type: string
-          description: Total size of all backups in this backup volume.
-        created:
-          type: string
-          description: Timestamp of the first backup.
-        lastBackupName:
-          type: string
-          description: Name of the most recent backup.
-        lastBackupAt:
-          type: string
-          description: Timestamp of the most recent backup.
-        backingImageName:
-          type: string
-          description: Name of the backing image used by the source volume, if any.
     APIError:
       type: object
       description: API error response.
@@ -251,68 +322,6 @@ components:
         message:
           type: string
           description: Human-readable error message.
-    Replica:
-      type: object
-      description: A Longhorn replica instance storing a copy of volume data on a node.
-      properties:
-        name:
-          type: string
-          description: Unique name of the replica.
-        hostId:
-          type: string
-          description: Node where this replica is located.
-        diskID:
-          type: string
-          description: Disk on the node where this replica stores data.
-        diskPath:
-          type: string
-          description: File system path on the disk for this replica's data.
-        dataPath:
-          type: string
-          description: Full path to the replica data directory.
-        mode:
-          type: string
-          enum:
-          - RW
-          - WO
-          - ERR
-          description: Replica mode. RW is read-write; WO is write-only during rebuild; ERR is error state.
-        running:
-          type: boolean
-          description: Whether the replica process is currently running.
-        failedAt:
-          type: string
-          description: Timestamp when the replica last failed, if applicable.
-    Backup:
-      type: object
-      description: A backup stored in the external backup target for a Longhorn volume snapshot.
-      properties:
-        id:
-          type: string
-          description: Unique identifier of the backup.
-        name:
-          type: string
-          description: Name of the backup.
-        snapshotName:
-          type: string
-          description: Name of the snapshot this backup was created from.
-        snapshotCreated:
-          type: string
-          description: Timestamp when the source snapshot was created.
-        created:
-          type: string
-          description: Timestamp when the backup was completed.
-        size:
-          type: string
-          description: Size of the backup data in bytes.
-        labels:
-          type: object
-          description: Labels associated with this backup.
-          additionalProperties:
-            type: string
-        url:
-          type: string
-          description: URL of this backup in the backup store.
     BackupInput:
       type: object
       description: Input for backing up a snapshot to external storage.
@@ -327,15 +336,6 @@ components:
           description: Labels to apply to the backup.
           additionalProperties:
             type: string
-    BackupVolumeCollection:
-      type: object
-      description: A collection of backup volumes.
-      properties:
-        data:
-          type: array
-          description: List of backup volume resources.
-          items:
-            $ref: '#/components/schemas/BackupVolume'
   parameters:
     backupVolumeName:
       name: backupVolumeName

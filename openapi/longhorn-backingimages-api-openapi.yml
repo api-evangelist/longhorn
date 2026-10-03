@@ -63,56 +63,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    BackingImage:
-      type: object
-      description: A Longhorn backing image providing pre-populated base data for volumes.
-      properties:
-        id:
-          type: string
-          description: Unique identifier of the backing image.
-        name:
-          type: string
-          description: Name of the backing image.
-        sourceType:
-          type: string
-          enum:
-          - download
-          - upload
-          - export-from-volume
-          - restore
-          - clone
-          description: How the backing image data was sourced.
-        size:
-          type: integer
-          description: Size of the backing image in bytes.
-        checksum:
-          type: string
-          description: SHA512 checksum of the backing image data for integrity verification.
-    BackingImageCollection:
-      type: object
-      description: A collection of backing image resources.
-      properties:
-        data:
-          type: array
-          description: List of backing image resources.
-          items:
-            $ref: '#/components/schemas/BackingImage'
-    APIError:
-      type: object
-      description: API error response.
-      properties:
-        type:
-          type: string
-          description: Error type identifier.
-        status:
-          type: integer
-          description: HTTP status code.
-        code:
-          type: string
-          description: Machine-readable error code.
-        message:
-          type: string
-          description: Human-readable error message.
     BackingImageCreateInput:
       type: object
       description: Input for creating a new backing image.
@@ -138,6 +88,56 @@ components:
         checksum:
           type: string
           description: Expected SHA512 checksum for verifying the backing image data.
+    BackingImageCollection:
+      type: object
+      description: A collection of backing image resources.
+      properties:
+        data:
+          type: array
+          description: List of backing image resources.
+          items:
+            $ref: '#/components/schemas/BackingImage'
+    APIError:
+      type: object
+      description: API error response.
+      properties:
+        type:
+          type: string
+          description: Error type identifier.
+        status:
+          type: integer
+          description: HTTP status code.
+        code:
+          type: string
+          description: Machine-readable error code.
+        message:
+          type: string
+          description: Human-readable error message.
+    BackingImage:
+      type: object
+      description: A Longhorn backing image providing pre-populated base data for volumes.
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the backing image.
+        name:
+          type: string
+          description: Name of the backing image.
+        sourceType:
+          type: string
+          enum:
+          - download
+          - upload
+          - export-from-volume
+          - restore
+          - clone
+          description: How the backing image data was sourced.
+        size:
+          type: integer
+          description: Size of the backing image in bytes.
+        checksum:
+          type: string
+          description: SHA512 checksum of the backing image data for integrity verification.
   responses:
     Unauthorized:
       description: Authentication credentials are missing or invalid.
