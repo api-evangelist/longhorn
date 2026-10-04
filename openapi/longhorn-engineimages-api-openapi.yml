@@ -105,32 +105,26 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
+    BadRequest:
+      description: The request was malformed or contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
   schemas:
-    EngineImageCollection:
-      type: object
-      description: A collection of engine image resources.
-      properties:
-        data:
-          type: array
-          description: List of engine image resources.
-          items:
-            $ref: '#/components/schemas/EngineImage'
-    APIError:
-      type: object
-      description: API error response.
-      properties:
-        type:
-          type: string
-          description: Error type identifier.
-        status:
-          type: integer
-          description: HTTP status code.
-        code:
-          type: string
-          description: Machine-readable error code.
-        message:
-          type: string
-          description: Human-readable error message.
     EngineImage:
       type: object
       description: A Longhorn engine image providing the storage engine binary.
@@ -169,6 +163,31 @@ components:
           description: List of nodes where this engine image is deployed.
           items:
             type: string
+    EngineImageCollection:
+      type: object
+      description: A collection of engine image resources.
+      properties:
+        data:
+          type: array
+          description: List of engine image resources.
+          items:
+            $ref: '#/components/schemas/EngineImage'
+    APIError:
+      type: object
+      description: API error response.
+      properties:
+        type:
+          type: string
+          description: Error type identifier.
+        status:
+          type: integer
+          description: HTTP status code.
+        code:
+          type: string
+          description: Machine-readable error code.
+        message:
+          type: string
+          description: Human-readable error message.
   parameters:
     engineImageName:
       name: engineImageName
@@ -177,25 +196,6 @@ components:
       description: Name of the engine image resource.
       schema:
         type: string
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/APIError'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/APIError'
-    BadRequest:
-      description: The request was malformed or contained invalid parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/APIError'
   securitySchemes:
     bearerAuth:
       type: http

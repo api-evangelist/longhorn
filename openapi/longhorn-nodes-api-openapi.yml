@@ -86,14 +86,25 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    nodeId:
-      name: nodeId
-      in: path
-      required: true
-      description: Identifier of the Longhorn node (typically the Kubernetes node name).
-      schema:
-        type: string
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
+    BadRequest:
+      description: The request was malformed or contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
   schemas:
     NodeUpdateInput:
       type: object
@@ -115,6 +126,40 @@ components:
           description: Updated list of node tags.
           items:
             type: string
+    APIError:
+      type: object
+      description: API error response.
+      properties:
+        type:
+          type: string
+          description: Error type identifier.
+        status:
+          type: integer
+          description: HTTP status code.
+        code:
+          type: string
+          description: Machine-readable error code.
+        message:
+          type: string
+          description: Human-readable error message.
+    DiskStatus:
+      type: object
+      description: Observed status of a disk on a Longhorn node.
+      properties:
+        storageAvailable:
+          type: integer
+          description: Available storage on this disk in bytes.
+        storageMaximum:
+          type: integer
+          description: Total capacity of this disk in bytes.
+        storageScheduled:
+          type: integer
+          description: Storage allocated to replicas on this disk in bytes.
+        conditions:
+          type: object
+          description: Health conditions for this disk.
+          additionalProperties:
+            type: object
     Node:
       type: object
       description: A Longhorn storage node with configured disks and scheduling settings.
@@ -151,24 +196,15 @@ components:
           description: Node health conditions.
           additionalProperties:
             type: object
-    DiskStatus:
+    NodeCollection:
       type: object
-      description: Observed status of a disk on a Longhorn node.
+      description: A collection of Longhorn node resources.
       properties:
-        storageAvailable:
-          type: integer
-          description: Available storage on this disk in bytes.
-        storageMaximum:
-          type: integer
-          description: Total capacity of this disk in bytes.
-        storageScheduled:
-          type: integer
-          description: Storage allocated to replicas on this disk in bytes.
-        conditions:
-          type: object
-          description: Health conditions for this disk.
-          additionalProperties:
-            type: object
+        data:
+          type: array
+          description: List of node resources.
+          items:
+            $ref: '#/components/schemas/Node'
     DiskSpec:
       type: object
       description: Configuration for a disk on a Longhorn node.
@@ -190,50 +226,14 @@ components:
           description: Tags for this disk used in replica placement affinity.
           items:
             type: string
-    APIError:
-      type: object
-      description: API error response.
-      properties:
-        type:
-          type: string
-          description: Error type identifier.
-        status:
-          type: integer
-          description: HTTP status code.
-        code:
-          type: string
-          description: Machine-readable error code.
-        message:
-          type: string
-          description: Human-readable error message.
-    NodeCollection:
-      type: object
-      description: A collection of Longhorn node resources.
-      properties:
-        data:
-          type: array
-          description: List of node resources.
-          items:
-            $ref: '#/components/schemas/Node'
-  responses:
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/APIError'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/APIError'
-    BadRequest:
-      description: The request was malformed or contained invalid parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/APIError'
+  parameters:
+    nodeId:
+      name: nodeId
+      in: path
+      required: true
+      description: Identifier of the Longhorn node (typically the Kubernetes node name).
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http

@@ -122,14 +122,25 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    recurringJobName:
-      name: recurringJobName
-      in: path
-      required: true
-      description: Name of the recurring job.
-      schema:
-        type: string
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
+    BadRequest:
+      description: The request was malformed or contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
   schemas:
     RecurringJobCreateInput:
       type: object
@@ -242,25 +253,14 @@ components:
           description: List of recurring job resources.
           items:
             $ref: '#/components/schemas/RecurringJob'
-  responses:
-    BadRequest:
-      description: The request was malformed or contained invalid parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/APIError'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/APIError'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/APIError'
+  parameters:
+    recurringJobName:
+      name: recurringJobName
+      in: path
+      required: true
+      description: Name of the recurring job.
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http

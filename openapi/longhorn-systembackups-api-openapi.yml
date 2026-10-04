@@ -95,6 +95,15 @@ components:
         createdAt:
           type: string
           description: Timestamp when the system backup was created.
+    SystemBackupCollection:
+      type: object
+      description: A collection of system backup resources.
+      properties:
+        data:
+          type: array
+          description: List of system backup resources.
+          items:
+            $ref: '#/components/schemas/SystemBackup'
     APIError:
       type: object
       description: API error response.
@@ -111,24 +120,15 @@ components:
         message:
           type: string
           description: Human-readable error message.
-    SystemBackupCollection:
-      type: object
-      description: A collection of system backup resources.
-      properties:
-        data:
-          type: array
-          description: List of system backup resources.
-          items:
-            $ref: '#/components/schemas/SystemBackup'
   responses:
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
+    BadRequest:
+      description: The request was malformed or contained invalid parameters.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/APIError'
-    BadRequest:
-      description: The request was malformed or contained invalid parameters.
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
       content:
         application/json:
           schema:
