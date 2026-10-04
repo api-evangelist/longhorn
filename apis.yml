@@ -209,6 +209,9 @@ apis:
   - type: JSONSchema
     url: json-schema/longhorn-volume-schema.json
 common:
+  - type: CapabilityMap
+    url: capabilities/longhorn-capability-edges.yml
+    name: Longhorn Business Capability Map
   - type: IssueTracker
     url: https://github.com/longhorn/longhorn/issues
   - type: SecurityPolicy
