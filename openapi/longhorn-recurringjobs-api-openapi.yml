@@ -122,26 +122,16 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/APIError'
-    BadRequest:
-      description: The request was malformed or contained invalid parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/APIError'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/APIError'
   schemas:
+    RecurringJobCollection:
+      type: object
+      description: A collection of recurring job resources.
+      properties:
+        data:
+          type: array
+          description: List of recurring job resources.
+          items:
+            $ref: '#/components/schemas/RecurringJob'
     RecurringJobCreateInput:
       type: object
       description: Input for creating or updating a recurring job.
@@ -244,15 +234,25 @@ components:
           description: Group names this recurring job belongs to.
           items:
             type: string
-    RecurringJobCollection:
-      type: object
-      description: A collection of recurring job resources.
-      properties:
-        data:
-          type: array
-          description: List of recurring job resources.
-          items:
-            $ref: '#/components/schemas/RecurringJob'
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
+    BadRequest:
+      description: The request was malformed or contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
   parameters:
     recurringJobName:
       name: recurringJobName

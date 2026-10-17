@@ -140,14 +140,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/APIError'
-    BadRequest:
-      description: The request was malformed or contained invalid parameters.
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/APIError'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
+    BadRequest:
+      description: The request was malformed or contained invalid parameters.
       content:
         application/json:
           schema:
@@ -162,6 +162,18 @@ components:
           description: List of snapshot objects.
           items:
             $ref: '#/components/schemas/Snapshot'
+    SnapshotCreateInput:
+      type: object
+      description: Input for creating a volume snapshot.
+      properties:
+        name:
+          type: string
+          description: Optional explicit name for the snapshot. Generated if omitted.
+        labels:
+          type: object
+          description: Labels to apply to the new snapshot.
+          additionalProperties:
+            type: string
     APIError:
       type: object
       description: API error response.
@@ -178,18 +190,6 @@ components:
         message:
           type: string
           description: Human-readable error message.
-    SnapshotCreateInput:
-      type: object
-      description: Input for creating a volume snapshot.
-      properties:
-        name:
-          type: string
-          description: Optional explicit name for the snapshot. Generated if omitted.
-        labels:
-          type: object
-          description: Labels to apply to the new snapshot.
-          additionalProperties:
-            type: string
     Snapshot:
       type: object
       description: A point-in-time snapshot of a Longhorn volume.

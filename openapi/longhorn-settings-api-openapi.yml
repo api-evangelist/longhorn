@@ -97,43 +97,19 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/APIError'
-    BadRequest:
-      description: The request was malformed or contained invalid parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/APIError'
     Unauthorized:
       description: Authentication credentials are missing or invalid.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/APIError'
-  parameters:
-    settingName:
-      name: settingName
-      in: path
-      required: true
-      description: Key name of the Longhorn setting.
-      schema:
-        type: string
+    BadRequest:
+      description: The request was malformed or contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIError'
   schemas:
-    APIError:
-      type: object
-      description: API error response.
-      properties:
-        type:
-          type: string
-          description: Error type identifier.
-        status:
-          type: integer
-          description: HTTP status code.
-        code:
-          type: string
-          description: Machine-readable error code.
-        message:
-          type: string
-          description: Human-readable error message.
     SettingCollection:
       type: object
       description: A collection of Longhorn settings.
@@ -177,6 +153,30 @@ components:
               description: Allowed values for enum-type settings.
               items:
                 type: string
+    APIError:
+      type: object
+      description: API error response.
+      properties:
+        type:
+          type: string
+          description: Error type identifier.
+        status:
+          type: integer
+          description: HTTP status code.
+        code:
+          type: string
+          description: Machine-readable error code.
+        message:
+          type: string
+          description: Human-readable error message.
+  parameters:
+    settingName:
+      name: settingName
+      in: path
+      required: true
+      description: Key name of the Longhorn setting.
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http
