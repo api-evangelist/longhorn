@@ -209,6 +209,8 @@ apis:
   - type: JSONSchema
     url: json-schema/longhorn-volume-schema.json
 common:
+  - type: PostmanWorkspace
+    url: https://www.postman.com/kinlaneapi/longhorn/overview
   - type: Plans
     url: plans/longhorn-plans-pricing.yml
   - type: RateLimits
