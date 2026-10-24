@@ -1,922 +1,743 @@
 {
+  "info": {
+    "_postman_id": "da8ae7e4-34d6-400b-839b-47cc4d3677df",
+    "name": "Longhorn Manager Backups API",
+    "description": "The Longhorn Manager REST API provides programmatic access to all Longhorn storage management operations.\n\nContact Support:\n Name: Longhorn Community",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T01:38:37.000Z",
+    "updatedAt": "2026-10-22T01:38:37.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-da8ae7e4-34d6-400b-839b-47cc4d3677df"
+  },
   "item": [
     {
-      "id": "be08671a-7080-4d1c-9b56-fad0d6e5041e",
-      "name": "Backups",
-      "description": {
-        "content": "Backup operations for storing volume snapshots to external storage targets such as S3-compatible storage or NFS. Backups can be restored to new volumes for disaster recovery.",
-        "type": "text/plain"
-      },
+      "name": "v1",
       "item": [
         {
-          "id": "470d0fa7-9211-4b75-ada7-a3c7d931df42",
-          "name": "Longhorn Back up a snapshot",
-          "request": {
-            "name": "Longhorn Back up a snapshot",
-            "description": {
-              "content": "Triggers a backup of a specific snapshot to the configured external backup target (S3 or NFS). The backup is asynchronous; monitor the backup resource to track progress.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v1",
-                "volumes",
-                "{{volumeName}}"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "key": "action",
-                  "value": "snapshotBackup"
-                }
-              ],
-              "variable": [
-                {
-                  "description": "Hostname or service name for the Longhorn Manager.",
-                  "type": "any",
-                  "value": "{{longhornManagerHost}}",
-                  "key": "longhornManagerHost"
-                },
-                {
-                  "description": "Port on which Longhorn Manager serves the API.",
-                  "type": "any",
-                  "value": "{{longhornManagerPort}}",
-                  "key": "longhornManagerPort"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"<string>\",\n  \"labels\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  }\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
+          "name": "volumes",
+          "item": [
             {
-              "id": "d5c96213-0d47-44be-afca-118d5cde4a34",
-              "name": "Backup initiated.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "volumes",
-                    "{{volumeName}}"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"name\": \"<string>\",\n  \"labels\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
+              "name": "{volumeName}?action=snapshotBackup",
+              "item": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "name": "Longhorn Back up a snapshot",
+                  "id": "f03bdb45-cd99-45a0-ac9e-a7d16ed711fd",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"labels\": {\n    \"officiaaa2\": \"<string>\",\n    \"consequat_6f_\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/volumes/{{volumeName}}?action=snapshotBackup",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "volumes",
+                        "{{volumeName}}"
+                      ],
+                      "query": [
+                        {
+                          "key": "action",
+                          "value": "snapshotBackup"
+                        }
+                      ]
+                    },
+                    "description": "Triggers a backup of a specific snapshot to the configured external backup target (S3 or NFS). The backup is asynchronous; monitor the backup resource to track progress."
+                  },
+                  "response": [
+                    {
+                      "id": "2bd4b3bd-0411-4bce-ac82-05a5ba445b27",
+                      "name": "Backup initiated.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"labels\": {\n    \"officiaaa2\": \"<string>\",\n    \"consequat_6f_\": \"<string>\"\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/volumes/{{volumeName}}",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "volumes",
+                            "{{volumeName}}"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"size\": \"<string>\",\n  \"numberOfReplicas\": \"<integer>\",\n  \"state\": \"detaching\",\n  \"robustness\": \"unknown\",\n  \"frontend\": \"blockdev\",\n  \"accessMode\": \"rwo\",\n  \"migratable\": \"<boolean>\",\n  \"encrypted\": \"<boolean>\",\n  \"dataLocality\": \"best-effort\",\n  \"snapshotDataIntegrity\": \"<string>\",\n  \"replicaAutoBalance\": \"<string>\",\n  \"currentImage\": \"<string>\",\n  \"baseImage\": \"<string>\",\n  \"conditions\": {\n    \"proident_4a1\": {},\n    \"Duis2\": {}\n  },\n  \"replicas\": [\n    {\n      \"name\": \"<string>\",\n      \"hostId\": \"<string>\",\n      \"diskID\": \"<string>\",\n      \"diskPath\": \"<string>\",\n      \"dataPath\": \"<string>\",\n      \"mode\": \"WO\",\n      \"running\": \"<boolean>\",\n      \"failedAt\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"hostId\": \"<string>\",\n      \"diskID\": \"<string>\",\n      \"diskPath\": \"<string>\",\n      \"dataPath\": \"<string>\",\n      \"mode\": \"WO\",\n      \"running\": \"<boolean>\",\n      \"failedAt\": \"<string>\"\n    }\n  ],\n  \"recurringJobSelector\": [\n    {\n      \"name\": \"<string>\",\n      \"isGroup\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"isGroup\": \"<boolean>\"\n    }\n  ],\n  \"kubernetesStatus\": {}\n}",
+                      "createdAt": "2026-10-22T01:38:37.000Z",
+                      "updatedAt": "2026-10-22T01:38:37.000Z",
+                      "uid": "35240-2bd4b3bd-0411-4bce-ac82-05a5ba445b27"
+                    },
+                    {
+                      "id": "05c450af-9603-4eca-8fce-e72bab0c25ca",
+                      "name": "The request was malformed or contained invalid parameters.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"labels\": {\n    \"officiaaa2\": \"<string>\",\n    \"consequat_6f_\": \"<string>\"\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/volumes/{{volumeName}}",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "volumes",
+                            "{{volumeName}}"
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T01:38:37.000Z",
+                      "updatedAt": "2026-10-22T01:38:37.000Z",
+                      "uid": "35240-05c450af-9603-4eca-8fce-e72bab0c25ca"
+                    },
+                    {
+                      "id": "db3bf2f7-76c6-4306-9b32-5b757eb95907",
+                      "name": "Authentication credentials are missing or invalid.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"labels\": {\n    \"officiaaa2\": \"<string>\",\n    \"consequat_6f_\": \"<string>\"\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/volumes/{{volumeName}}",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "volumes",
+                            "{{volumeName}}"
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T01:38:37.000Z",
+                      "updatedAt": "2026-10-22T01:38:37.000Z",
+                      "uid": "35240-db3bf2f7-76c6-4306-9b32-5b757eb95907"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T01:38:37.000Z",
+                  "updatedAt": "2026-10-22T01:38:37.000Z",
+                  "uid": "35240-f03bdb45-cd99-45a0-ac9e-a7d16ed711fd"
                 }
               ],
-              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"size\": \"string\",\n  \"numberOfReplicas\": 5223,\n  \"state\": \"attaching\",\n  \"robustness\": \"unknown\",\n  \"frontend\": \"blockdev\",\n  \"accessMode\": \"rwx\",\n  \"migratable\": false,\n  \"encrypted\": false,\n  \"dataLocality\": \"strict-local\",\n  \"snapshotDataIntegrity\": \"string\",\n  \"replicaAutoBalance\": \"string\",\n  \"currentImage\": \"string\",\n  \"baseImage\": \"string\",\n  \"conditions\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  },\n  \"replicas\": [\n    {\n      \"name\": \"string\",\n      \"hostId\": \"string\",\n      \"diskID\": \"string\",\n      \"diskPath\": \"string\",\n      \"dataPath\": \"string\",\n      \"mode\": \"RW\",\n      \"running\": false,\n      \"failedAt\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"hostId\": \"string\",\n      \"diskID\": \"string\",\n      \"diskPath\": \"string\",\n      \"dataPath\": \"string\",\n      \"mode\": \"WO\",\n      \"running\": true,\n      \"failedAt\": \"string\"\n    }\n  ],\n  \"recurringJobSelector\": [\n    {\n      \"name\": \"string\",\n      \"isGroup\": true\n    },\n    {\n      \"name\": \"string\",\n      \"isGroup\": false\n    }\n  ],\n  \"kubernetesStatus\": {}\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "3c6e2c7a-c6c7-48e3-bded-f987bc861437",
-              "name": "The request was malformed or contained invalid parameters.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "volumes",
-                    "{{volumeName}}"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"name\": \"<string>\",\n  \"labels\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"type\": \"string\",\n  \"status\": 6433,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "5ec502e9-748c-4084-8301-2a07c1786dd1",
-              "name": "Authentication credentials are missing or invalid.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "volumes",
-                    "{{volumeName}}"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"name\": \"<string>\",\n  \"labels\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"type\": \"string\",\n  \"status\": 6433,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "id": "fa469c8f-ae26-49e0-ab69-0d0199a708b0",
+              "createdAt": "2026-10-22T01:38:37.000Z",
+              "updatedAt": "2026-10-22T01:38:37.000Z",
+              "uid": "35240-fa469c8f-ae26-49e0-ab69-0d0199a708b0"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "860cbf59-c1af-4e2a-a802-773aec2c49b2",
+          "createdAt": "2026-10-22T01:38:37.000Z",
+          "updatedAt": "2026-10-22T01:38:37.000Z",
+          "uid": "35240-860cbf59-c1af-4e2a-a802-773aec2c49b2"
         },
         {
-          "id": "a6064bb8-fca2-46ea-9a4c-91ff937fa177",
-          "name": "Longhorn List backup volumes",
-          "request": {
-            "name": "Longhorn List backup volumes",
-            "description": {
-              "content": "Returns a list of all backup volumes in the configured backup target. A backup volume contains one or more backups of a Longhorn volume. This endpoint queries the external backup store.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v1",
-                "backupvolumes"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
+          "name": "backupvolumes",
+          "item": [
+            {
+              "name": "{backupVolumeName}",
+              "item": [
                 {
-                  "description": "Hostname or service name for the Longhorn Manager.",
-                  "type": "any",
-                  "value": "{{longhornManagerHost}}",
-                  "key": "longhornManagerHost"
+                  "name": "backups",
+                  "item": [
+                    {
+                      "name": "Longhorn List backups for a backup volume",
+                      "id": "db25e603-cf1d-4937-a635-8ad323b390fe",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/backupvolumes/:backupVolumeName/backups",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "backupvolumes",
+                            ":backupVolumeName",
+                            "backups"
+                          ],
+                          "variable": [
+                            {
+                              "id": "3ddcca62-e5f9-4d6e-b3f1-48199f490a7c",
+                              "key": "backupVolumeName",
+                              "value": "<string>",
+                              "description": "(Required) Name of the backup volume in the backup store."
+                            }
+                          ]
+                        },
+                        "description": "Returns a list of all backups stored for a specific backup volume. Each backup corresponds to a snapshot of the source Longhorn volume at the time the backup was created."
+                      },
+                      "response": [
+                        {
+                          "id": "42d56876-1cd5-403c-83d4-91a95f941679",
+                          "name": "Backup list retrieved successfully.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/backupvolumes/:backupVolumeName/backups",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "backupvolumes",
+                                ":backupVolumeName",
+                                "backups"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "backupVolumeName"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"data\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"snapshotName\": \"<string>\",\n      \"snapshotCreated\": \"<string>\",\n      \"created\": \"<string>\",\n      \"size\": \"<string>\",\n      \"labels\": {\n        \"magna_d10\": \"<string>\",\n        \"ipsum_a_3\": \"<string>\",\n        \"labore_2b\": \"<string>\"\n      },\n      \"url\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"snapshotName\": \"<string>\",\n      \"snapshotCreated\": \"<string>\",\n      \"created\": \"<string>\",\n      \"size\": \"<string>\",\n      \"labels\": {\n        \"enim8\": \"<string>\"\n      },\n      \"url\": \"<string>\"\n    }\n  ]\n}",
+                          "createdAt": "2026-10-22T01:38:37.000Z",
+                          "updatedAt": "2026-10-22T01:38:37.000Z",
+                          "uid": "35240-42d56876-1cd5-403c-83d4-91a95f941679"
+                        },
+                        {
+                          "id": "b1ca84e2-02d4-4912-8f3f-9efb471efb08",
+                          "name": "Authentication credentials are missing or invalid.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/backupvolumes/:backupVolumeName/backups",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "backupvolumes",
+                                ":backupVolumeName",
+                                "backups"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "backupVolumeName"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"type\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-10-22T01:38:37.000Z",
+                          "updatedAt": "2026-10-22T01:38:37.000Z",
+                          "uid": "35240-b1ca84e2-02d4-4912-8f3f-9efb471efb08"
+                        }
+                      ],
+                      "createdAt": "2026-10-22T01:38:37.000Z",
+                      "updatedAt": "2026-10-22T01:38:37.000Z",
+                      "uid": "35240-db25e603-cf1d-4937-a635-8ad323b390fe"
+                    }
+                  ],
+                  "id": "c022f333-ae7c-4f98-b93e-a0b7dbbb21e6",
+                  "createdAt": "2026-10-22T01:38:37.000Z",
+                  "updatedAt": "2026-10-22T01:38:37.000Z",
+                  "uid": "35240-c022f333-ae7c-4f98-b93e-a0b7dbbb21e6"
                 },
                 {
-                  "description": "Port on which Longhorn Manager serves the API.",
-                  "type": "any",
-                  "value": "{{longhornManagerPort}}",
-                  "key": "longhornManagerPort"
+                  "name": "Longhorn Get a backup volume",
+                  "id": "7688694c-04a1-447d-8773-41d99d4eb94b",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/backupvolumes/:backupVolumeName",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "backupvolumes",
+                        ":backupVolumeName"
+                      ],
+                      "variable": [
+                        {
+                          "id": "762a94f1-1622-4bee-8703-df77318bb841",
+                          "key": "backupVolumeName",
+                          "value": "<string>",
+                          "description": "(Required) Name of the backup volume in the backup store."
+                        }
+                      ]
+                    },
+                    "description": "Returns details of a specific backup volume from the backup store including the list of available backups and their metadata."
+                  },
+                  "response": [
+                    {
+                      "id": "0d143e81-2622-4aa0-9e01-800bc26daea7",
+                      "name": "Backup volume details retrieved successfully.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/backupvolumes/:backupVolumeName",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "backupvolumes",
+                            ":backupVolumeName"
+                          ],
+                          "variable": [
+                            {
+                              "key": "backupVolumeName"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"size\": \"<string>\",\n  \"created\": \"<string>\",\n  \"lastBackupName\": \"<string>\",\n  \"lastBackupAt\": \"<string>\",\n  \"backingImageName\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T01:38:37.000Z",
+                      "updatedAt": "2026-10-22T01:38:37.000Z",
+                      "uid": "35240-0d143e81-2622-4aa0-9e01-800bc26daea7"
+                    },
+                    {
+                      "id": "2f338d65-1235-476a-8a28-326019d64eed",
+                      "name": "Authentication credentials are missing or invalid.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/backupvolumes/:backupVolumeName",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "backupvolumes",
+                            ":backupVolumeName"
+                          ],
+                          "variable": [
+                            {
+                              "key": "backupVolumeName"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T01:38:37.000Z",
+                      "updatedAt": "2026-10-22T01:38:37.000Z",
+                      "uid": "35240-2f338d65-1235-476a-8a28-326019d64eed"
+                    },
+                    {
+                      "id": "a28b2867-c2bf-4fcb-9e98-8769230df55f",
+                      "name": "The requested resource was not found.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/backupvolumes/:backupVolumeName",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "backupvolumes",
+                            ":backupVolumeName"
+                          ],
+                          "variable": [
+                            {
+                              "key": "backupVolumeName"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T01:38:37.000Z",
+                      "updatedAt": "2026-10-22T01:38:37.000Z",
+                      "uid": "35240-a28b2867-c2bf-4fcb-9e98-8769230df55f"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T01:38:37.000Z",
+                  "updatedAt": "2026-10-22T01:38:37.000Z",
+                  "uid": "35240-7688694c-04a1-447d-8773-41d99d4eb94b"
                 }
-              ]
+              ],
+              "id": "362bccbb-4e82-402e-a887-0f4fa93beba7",
+              "createdAt": "2026-10-22T01:38:37.000Z",
+              "updatedAt": "2026-10-22T01:38:37.000Z",
+              "uid": "35240-362bccbb-4e82-402e-a887-0f4fa93beba7"
             },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
             {
-              "id": "7196f91c-9bed-4671-a928-3481dfdc9574",
-              "name": "Backup volume list retrieved successfully.",
-              "originalRequest": {
+              "name": "Longhorn List backup volumes",
+              "id": "f33a33c9-d683-47ab-83a0-0fa98f9cd99b",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
                 "url": {
+                  "raw": "{{baseUrl}}/v1/backupvolumes",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
                   "path": [
                     "v1",
                     "backupvolumes"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
                   ]
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
+                "description": "Returns a list of all backup volumes in the configured backup target. A backup volume contains one or more backups of a Longhorn volume. This endpoint queries the external backup store."
               },
-              "status": "OK",
-              "code": 200,
-              "header": [
+              "response": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"size\": \"string\",\n      \"created\": \"string\",\n      \"lastBackupName\": \"string\",\n      \"lastBackupAt\": \"string\",\n      \"backingImageName\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"size\": \"string\",\n      \"created\": \"string\",\n      \"lastBackupName\": \"string\",\n      \"lastBackupAt\": \"string\",\n      \"backingImageName\": \"string\"\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "c41dbb3a-31e3-4d4d-b9c4-4f2d4ea64e17",
-              "name": "Authentication credentials are missing or invalid.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "backupvolumes"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
+                  "id": "8c117169-f179-41de-ab72-bbc936007d39",
+                  "name": "Backup volume list retrieved successfully.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/backupvolumes",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "backupvolumes"
+                      ]
                     }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
                   },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"data\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"size\": \"<string>\",\n      \"created\": \"<string>\",\n      \"lastBackupName\": \"<string>\",\n      \"lastBackupAt\": \"<string>\",\n      \"backingImageName\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"size\": \"<string>\",\n      \"created\": \"<string>\",\n      \"lastBackupName\": \"<string>\",\n      \"lastBackupAt\": \"<string>\",\n      \"backingImageName\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-10-22T01:38:37.000Z",
+                  "updatedAt": "2026-10-22T01:38:37.000Z",
+                  "uid": "35240-8c117169-f179-41de-ab72-bbc936007d39"
+                },
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "id": "412a8d88-287e-4f93-82fa-0949dcbf8268",
+                  "name": "Authentication credentials are missing or invalid.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/backupvolumes",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "backupvolumes"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:38:37.000Z",
+                  "updatedAt": "2026-10-22T01:38:37.000Z",
+                  "uid": "35240-412a8d88-287e-4f93-82fa-0949dcbf8268"
                 }
               ],
-              "body": "{\n  \"type\": \"string\",\n  \"status\": 6433,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "createdAt": "2026-10-22T01:38:37.000Z",
+              "updatedAt": "2026-10-22T01:38:37.000Z",
+              "uid": "35240-f33a33c9-d683-47ab-83a0-0fa98f9cd99b"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "2d24a095-af7e-43e3-99f2-8eb71cc721cf",
-          "name": "Longhorn Get a backup volume",
-          "request": {
-            "name": "Longhorn Get a backup volume",
-            "description": {
-              "content": "Returns details of a specific backup volume from the backup store including the list of available backups and their metadata.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v1",
-                "backupvolumes",
-                ":backupVolumeName"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "backupVolumeName",
-                  "description": "(Required) Name of the backup volume in the backup store."
-                },
-                {
-                  "description": "Hostname or service name for the Longhorn Manager.",
-                  "type": "any",
-                  "value": "{{longhornManagerHost}}",
-                  "key": "longhornManagerHost"
-                },
-                {
-                  "description": "Port on which Longhorn Manager serves the API.",
-                  "type": "any",
-                  "value": "{{longhornManagerPort}}",
-                  "key": "longhornManagerPort"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "4d64c6ee-f8b3-4107-92fa-71eab93f6a53",
-              "name": "Backup volume details retrieved successfully.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "backupvolumes",
-                    ":backupVolumeName"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "backupVolumeName",
-                      "description": "(Required) Name of the backup volume in the backup store."
-                    },
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"size\": \"string\",\n  \"created\": \"string\",\n  \"lastBackupName\": \"string\",\n  \"lastBackupAt\": \"string\",\n  \"backingImageName\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "dbc776ba-3f81-4317-87af-2b04471fa6d1",
-              "name": "Authentication credentials are missing or invalid.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "backupvolumes",
-                    ":backupVolumeName"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "backupVolumeName",
-                      "description": "(Required) Name of the backup volume in the backup store."
-                    },
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"type\": \"string\",\n  \"status\": 6433,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "d0935cad-14a7-45f4-a1c0-21058e7bcf2f",
-              "name": "The requested resource was not found.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "backupvolumes",
-                    ":backupVolumeName"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "backupVolumeName",
-                      "description": "(Required) Name of the backup volume in the backup store."
-                    },
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"type\": \"string\",\n  \"status\": 6433,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "41bbf7bd-66aa-4df7-9a77-27510d036ea8",
-          "name": "Longhorn List backups for a backup volume",
-          "request": {
-            "name": "Longhorn List backups for a backup volume",
-            "description": {
-              "content": "Returns a list of all backups stored for a specific backup volume. Each backup corresponds to a snapshot of the source Longhorn volume at the time the backup was created.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v1",
-                "backupvolumes",
-                ":backupVolumeName",
-                "backups"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "backupVolumeName",
-                  "description": "(Required) Name of the backup volume in the backup store."
-                },
-                {
-                  "description": "Hostname or service name for the Longhorn Manager.",
-                  "type": "any",
-                  "value": "{{longhornManagerHost}}",
-                  "key": "longhornManagerHost"
-                },
-                {
-                  "description": "Port on which Longhorn Manager serves the API.",
-                  "type": "any",
-                  "value": "{{longhornManagerPort}}",
-                  "key": "longhornManagerPort"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "4a1b501f-4c7a-44f5-abb3-2138cc36aec0",
-              "name": "Backup list retrieved successfully.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "backupvolumes",
-                    ":backupVolumeName",
-                    "backups"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "backupVolumeName",
-                      "description": "(Required) Name of the backup volume in the backup store."
-                    },
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"snapshotName\": \"string\",\n      \"snapshotCreated\": \"string\",\n      \"created\": \"string\",\n      \"size\": \"string\",\n      \"labels\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      },\n      \"url\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"snapshotName\": \"string\",\n      \"snapshotCreated\": \"string\",\n      \"created\": \"string\",\n      \"size\": \"string\",\n      \"labels\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"url\": \"string\"\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "14fc6226-eab3-442a-b4e7-f105ce33bcb9",
-              "name": "Authentication credentials are missing or invalid.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "backupvolumes",
-                    ":backupVolumeName",
-                    "backups"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "backupVolumeName",
-                      "description": "(Required) Name of the backup volume in the backup store."
-                    },
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"type\": \"string\",\n  \"status\": 6433,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "f5588a3e-cdcb-46f8-ad85-9c48f8120b44",
+          "createdAt": "2026-10-22T01:38:37.000Z",
+          "updatedAt": "2026-10-22T01:38:37.000Z",
+          "uid": "35240-f5588a3e-cdcb-46f8-ad85-9c48f8120b44"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "description": {
-        "content": "Hostname or service name for the Longhorn Manager.",
-        "type": "text/plain"
-      },
-      "type": "any",
-      "value": "longhorn-backend",
-      "key": "longhornManagerHost"
-    },
-    {
-      "description": {
-        "content": "Port on which Longhorn Manager serves the API.",
-        "type": "text/plain"
-      },
-      "type": "any",
-      "value": "9500",
-      "key": "longhornManagerPort"
-    },
-    {
-      "type": "string",
-      "value": "http://{{longhornManagerHost}}:{{longhornManagerPort}}",
-      "key": "baseUrl"
-    },
-    {
-      "disabled": false,
-      "description": {
-        "content": "(Required) Name of the Longhorn volume.",
-        "type": "text/plain"
-      },
-      "type": "any",
-      "value": "<string>",
-      "key": "volumeName"
+      "id": "72ba43e8-1bbd-480d-b235-abbb320e5a03",
+      "createdAt": "2026-10-22T01:38:37.000Z",
+      "updatedAt": "2026-10-22T01:38:37.000Z",
+      "uid": "35240-72ba43e8-1bbd-480d-b235-abbb320e5a03"
     }
   ],
   "auth": {
@@ -924,17 +745,27 @@
     "bearer": [
       {
         "key": "token",
-        "value": "{{bearerToken}}"
+        "value": "{{bearerToken}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "00ec454b-09d1-4537-ba62-c7f4ca6f608f",
-    "name": "Longhorn Manager BackingImages Backups API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "The Longhorn Manager REST API provides programmatic access to all Longhorn storage management operations. The API follows the Rancher REST API specification and is served by the Longhorn Manager service, typically accessible within a Kubernetes cluster at port 9500 or via the longhorn-backend service. It provides full lifecycle management for volumes, snapshots, backups, nodes, disks, engine images, recurring jobs, and system settings. The API is used by the Longhorn UI and can be accessed directly for automation and integration. The schema is discoverable at /v1/schemas.\n\nContact Support:\n Name: Longhorn Community",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "longhornManagerHost",
+      "value": "longhorn-backend"
+    },
+    {
+      "key": "longhornManagerPort",
+      "value": "9500"
+    },
+    {
+      "key": "baseUrl",
+      "value": "http://{{longhornManagerHost}}:{{longhornManagerPort}}"
+    },
+    {
+      "key": "volumeName",
+      "value": "<string>"
     }
-  }
+  ]
 }

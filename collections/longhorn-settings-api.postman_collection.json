@@ -1,745 +1,591 @@
 {
+  "info": {
+    "_postman_id": "b22fed88-a4cc-412a-a01c-d66f7fee6235",
+    "name": "Longhorn Manager Settings API",
+    "description": "The Longhorn Manager REST API provides programmatic access to all Longhorn storage management operations.\n\nContact Support:\n Name: Longhorn Community",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T01:38:56.000Z",
+    "updatedAt": "2026-10-22T01:38:57.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-b22fed88-a4cc-412a-a01c-d66f7fee6235"
+  },
   "item": [
     {
-      "id": "f5714192-edc4-4cd8-84ff-ce3a034969a2",
-      "name": "Settings",
-      "description": {
-        "content": "System-wide Longhorn settings management including backup targets, replica counts, node scheduling policies, data locality settings, and storage over-provisioning configuration.",
-        "type": "text/plain"
-      },
+      "name": "v1",
       "item": [
         {
-          "id": "70df81df-867b-43a5-a9f6-e6b8cdbf8335",
-          "name": "Longhorn List all settings",
-          "request": {
-            "name": "Longhorn List all settings",
-            "description": {
-              "content": "Returns a list of all Longhorn system settings including backup target, default replica count, data locality, storage over-provisioning percentage, and all other configurable system parameters.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v1",
-                "settings"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
+          "name": "settings",
+          "item": [
+            {
+              "name": "{settingName}",
+              "item": [
                 {
-                  "description": "Hostname or service name for the Longhorn Manager.",
-                  "type": "any",
-                  "value": "{{longhornManagerHost}}",
-                  "key": "longhornManagerHost"
+                  "name": "Longhorn Get a setting",
+                  "id": "47f13c69-1e64-49f7-aa6a-f2e1a418f01a",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/settings/:settingName",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "settings",
+                        ":settingName"
+                      ],
+                      "variable": [
+                        {
+                          "id": "ce2ff974-b783-4904-8525-1d4a3b73ad47",
+                          "key": "settingName",
+                          "value": "<string>",
+                          "description": "(Required) Key name of the Longhorn setting."
+                        }
+                      ]
+                    },
+                    "description": "Returns the current value and metadata for a specific Longhorn setting. Settings include backup targets, replica counts, CPU and memory limits, node scheduling policies, and many other system parameters."
+                  },
+                  "response": [
+                    {
+                      "id": "8e5e9cf5-6469-4c78-a836-6063cb106a71",
+                      "name": "Setting retrieved successfully.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/settings/:settingName",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "settings",
+                            ":settingName"
+                          ],
+                          "variable": [
+                            {
+                              "key": "settingName"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"value\": \"<string>\",\n  \"definition\": {\n    \"description\": \"<string>\",\n    \"type\": \"<string>\",\n    \"required\": \"<boolean>\",\n    \"readOnly\": \"<boolean>\",\n    \"options\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                      "createdAt": "2026-10-22T01:38:57.000Z",
+                      "updatedAt": "2026-10-22T01:38:57.000Z",
+                      "uid": "35240-8e5e9cf5-6469-4c78-a836-6063cb106a71"
+                    },
+                    {
+                      "id": "3ec89c4e-a4a4-4ce7-82b7-eedf79f3ff1a",
+                      "name": "Authentication credentials are missing or invalid.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/settings/:settingName",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "settings",
+                            ":settingName"
+                          ],
+                          "variable": [
+                            {
+                              "key": "settingName"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T01:38:57.000Z",
+                      "updatedAt": "2026-10-22T01:38:57.000Z",
+                      "uid": "35240-3ec89c4e-a4a4-4ce7-82b7-eedf79f3ff1a"
+                    },
+                    {
+                      "id": "2d765278-f0ad-4948-9c73-43e1608fa4d1",
+                      "name": "The requested resource was not found.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/settings/:settingName",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "settings",
+                            ":settingName"
+                          ],
+                          "variable": [
+                            {
+                              "key": "settingName"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T01:38:57.000Z",
+                      "updatedAt": "2026-10-22T01:38:57.000Z",
+                      "uid": "35240-2d765278-f0ad-4948-9c73-43e1608fa4d1"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T01:38:57.000Z",
+                  "updatedAt": "2026-10-22T01:38:57.000Z",
+                  "uid": "35240-47f13c69-1e64-49f7-aa6a-f2e1a418f01a"
                 },
                 {
-                  "description": "Port on which Longhorn Manager serves the API.",
-                  "type": "any",
-                  "value": "{{longhornManagerPort}}",
-                  "key": "longhornManagerPort"
+                  "name": "Longhorn Update a setting",
+                  "id": "598df683-8326-4cc9-9275-5ada7bac1ccc",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"value\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/settings/:settingName",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "settings",
+                        ":settingName"
+                      ],
+                      "variable": [
+                        {
+                          "id": "fda2d498-f4c0-46ea-a9fa-62908d02915d",
+                          "key": "settingName",
+                          "value": "<string>",
+                          "description": "(Required) Key name of the Longhorn setting."
+                        }
+                      ]
+                    },
+                    "description": "Updates the value of a specific Longhorn system setting. Changes take effect immediately without requiring a restart."
+                  },
+                  "response": [
+                    {
+                      "id": "e00179d1-2bb1-4117-9bdb-18f7c3079e0e",
+                      "name": "Setting updated successfully.",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"value\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/settings/:settingName",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "settings",
+                            ":settingName"
+                          ],
+                          "variable": [
+                            {
+                              "key": "settingName"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"value\": \"<string>\",\n  \"definition\": {\n    \"description\": \"<string>\",\n    \"type\": \"<string>\",\n    \"required\": \"<boolean>\",\n    \"readOnly\": \"<boolean>\",\n    \"options\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                      "createdAt": "2026-10-22T01:38:57.000Z",
+                      "updatedAt": "2026-10-22T01:38:57.000Z",
+                      "uid": "35240-e00179d1-2bb1-4117-9bdb-18f7c3079e0e"
+                    },
+                    {
+                      "id": "5a9c861d-d5d5-4cdd-8a99-f511f6a541c3",
+                      "name": "The request was malformed or contained invalid parameters.",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"value\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/settings/:settingName",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "settings",
+                            ":settingName"
+                          ],
+                          "variable": [
+                            {
+                              "key": "settingName"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T01:38:57.000Z",
+                      "updatedAt": "2026-10-22T01:38:57.000Z",
+                      "uid": "35240-5a9c861d-d5d5-4cdd-8a99-f511f6a541c3"
+                    },
+                    {
+                      "id": "90509bd8-85bd-4076-b122-468d8294cbee",
+                      "name": "Authentication credentials are missing or invalid.",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"value\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/settings/:settingName",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "settings",
+                            ":settingName"
+                          ],
+                          "variable": [
+                            {
+                              "key": "settingName"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T01:38:57.000Z",
+                      "updatedAt": "2026-10-22T01:38:57.000Z",
+                      "uid": "35240-90509bd8-85bd-4076-b122-468d8294cbee"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T01:38:57.000Z",
+                  "updatedAt": "2026-10-22T01:38:57.000Z",
+                  "uid": "35240-598df683-8326-4cc9-9275-5ada7bac1ccc"
                 }
-              ]
+              ],
+              "id": "ece99d5f-2215-4027-8f4b-8e94dbb81f6f",
+              "createdAt": "2026-10-22T01:38:57.000Z",
+              "updatedAt": "2026-10-22T01:38:57.000Z",
+              "uid": "35240-ece99d5f-2215-4027-8f4b-8e94dbb81f6f"
             },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
             {
-              "id": "7dfe2a96-aae7-4bc5-88f4-14005e00b0d3",
-              "name": "Settings list retrieved successfully.",
-              "originalRequest": {
+              "name": "Longhorn List all settings",
+              "id": "928f67db-6569-4530-81a6-6e7f8a0f9925",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
                 "url": {
+                  "raw": "{{baseUrl}}/v1/settings",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
                   "path": [
                     "v1",
                     "settings"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
                   ]
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
+                "description": "Returns a list of all Longhorn system settings including backup target, default replica count, data locality, storage over-provisioning percentage, and all other configurable system parameters."
               },
-              "status": "OK",
-              "code": 200,
-              "header": [
+              "response": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"value\": \"string\",\n      \"definition\": {\n        \"description\": \"string\",\n        \"type\": \"string\",\n        \"required\": false,\n        \"readOnly\": false,\n        \"options\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"value\": \"string\",\n      \"definition\": {\n        \"description\": \"string\",\n        \"type\": \"string\",\n        \"required\": false,\n        \"readOnly\": false,\n        \"options\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "e5a5463b-897f-4aba-b30f-f95687d461bd",
-              "name": "Authentication credentials are missing or invalid.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "settings"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
+                  "id": "664bdf77-b83e-40ec-9a85-aebb0cd5dd05",
+                  "name": "Settings list retrieved successfully.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/settings",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "settings"
+                      ]
                     }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
                   },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"data\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"definition\": {\n        \"description\": \"<string>\",\n        \"type\": \"<string>\",\n        \"required\": \"<boolean>\",\n        \"readOnly\": \"<boolean>\",\n        \"options\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"definition\": {\n        \"description\": \"<string>\",\n        \"type\": \"<string>\",\n        \"required\": \"<boolean>\",\n        \"readOnly\": \"<boolean>\",\n        \"options\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    }\n  ]\n}",
+                  "createdAt": "2026-10-22T01:38:57.000Z",
+                  "updatedAt": "2026-10-22T01:38:57.000Z",
+                  "uid": "35240-664bdf77-b83e-40ec-9a85-aebb0cd5dd05"
+                },
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "id": "a713e70a-f2d7-4950-a251-7b6fdc1ce58d",
+                  "name": "Authentication credentials are missing or invalid.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/settings",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "settings"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:38:57.000Z",
+                  "updatedAt": "2026-10-22T01:38:57.000Z",
+                  "uid": "35240-a713e70a-f2d7-4950-a251-7b6fdc1ce58d"
                 }
               ],
-              "body": "{\n  \"type\": \"string\",\n  \"status\": 1864,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "createdAt": "2026-10-22T01:38:57.000Z",
+              "updatedAt": "2026-10-22T01:38:57.000Z",
+              "uid": "35240-928f67db-6569-4530-81a6-6e7f8a0f9925"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "238c662a-6bdb-4785-a3a0-c623d1199bf1",
-          "name": "Longhorn Get a setting",
-          "request": {
-            "name": "Longhorn Get a setting",
-            "description": {
-              "content": "Returns the current value and metadata for a specific Longhorn setting. Settings include backup targets, replica counts, CPU and memory limits, node scheduling policies, and many other system parameters.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v1",
-                "settings",
-                ":settingName"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "settingName",
-                  "description": "(Required) Key name of the Longhorn setting."
-                },
-                {
-                  "description": "Hostname or service name for the Longhorn Manager.",
-                  "type": "any",
-                  "value": "{{longhornManagerHost}}",
-                  "key": "longhornManagerHost"
-                },
-                {
-                  "description": "Port on which Longhorn Manager serves the API.",
-                  "type": "any",
-                  "value": "{{longhornManagerPort}}",
-                  "key": "longhornManagerPort"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "96dd4806-2aca-4fa1-a285-441bab2066ef",
-              "name": "Setting retrieved successfully.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "settings",
-                    ":settingName"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "settingName",
-                      "description": "(Required) Key name of the Longhorn setting."
-                    },
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"value\": \"string\",\n  \"definition\": {\n    \"description\": \"string\",\n    \"type\": \"string\",\n    \"required\": true,\n    \"readOnly\": false,\n    \"options\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "3ea437b8-a75d-4131-986b-435ae59a4fff",
-              "name": "Authentication credentials are missing or invalid.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "settings",
-                    ":settingName"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "settingName",
-                      "description": "(Required) Key name of the Longhorn setting."
-                    },
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"type\": \"string\",\n  \"status\": 1864,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "ddf47564-5c63-47ab-9fc2-7634cec51caa",
-              "name": "The requested resource was not found.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "settings",
-                    ":settingName"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "settingName",
-                      "description": "(Required) Key name of the Longhorn setting."
-                    },
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"type\": \"string\",\n  \"status\": 1864,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "9d654de3-da7f-40a6-9120-8356b353a92b",
-          "name": "Longhorn Update a setting",
-          "request": {
-            "name": "Longhorn Update a setting",
-            "description": {
-              "content": "Updates the value of a specific Longhorn system setting. Changes take effect immediately without requiring a restart.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v1",
-                "settings",
-                ":settingName"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "settingName",
-                  "description": "(Required) Key name of the Longhorn setting."
-                },
-                {
-                  "description": "Hostname or service name for the Longhorn Manager.",
-                  "type": "any",
-                  "value": "{{longhornManagerHost}}",
-                  "key": "longhornManagerHost"
-                },
-                {
-                  "description": "Port on which Longhorn Manager serves the API.",
-                  "type": "any",
-                  "value": "{{longhornManagerPort}}",
-                  "key": "longhornManagerPort"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "PUT",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"value\": \"<string>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "da40a93c-d636-40e0-9451-0c0290ba87cb",
-              "name": "Setting updated successfully.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "settings",
-                    ":settingName"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "settingName",
-                      "description": "(Required) Key name of the Longhorn setting."
-                    },
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PUT",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"value\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"value\": \"string\",\n  \"definition\": {\n    \"description\": \"string\",\n    \"type\": \"string\",\n    \"required\": true,\n    \"readOnly\": false,\n    \"options\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "88317c5a-0533-4d85-8f02-2bafa4c7fcf8",
-              "name": "The request was malformed or contained invalid parameters.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "settings",
-                    ":settingName"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "settingName",
-                      "description": "(Required) Key name of the Longhorn setting."
-                    },
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PUT",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"value\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"type\": \"string\",\n  \"status\": 1864,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "02da76c0-fa54-4010-842a-d47d7727241f",
-              "name": "Authentication credentials are missing or invalid.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "settings",
-                    ":settingName"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "settingName",
-                      "description": "(Required) Key name of the Longhorn setting."
-                    },
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PUT",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"value\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"type\": \"string\",\n  \"status\": 1864,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "8e55fce4-16b2-429c-a51c-52e6a97767d6",
+          "createdAt": "2026-10-22T01:38:57.000Z",
+          "updatedAt": "2026-10-22T01:38:57.000Z",
+          "uid": "35240-8e55fce4-16b2-429c-a51c-52e6a97767d6"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "description": {
-        "content": "Hostname or service name for the Longhorn Manager.",
-        "type": "text/plain"
-      },
-      "type": "any",
-      "value": "longhorn-backend",
-      "key": "longhornManagerHost"
-    },
-    {
-      "description": {
-        "content": "Port on which Longhorn Manager serves the API.",
-        "type": "text/plain"
-      },
-      "type": "any",
-      "value": "9500",
-      "key": "longhornManagerPort"
-    },
-    {
-      "type": "string",
-      "value": "http://{{longhornManagerHost}}:{{longhornManagerPort}}",
-      "key": "baseUrl"
+      "id": "305cda03-95b5-42c8-85e9-f944e0259c18",
+      "createdAt": "2026-10-22T01:38:57.000Z",
+      "updatedAt": "2026-10-22T01:38:57.000Z",
+      "uid": "35240-305cda03-95b5-42c8-85e9-f944e0259c18"
     }
   ],
   "auth": {
@@ -747,17 +593,23 @@
     "bearer": [
       {
         "key": "token",
-        "value": "{{bearerToken}}"
+        "value": "{{bearerToken}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "c459cbf5-efd4-44ac-b0bd-54e1d85e1919",
-    "name": "Longhorn Manager BackingImages Settings API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "The Longhorn Manager REST API provides programmatic access to all Longhorn storage management operations. The API follows the Rancher REST API specification and is served by the Longhorn Manager service, typically accessible within a Kubernetes cluster at port 9500 or via the longhorn-backend service. It provides full lifecycle management for volumes, snapshots, backups, nodes, disks, engine images, recurring jobs, and system settings. The API is used by the Longhorn UI and can be accessed directly for automation and integration. The schema is discoverable at /v1/schemas.\n\nContact Support:\n Name: Longhorn Community",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "longhornManagerHost",
+      "value": "longhorn-backend"
+    },
+    {
+      "key": "longhornManagerPort",
+      "value": "9500"
+    },
+    {
+      "key": "baseUrl",
+      "value": "http://{{longhornManagerHost}}:{{longhornManagerPort}}"
     }
-  }
+  ]
 }

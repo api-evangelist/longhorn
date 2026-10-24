@@ -1,1026 +1,792 @@
 {
+  "info": {
+    "_postman_id": "5ac99ca7-4014-402e-839d-708c1ee2ef17",
+    "name": "Longhorn Manager Engine Images API",
+    "description": "The Longhorn Manager REST API provides programmatic access to all Longhorn storage management operations.\n\nContact Support:\n Name: Longhorn Community",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T01:38:41.000Z",
+    "updatedAt": "2026-10-22T01:38:41.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-5ac99ca7-4014-402e-839d-708c1ee2ef17"
+  },
   "item": [
     {
-      "id": "dd96e828-2b2f-4d9d-b343-66e16390f15c",
-      "name": "EngineImages",
-      "description": {
-        "content": "Engine image management for the Longhorn storage engine. Engine images are OCI images containing the Longhorn engine binary and are used to upgrade or manage storage engine versions.",
-        "type": "text/plain"
-      },
+      "name": "v1",
       "item": [
         {
-          "id": "586df613-1058-4281-a197-6e1c030ebd80",
-          "name": "Longhorn List engine images",
-          "request": {
-            "name": "Longhorn List engine images",
-            "description": {
-              "content": "Returns a list of all Longhorn engine images installed in the cluster. Engine images contain the Longhorn storage engine binary and are used to manage volume upgrade and compatibility.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v1",
-                "engineimages"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "description": "Hostname or service name for the Longhorn Manager.",
-                  "type": "any",
-                  "value": "{{longhornManagerHost}}",
-                  "key": "longhornManagerHost"
-                },
-                {
-                  "description": "Port on which Longhorn Manager serves the API.",
-                  "type": "any",
-                  "value": "{{longhornManagerPort}}",
-                  "key": "longhornManagerPort"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
+          "name": "engineimages",
+          "item": [
             {
-              "id": "b29c18c9-b009-4afe-b97a-d06dbff59987",
-              "name": "Engine image list retrieved successfully.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "engineimages"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+              "name": "{engineImageName}",
+              "item": [
+                {
+                  "name": "Longhorn Get an engine image",
+                  "id": "1612b4fe-84e0-4946-a412-20222b13fca6",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
                   },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/engineimages/:engineImageName",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "engineimages",
+                        ":engineImageName"
+                      ],
+                      "variable": [
+                        {
+                          "id": "1a843a3a-9999-4cd9-b4af-a7947491a14a",
+                          "key": "engineImageName",
+                          "value": "<string>",
+                          "description": "(Required) Name of the engine image resource."
+                        }
+                      ]
+                    },
+                    "description": "Returns details of a specific engine image including its deployment state, CLI API version, controller API version, and which nodes have the image deployed."
+                  },
+                  "response": [
+                    {
+                      "id": "1fe53f86-657c-488a-80ad-bfcb252bedfc",
+                      "name": "Engine image details retrieved successfully.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/engineimages/:engineImageName",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "engineimages",
+                            ":engineImageName"
+                          ],
+                          "variable": [
+                            {
+                              "key": "engineImageName"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"image\": \"<string>\",\n  \"state\": \"ready\",\n  \"default\": \"<boolean>\",\n  \"cliAPIVersion\": \"<integer>\",\n  \"cliAPIMinVersion\": \"<integer>\",\n  \"controllerAPIVersion\": \"<integer>\",\n  \"nodesDeployed\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "createdAt": "2026-10-22T01:38:41.000Z",
+                      "updatedAt": "2026-10-22T01:38:41.000Z",
+                      "uid": "35240-1fe53f86-657c-488a-80ad-bfcb252bedfc"
+                    },
+                    {
+                      "id": "6cab3cd1-6fa2-4d3c-bf87-ca04fc9ab7f4",
+                      "name": "Authentication credentials are missing or invalid.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/engineimages/:engineImageName",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "engineimages",
+                            ":engineImageName"
+                          ],
+                          "variable": [
+                            {
+                              "key": "engineImageName"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T01:38:41.000Z",
+                      "updatedAt": "2026-10-22T01:38:41.000Z",
+                      "uid": "35240-6cab3cd1-6fa2-4d3c-bf87-ca04fc9ab7f4"
+                    },
+                    {
+                      "id": "d4a42ef3-c640-41db-a65a-e6bb874b4dd8",
+                      "name": "The requested resource was not found.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/engineimages/:engineImageName",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "engineimages",
+                            ":engineImageName"
+                          ],
+                          "variable": [
+                            {
+                              "key": "engineImageName"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T01:38:41.000Z",
+                      "updatedAt": "2026-10-22T01:38:41.000Z",
+                      "uid": "35240-d4a42ef3-c640-41db-a65a-e6bb874b4dd8"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T01:38:41.000Z",
+                  "updatedAt": "2026-10-22T01:38:41.000Z",
+                  "uid": "35240-1612b4fe-84e0-4946-a412-20222b13fca6"
+                },
+                {
+                  "name": "Longhorn Delete an engine image",
+                  "id": "fb9eff78-bb06-4266-98db-a8084eaff5b2",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/engineimages/:engineImageName",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "engineimages",
+                        ":engineImageName"
+                      ],
+                      "variable": [
+                        {
+                          "id": "23b8b70b-821f-473b-9579-3f302aea469d",
+                          "key": "engineImageName",
+                          "value": "<string>",
+                          "description": "(Required) Name of the engine image resource."
+                        }
+                      ]
+                    },
+                    "description": "Removes an engine image from the cluster. The default engine image and images currently in use by volumes cannot be deleted."
+                  },
+                  "response": [
+                    {
+                      "id": "a06607af-cfd8-4b39-8901-788e12ed4d01",
+                      "name": "Engine image deleted successfully.",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/engineimages/:engineImageName",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "engineimages",
+                            ":engineImageName"
+                          ],
+                          "variable": [
+                            {
+                              "key": "engineImageName"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "No Content",
+                      "code": 204,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-10-22T01:38:41.000Z",
+                      "updatedAt": "2026-10-22T01:38:41.000Z",
+                      "uid": "35240-a06607af-cfd8-4b39-8901-788e12ed4d01"
+                    },
+                    {
+                      "id": "1cb174ba-a9b9-4b65-85a2-4893d1da31a9",
+                      "name": "The request was malformed or contained invalid parameters.",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/engineimages/:engineImageName",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "engineimages",
+                            ":engineImageName"
+                          ],
+                          "variable": [
+                            {
+                              "key": "engineImageName"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T01:38:41.000Z",
+                      "updatedAt": "2026-10-22T01:38:41.000Z",
+                      "uid": "35240-1cb174ba-a9b9-4b65-85a2-4893d1da31a9"
+                    },
+                    {
+                      "id": "a36ac6e3-3315-447c-a231-8f4cb015e35c",
+                      "name": "Authentication credentials are missing or invalid.",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/engineimages/:engineImageName",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "engineimages",
+                            ":engineImageName"
+                          ],
+                          "variable": [
+                            {
+                              "key": "engineImageName"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T01:38:41.000Z",
+                      "updatedAt": "2026-10-22T01:38:41.000Z",
+                      "uid": "35240-a36ac6e3-3315-447c-a231-8f4cb015e35c"
+                    },
+                    {
+                      "id": "6e43daf9-0a58-438f-bc36-e10636b3cbe4",
+                      "name": "The requested resource was not found.",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/engineimages/:engineImageName",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "engineimages",
+                            ":engineImageName"
+                          ],
+                          "variable": [
+                            {
+                              "key": "engineImageName"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T01:38:41.000Z",
+                      "updatedAt": "2026-10-22T01:38:41.000Z",
+                      "uid": "35240-6e43daf9-0a58-438f-bc36-e10636b3cbe4"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T01:38:41.000Z",
+                  "updatedAt": "2026-10-22T01:38:41.000Z",
+                  "uid": "35240-fb9eff78-bb06-4266-98db-a8084eaff5b2"
+                }
+              ],
+              "id": "288cfbd1-93e4-4a85-bcf8-86e655256b9c",
+              "createdAt": "2026-10-22T01:38:41.000Z",
+              "updatedAt": "2026-10-22T01:38:41.000Z",
+              "uid": "35240-288cfbd1-93e4-4a85-bcf8-86e655256b9c"
+            },
+            {
+              "name": "Longhorn List engine images",
+              "id": "263b7a58-5014-4fe6-a809-3409152564b7",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
                 "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"image\": \"string\",\n      \"state\": \"error\",\n      \"default\": true,\n      \"cliAPIVersion\": 6712,\n      \"cliAPIMinVersion\": 9790,\n      \"controllerAPIVersion\": 4055,\n      \"nodesDeployed\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"image\": \"string\",\n      \"state\": \"error\",\n      \"default\": false,\n      \"cliAPIVersion\": 5100,\n      \"cliAPIMinVersion\": 1412,\n      \"controllerAPIVersion\": 865,\n      \"nodesDeployed\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "7a8cec3b-8572-47bf-a79e-9c98a71d4829",
-              "name": "Authentication credentials are missing or invalid.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "engineimages"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
-                  ]
-                },
                 "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"type\": \"string\",\n  \"status\": 1149,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "c5705995-1734-409a-9e12-0cdc4f221c9b",
-          "name": "Longhorn Create an engine image",
-          "request": {
-            "name": "Longhorn Create an engine image",
-            "description": {
-              "content": "Deploys a new Longhorn engine image to the cluster by specifying an OCI image reference. Longhorn deploys the engine binary from this image to all nodes via a DaemonSet.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v1",
-                "engineimages"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "description": "Hostname or service name for the Longhorn Manager.",
-                  "type": "any",
-                  "value": "{{longhornManagerHost}}",
-                  "key": "longhornManagerHost"
-                },
-                {
-                  "description": "Port on which Longhorn Manager serves the API.",
-                  "type": "any",
-                  "value": "{{longhornManagerPort}}",
-                  "key": "longhornManagerPort"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"image\": \"<string>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "8d5306c8-14d9-4029-ad49-06bb9c4a37a0",
-              "name": "Engine image deployment initiated.",
-              "originalRequest": {
                 "url": {
-                  "path": [
-                    "v1",
-                    "engineimages"
-                  ],
+                  "raw": "{{baseUrl}}/v1/engineimages",
                   "host": [
                     "{{baseUrl}}"
                   ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
+                  "path": [
+                    "v1",
+                    "engineimages"
                   ]
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                "description": "Returns a list of all Longhorn engine images installed in the cluster. Engine images contain the Longhorn storage engine binary and are used to manage volume upgrade and compatibility."
+              },
+              "response": [
+                {
+                  "id": "255da222-efe5-4eb1-b4ab-ee8ba9be7903",
+                  "name": "Engine image list retrieved successfully.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/engineimages",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "engineimages"
+                      ]
+                    }
                   },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"data\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"image\": \"<string>\",\n      \"state\": \"deploying\",\n      \"default\": \"<boolean>\",\n      \"cliAPIVersion\": \"<integer>\",\n      \"cliAPIMinVersion\": \"<integer>\",\n      \"controllerAPIVersion\": \"<integer>\",\n      \"nodesDeployed\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"image\": \"<string>\",\n      \"state\": \"ready\",\n      \"default\": \"<boolean>\",\n      \"cliAPIVersion\": \"<integer>\",\n      \"cliAPIMinVersion\": \"<integer>\",\n      \"controllerAPIVersion\": \"<integer>\",\n      \"nodesDeployed\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ]\n}",
+                  "createdAt": "2026-10-22T01:38:41.000Z",
+                  "updatedAt": "2026-10-22T01:38:41.000Z",
+                  "uid": "35240-255da222-efe5-4eb1-b4ab-ee8ba9be7903"
+                },
+                {
+                  "id": "92ba60ee-f6e1-4adc-93f2-ec9278403f23",
+                  "name": "Authentication credentials are missing or invalid.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/engineimages",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "engineimages"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:38:41.000Z",
+                  "updatedAt": "2026-10-22T01:38:41.000Z",
+                  "uid": "35240-92ba60ee-f6e1-4adc-93f2-ec9278403f23"
+                }
+              ],
+              "createdAt": "2026-10-22T01:38:41.000Z",
+              "updatedAt": "2026-10-22T01:38:41.000Z",
+              "uid": "35240-263b7a58-5014-4fe6-a809-3409152564b7"
+            },
+            {
+              "name": "Longhorn Create an engine image",
+              "id": "831217c2-130b-4b80-bd61-14bd22e70da5",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
                 "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
                 "body": {
                   "mode": "raw",
                   "raw": "{\n  \"image\": \"<string>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"image\": \"string\",\n  \"state\": \"deploying\",\n  \"default\": false,\n  \"cliAPIVersion\": 9180,\n  \"cliAPIMinVersion\": 7894,\n  \"controllerAPIVersion\": 8079,\n  \"nodesDeployed\": [\n    \"string\",\n    \"string\"\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "87372013-49fc-4586-a939-0c16f4e75a49",
-              "name": "The request was malformed or contained invalid parameters.",
-              "originalRequest": {
+                },
                 "url": {
+                  "raw": "{{baseUrl}}/v1/engineimages",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
                   "path": [
                     "v1",
                     "engineimages"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
                   ]
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"image\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
+                "description": "Deploys a new Longhorn engine image to the cluster by specifying an OCI image reference. Longhorn deploys the engine binary from this image to all nodes via a DaemonSet."
               },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
+              "response": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"type\": \"string\",\n  \"status\": 1149,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "eb4c09d9-e659-485d-a6c0-ef1cb20a2cb6",
-              "name": "Authentication credentials are missing or invalid.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "engineimages"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
+                  "id": "e69d5ee0-68ec-447f-885d-32606142b4c5",
+                  "name": "Engine image deployment initiated.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"image\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
                     },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/engineimages",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "engineimages"
+                      ]
                     }
-                  ]
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"image\": \"<string>\",\n  \"state\": \"ready\",\n  \"default\": \"<boolean>\",\n  \"cliAPIVersion\": \"<integer>\",\n  \"cliAPIMinVersion\": \"<integer>\",\n  \"controllerAPIVersion\": \"<integer>\",\n  \"nodesDeployed\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "createdAt": "2026-10-22T01:38:41.000Z",
+                  "updatedAt": "2026-10-22T01:38:41.000Z",
+                  "uid": "35240-e69d5ee0-68ec-447f-885d-32606142b4c5"
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"image\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "id": "741d568d-a007-476d-90bc-7dedc3c236b6",
+                  "name": "The request was malformed or contained invalid parameters.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"image\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/engineimages",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "engineimages"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:38:41.000Z",
+                  "updatedAt": "2026-10-22T01:38:41.000Z",
+                  "uid": "35240-741d568d-a007-476d-90bc-7dedc3c236b6"
+                },
+                {
+                  "id": "d047c6b1-b30d-4cdd-be0d-00ee17da1fa9",
+                  "name": "Authentication credentials are missing or invalid.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"image\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/engineimages",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "engineimages"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:38:41.000Z",
+                  "updatedAt": "2026-10-22T01:38:41.000Z",
+                  "uid": "35240-d047c6b1-b30d-4cdd-be0d-00ee17da1fa9"
                 }
               ],
-              "body": "{\n  \"type\": \"string\",\n  \"status\": 1149,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "createdAt": "2026-10-22T01:38:41.000Z",
+              "updatedAt": "2026-10-22T01:38:41.000Z",
+              "uid": "35240-831217c2-130b-4b80-bd61-14bd22e70da5"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "b1f7a1c0-19af-44cc-9af8-9f996acdae2e",
-          "name": "Longhorn Get an engine image",
-          "request": {
-            "name": "Longhorn Get an engine image",
-            "description": {
-              "content": "Returns details of a specific engine image including its deployment state, CLI API version, controller API version, and which nodes have the image deployed.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v1",
-                "engineimages",
-                ":engineImageName"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "engineImageName",
-                  "description": "(Required) Name of the engine image resource."
-                },
-                {
-                  "description": "Hostname or service name for the Longhorn Manager.",
-                  "type": "any",
-                  "value": "{{longhornManagerHost}}",
-                  "key": "longhornManagerHost"
-                },
-                {
-                  "description": "Port on which Longhorn Manager serves the API.",
-                  "type": "any",
-                  "value": "{{longhornManagerPort}}",
-                  "key": "longhornManagerPort"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "92f31c22-d97b-4236-a85e-f76fcd8d0837",
-              "name": "Engine image details retrieved successfully.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "engineimages",
-                    ":engineImageName"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "engineImageName",
-                      "description": "(Required) Name of the engine image resource."
-                    },
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"image\": \"string\",\n  \"state\": \"deploying\",\n  \"default\": false,\n  \"cliAPIVersion\": 9180,\n  \"cliAPIMinVersion\": 7894,\n  \"controllerAPIVersion\": 8079,\n  \"nodesDeployed\": [\n    \"string\",\n    \"string\"\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "40b4fbd2-f57c-44b6-b6fc-76919aed9b88",
-              "name": "Authentication credentials are missing or invalid.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "engineimages",
-                    ":engineImageName"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "engineImageName",
-                      "description": "(Required) Name of the engine image resource."
-                    },
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"type\": \"string\",\n  \"status\": 1149,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "d8313c15-fcbe-4004-bf64-4397e384412c",
-              "name": "The requested resource was not found.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "engineimages",
-                    ":engineImageName"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "engineImageName",
-                      "description": "(Required) Name of the engine image resource."
-                    },
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"type\": \"string\",\n  \"status\": 1149,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "a66a397b-041c-41c2-868e-046075acbcf3",
-          "name": "Longhorn Delete an engine image",
-          "request": {
-            "name": "Longhorn Delete an engine image",
-            "description": {
-              "content": "Removes an engine image from the cluster. The default engine image and images currently in use by volumes cannot be deleted.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v1",
-                "engineimages",
-                ":engineImageName"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "engineImageName",
-                  "description": "(Required) Name of the engine image resource."
-                },
-                {
-                  "description": "Hostname or service name for the Longhorn Manager.",
-                  "type": "any",
-                  "value": "{{longhornManagerHost}}",
-                  "key": "longhornManagerHost"
-                },
-                {
-                  "description": "Port on which Longhorn Manager serves the API.",
-                  "type": "any",
-                  "value": "{{longhornManagerPort}}",
-                  "key": "longhornManagerPort"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "DELETE",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "700e0890-8696-4261-9e81-8f27f05fa43d",
-              "name": "Engine image deleted successfully.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "engineimages",
-                    ":engineImageName"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "engineImageName",
-                      "description": "(Required) Name of the engine image resource."
-                    },
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "No Content",
-              "code": 204,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "3a05d18e-9c3d-47fa-b623-95e1e162c92b",
-              "name": "The request was malformed or contained invalid parameters.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "engineimages",
-                    ":engineImageName"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "engineImageName",
-                      "description": "(Required) Name of the engine image resource."
-                    },
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"type\": \"string\",\n  \"status\": 1149,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "beb32472-9bce-4fc6-b96b-4eb69a641c24",
-              "name": "Authentication credentials are missing or invalid.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "engineimages",
-                    ":engineImageName"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "engineImageName",
-                      "description": "(Required) Name of the engine image resource."
-                    },
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"type\": \"string\",\n  \"status\": 1149,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "e141e2f1-f8e6-4682-9a8a-571a56f78359",
-              "name": "The requested resource was not found.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "engineimages",
-                    ":engineImageName"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "engineImageName",
-                      "description": "(Required) Name of the engine image resource."
-                    },
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"type\": \"string\",\n  \"status\": 1149,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "184ee36d-3b4f-4631-b671-0a609dc51039",
+          "createdAt": "2026-10-22T01:38:41.000Z",
+          "updatedAt": "2026-10-22T01:38:41.000Z",
+          "uid": "35240-184ee36d-3b4f-4631-b671-0a609dc51039"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "description": {
-        "content": "Hostname or service name for the Longhorn Manager.",
-        "type": "text/plain"
-      },
-      "type": "any",
-      "value": "longhorn-backend",
-      "key": "longhornManagerHost"
-    },
-    {
-      "description": {
-        "content": "Port on which Longhorn Manager serves the API.",
-        "type": "text/plain"
-      },
-      "type": "any",
-      "value": "9500",
-      "key": "longhornManagerPort"
-    },
-    {
-      "type": "string",
-      "value": "http://{{longhornManagerHost}}:{{longhornManagerPort}}",
-      "key": "baseUrl"
+      "id": "5e8a73b6-aafe-40c5-906c-f9aa87caa993",
+      "createdAt": "2026-10-22T01:38:41.000Z",
+      "updatedAt": "2026-10-22T01:38:41.000Z",
+      "uid": "35240-5e8a73b6-aafe-40c5-906c-f9aa87caa993"
     }
   ],
   "auth": {
@@ -1028,17 +794,23 @@
     "bearer": [
       {
         "key": "token",
-        "value": "{{bearerToken}}"
+        "value": "{{bearerToken}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "d72d644e-4d3e-4ed2-bb75-a897c049a433",
-    "name": "Longhorn Manager BackingImages EngineImages API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "The Longhorn Manager REST API provides programmatic access to all Longhorn storage management operations. The API follows the Rancher REST API specification and is served by the Longhorn Manager service, typically accessible within a Kubernetes cluster at port 9500 or via the longhorn-backend service. It provides full lifecycle management for volumes, snapshots, backups, nodes, disks, engine images, recurring jobs, and system settings. The API is used by the Longhorn UI and can be accessed directly for automation and integration. The schema is discoverable at /v1/schemas.\n\nContact Support:\n Name: Longhorn Community",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "longhornManagerHost",
+      "value": "longhorn-backend"
+    },
+    {
+      "key": "longhornManagerPort",
+      "value": "9500"
+    },
+    {
+      "key": "baseUrl",
+      "value": "http://{{longhornManagerHost}}:{{longhornManagerPort}}"
     }
-  }
+  ]
 }

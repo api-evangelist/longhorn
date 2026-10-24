@@ -1,461 +1,367 @@
 {
+  "info": {
+    "_postman_id": "3b668b5d-14bd-4f87-9d06-372318a5dead",
+    "name": "Longhorn Manager Backing Images API",
+    "description": "The Longhorn Manager REST API provides programmatic access to all Longhorn storage management operations.\n\nContact Support:\n Name: Longhorn Community",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T01:38:33.000Z",
+    "updatedAt": "2026-10-22T01:38:33.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-3b668b5d-14bd-4f87-9d06-372318a5dead"
+  },
   "item": [
     {
-      "id": "acf43e82-d6c3-4627-9a51-e67203a07893",
-      "name": "BackingImages",
-      "description": {
-        "content": "Backing image management for volumes that use pre-populated disk images as their base data. Backing images are immutable and can be shared across multiple volumes in the same namespace.",
-        "type": "text/plain"
-      },
+      "name": "v1",
       "item": [
         {
-          "id": "c268eebd-313f-49be-9028-2c5f90ac0d3b",
-          "name": "Longhorn List backing images",
-          "request": {
-            "name": "Longhorn List backing images",
-            "description": {
-              "content": "Returns a list of all backing images available in the cluster. Backing images are pre-populated disk images used as the base for new volumes.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v1",
-                "backingimages"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "description": "Hostname or service name for the Longhorn Manager.",
-                  "type": "any",
-                  "value": "{{longhornManagerHost}}",
-                  "key": "longhornManagerHost"
-                },
-                {
-                  "description": "Port on which Longhorn Manager serves the API.",
-                  "type": "any",
-                  "value": "{{longhornManagerPort}}",
-                  "key": "longhornManagerPort"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
+          "name": "backingimages",
+          "item": [
             {
-              "id": "edb3c5e9-f6b1-463d-86ad-e68841238d45",
-              "name": "Backing image list retrieved successfully.",
-              "originalRequest": {
+              "name": "Longhorn List backing images",
+              "id": "e5572358-c6bc-4553-ad07-0f3b86b04b8c",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
                 "url": {
-                  "path": [
-                    "v1",
-                    "backingimages"
-                  ],
+                  "raw": "{{baseUrl}}/v1/backingimages",
                   "host": [
                     "{{baseUrl}}"
                   ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
+                  "path": [
+                    "v1",
+                    "backingimages"
                   ]
                 },
+                "description": "Returns a list of all backing images available in the cluster. Backing images are pre-populated disk images used as the base for new volumes."
+              },
+              "response": [
+                {
+                  "id": "4ec8dfe6-662f-430e-a1b7-bc74dfab2fe8",
+                  "name": "Backing image list retrieved successfully.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/backingimages",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "backingimages"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"data\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"sourceType\": \"restore\",\n      \"size\": \"<integer>\",\n      \"checksum\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"sourceType\": \"clone\",\n      \"size\": \"<integer>\",\n      \"checksum\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-10-22T01:38:34.000Z",
+                  "updatedAt": "2026-10-22T01:38:34.000Z",
+                  "uid": "35240-4ec8dfe6-662f-430e-a1b7-bc74dfab2fe8"
+                },
+                {
+                  "id": "72cd0cd0-1734-43ed-9977-9d7204cb85da",
+                  "name": "Authentication credentials are missing or invalid.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/backingimages",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "backingimages"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:38:34.000Z",
+                  "updatedAt": "2026-10-22T01:38:34.000Z",
+                  "uid": "35240-72cd0cd0-1734-43ed-9977-9d7204cb85da"
+                }
+              ],
+              "createdAt": "2026-10-22T01:38:34.000Z",
+              "updatedAt": "2026-10-22T01:38:34.000Z",
+              "uid": "35240-e5572358-c6bc-4553-ad07-0f3b86b04b8c"
+            },
+            {
+              "name": "Longhorn Create a backing image",
+              "id": "6e3cd131-c739-4cdd-a5b7-b2ec55632152",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"sourceType\": \"export-from-volume\",\n      \"size\": 261,\n      \"checksum\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"sourceType\": \"clone\",\n      \"size\": 1680,\n      \"checksum\": \"string\"\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "e2993f69-44f9-441e-9a58-d834a62693c8",
-              "name": "Authentication credentials are missing or invalid.",
-              "originalRequest": {
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"sourceType\": \"download\",\n  \"parameters\": {\n    \"Lorem_\": \"<string>\",\n    \"enimd\": \"<string>\",\n    \"Ut_8\": \"<string>\"\n  },\n  \"checksum\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
                 "url": {
-                  "path": [
-                    "v1",
-                    "backingimages"
-                  ],
+                  "raw": "{{baseUrl}}/v1/backingimages",
                   "host": [
                     "{{baseUrl}}"
                   ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
+                  "path": [
+                    "v1",
+                    "backingimages"
                   ]
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
+                "description": "Creates a new backing image by uploading or downloading an image file. The backing image is distributed to all nodes that need it for volume creation."
               },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
+              "response": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "id": "927b6c43-c7d5-4e64-b39c-90b86deaa257",
+                  "name": "Backing image created successfully.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"sourceType\": \"download\",\n  \"parameters\": {\n    \"Lorem_\": \"<string>\",\n    \"enimd\": \"<string>\",\n    \"Ut_8\": \"<string>\"\n  },\n  \"checksum\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/backingimages",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "backingimages"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"sourceType\": \"upload\",\n  \"size\": \"<integer>\",\n  \"checksum\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:38:34.000Z",
+                  "updatedAt": "2026-10-22T01:38:34.000Z",
+                  "uid": "35240-927b6c43-c7d5-4e64-b39c-90b86deaa257"
+                },
+                {
+                  "id": "d49034ee-6ec1-4e2b-958d-e27322826dbd",
+                  "name": "The request was malformed or contained invalid parameters.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"sourceType\": \"download\",\n  \"parameters\": {\n    \"Lorem_\": \"<string>\",\n    \"enimd\": \"<string>\",\n    \"Ut_8\": \"<string>\"\n  },\n  \"checksum\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/backingimages",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "backingimages"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:38:34.000Z",
+                  "updatedAt": "2026-10-22T01:38:34.000Z",
+                  "uid": "35240-d49034ee-6ec1-4e2b-958d-e27322826dbd"
+                },
+                {
+                  "id": "460be123-c019-4822-9d69-ddee68a5d97f",
+                  "name": "Authentication credentials are missing or invalid.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"sourceType\": \"download\",\n  \"parameters\": {\n    \"Lorem_\": \"<string>\",\n    \"enimd\": \"<string>\",\n    \"Ut_8\": \"<string>\"\n  },\n  \"checksum\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/backingimages",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "backingimages"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:38:34.000Z",
+                  "updatedAt": "2026-10-22T01:38:34.000Z",
+                  "uid": "35240-460be123-c019-4822-9d69-ddee68a5d97f"
                 }
               ],
-              "body": "{\n  \"type\": \"string\",\n  \"status\": 8809,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "createdAt": "2026-10-22T01:38:34.000Z",
+              "updatedAt": "2026-10-22T01:38:34.000Z",
+              "uid": "35240-6e3cd131-c739-4cdd-a5b7-b2ec55632152"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "2b04067f-f885-4f82-82bd-46aad664872f",
-          "name": "Longhorn Create a backing image",
-          "request": {
-            "name": "Longhorn Create a backing image",
-            "description": {
-              "content": "Creates a new backing image by uploading or downloading an image file. The backing image is distributed to all nodes that need it for volume creation.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v1",
-                "backingimages"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "description": "Hostname or service name for the Longhorn Manager.",
-                  "type": "any",
-                  "value": "{{longhornManagerHost}}",
-                  "key": "longhornManagerHost"
-                },
-                {
-                  "description": "Port on which Longhorn Manager serves the API.",
-                  "type": "any",
-                  "value": "{{longhornManagerPort}}",
-                  "key": "longhornManagerPort"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"<string>\",\n  \"sourceType\": \"<string>\",\n  \"parameters\": {\n    \"key_0\": \"<string>\"\n  },\n  \"checksum\": \"<string>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "a2ecdec1-553e-44b1-a110-c73bd2c447f9",
-              "name": "Backing image created successfully.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "backingimages"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"name\": \"<string>\",\n  \"sourceType\": \"<string>\",\n  \"parameters\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"checksum\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"sourceType\": \"clone\",\n  \"size\": 2321,\n  \"checksum\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "3a3d7ff2-1a5b-49ef-bd5d-bc90614f3aca",
-              "name": "The request was malformed or contained invalid parameters.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "backingimages"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"name\": \"<string>\",\n  \"sourceType\": \"<string>\",\n  \"parameters\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"checksum\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"type\": \"string\",\n  \"status\": 8809,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "045ea84f-5710-4107-9b9a-7137a4495abb",
-              "name": "Authentication credentials are missing or invalid.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "backingimages"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"name\": \"<string>\",\n  \"sourceType\": \"<string>\",\n  \"parameters\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"checksum\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"type\": \"string\",\n  \"status\": 8809,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "ba4a3f58-0980-44a6-adda-162a330a2bc2",
+          "createdAt": "2026-10-22T01:38:33.000Z",
+          "updatedAt": "2026-10-22T01:38:33.000Z",
+          "uid": "35240-ba4a3f58-0980-44a6-adda-162a330a2bc2"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "description": {
-        "content": "Hostname or service name for the Longhorn Manager.",
-        "type": "text/plain"
-      },
-      "type": "any",
-      "value": "longhorn-backend",
-      "key": "longhornManagerHost"
-    },
-    {
-      "description": {
-        "content": "Port on which Longhorn Manager serves the API.",
-        "type": "text/plain"
-      },
-      "type": "any",
-      "value": "9500",
-      "key": "longhornManagerPort"
-    },
-    {
-      "type": "string",
-      "value": "http://{{longhornManagerHost}}:{{longhornManagerPort}}",
-      "key": "baseUrl"
+      "id": "fc612870-4b91-4966-bd53-0139ed65e736",
+      "createdAt": "2026-10-22T01:38:33.000Z",
+      "updatedAt": "2026-10-22T01:38:33.000Z",
+      "uid": "35240-fc612870-4b91-4966-bd53-0139ed65e736"
     }
   ],
   "auth": {
@@ -463,17 +369,23 @@
     "bearer": [
       {
         "key": "token",
-        "value": "{{bearerToken}}"
+        "value": "{{bearerToken}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "d44cfd69-ba8c-4471-8dfa-eb5037308e6e",
-    "name": "Longhorn Manager BackingImages API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "The Longhorn Manager REST API provides programmatic access to all Longhorn storage management operations. The API follows the Rancher REST API specification and is served by the Longhorn Manager service, typically accessible within a Kubernetes cluster at port 9500 or via the longhorn-backend service. It provides full lifecycle management for volumes, snapshots, backups, nodes, disks, engine images, recurring jobs, and system settings. The API is used by the Longhorn UI and can be accessed directly for automation and integration. The schema is discoverable at /v1/schemas.\n\nContact Support:\n Name: Longhorn Community",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "longhornManagerHost",
+      "value": "longhorn-backend"
+    },
+    {
+      "key": "longhornManagerPort",
+      "value": "9500"
+    },
+    {
+      "key": "baseUrl",
+      "value": "http://{{longhornManagerHost}}:{{longhornManagerPort}}"
     }
-  }
+  ]
 }

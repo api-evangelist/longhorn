@@ -1,818 +1,654 @@
 {
+  "info": {
+    "_postman_id": "a955dd92-f7b1-4de2-a978-0b9ef3814bcf",
+    "name": "Longhorn Manager Nodes API",
+    "description": "The Longhorn Manager REST API provides programmatic access to all Longhorn storage management operations.\n\nContact Support:\n Name: Longhorn Community",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T01:38:45.000Z",
+    "updatedAt": "2026-10-22T01:38:45.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-a955dd92-f7b1-4de2-a978-0b9ef3814bcf"
+  },
   "item": [
     {
-      "id": "08a3db05-930c-499e-a0fc-dce88af4c592",
-      "name": "Nodes",
-      "description": {
-        "content": "Node management for the Longhorn storage cluster including listing nodes, updating disk configurations, enabling or disabling scheduling, and managing node tags for workload placement.",
-        "type": "text/plain"
-      },
+      "name": "v1",
       "item": [
         {
-          "id": "057a5ef7-5291-4f78-a39f-9fb6eea1c332",
-          "name": "Longhorn List nodes",
-          "request": {
-            "name": "Longhorn List nodes",
-            "description": {
-              "content": "Returns a list of all nodes in the Longhorn storage cluster. Each node entry includes its scheduling eligibility, disk configurations, conditions, tags, and current state.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v1",
-                "nodes"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
+          "name": "nodes",
+          "item": [
+            {
+              "name": "{nodeId}",
+              "item": [
                 {
-                  "description": "Hostname or service name for the Longhorn Manager.",
-                  "type": "any",
-                  "value": "{{longhornManagerHost}}",
-                  "key": "longhornManagerHost"
+                  "name": "Longhorn Get a node",
+                  "id": "8e29b2b0-84fb-48bb-8786-9e31836d9376",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/nodes/:nodeId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "nodes",
+                        ":nodeId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "90898a2b-e155-4583-b09e-3702c1e9a848",
+                          "key": "nodeId",
+                          "value": "<string>",
+                          "description": "(Required) Identifier of the Longhorn node (typically the Kubernetes node name)."
+                        }
+                      ]
+                    },
+                    "description": "Returns detailed information about a specific node including all configured disks, their storage capacity, scheduling status, tags, and health conditions."
+                  },
+                  "response": [
+                    {
+                      "id": "a29b507b-c946-4b4f-a212-f266ea43c8dd",
+                      "name": "Node details retrieved successfully.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/nodes/:nodeId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "nodes",
+                            ":nodeId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "nodeId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"allowScheduling\": \"<boolean>\",\n  \"evictionRequested\": \"<boolean>\",\n  \"disks\": {\n    \"est_986\": {\n      \"path\": \"<string>\",\n      \"allowScheduling\": \"<boolean>\",\n      \"evictionRequested\": \"<boolean>\",\n      \"storageReserved\": \"<integer>\",\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"diskStatus\": {\n    \"ut5\": {\n      \"storageAvailable\": \"<integer>\",\n      \"storageMaximum\": \"<integer>\",\n      \"storageScheduled\": \"<integer>\",\n      \"conditions\": {\n        \"amet0\": {}\n      }\n    },\n    \"suntf\": {\n      \"storageAvailable\": \"<integer>\",\n      \"storageMaximum\": \"<integer>\",\n      \"storageScheduled\": \"<integer>\",\n      \"conditions\": {\n        \"culpa56f\": {},\n        \"elit_c1\": {}\n      }\n    },\n    \"deserunt03\": {\n      \"storageAvailable\": \"<integer>\",\n      \"storageMaximum\": \"<integer>\",\n      \"storageScheduled\": \"<integer>\",\n      \"conditions\": {\n        \"seda\": {}\n      }\n    },\n    \"esse_d\": {\n      \"storageAvailable\": \"<integer>\",\n      \"storageMaximum\": \"<integer>\",\n      \"storageScheduled\": \"<integer>\",\n      \"conditions\": {\n        \"velit_a35\": {}\n      }\n    }\n  },\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"conditions\": {\n    \"ameted\": {},\n    \"sunt_3\": {}\n  }\n}",
+                      "createdAt": "2026-10-22T01:38:46.000Z",
+                      "updatedAt": "2026-10-22T01:38:46.000Z",
+                      "uid": "35240-a29b507b-c946-4b4f-a212-f266ea43c8dd"
+                    },
+                    {
+                      "id": "04716923-5c38-4cdb-80da-6fc41bbe39fe",
+                      "name": "Authentication credentials are missing or invalid.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/nodes/:nodeId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "nodes",
+                            ":nodeId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "nodeId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T01:38:46.000Z",
+                      "updatedAt": "2026-10-22T01:38:46.000Z",
+                      "uid": "35240-04716923-5c38-4cdb-80da-6fc41bbe39fe"
+                    },
+                    {
+                      "id": "4ae0f69f-2f2b-4df5-ba34-518644d89f6f",
+                      "name": "The requested resource was not found.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/nodes/:nodeId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "nodes",
+                            ":nodeId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "nodeId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T01:38:46.000Z",
+                      "updatedAt": "2026-10-22T01:38:46.000Z",
+                      "uid": "35240-4ae0f69f-2f2b-4df5-ba34-518644d89f6f"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T01:38:46.000Z",
+                  "updatedAt": "2026-10-22T01:38:46.000Z",
+                  "uid": "35240-8e29b2b0-84fb-48bb-8786-9e31836d9376"
                 },
                 {
-                  "description": "Port on which Longhorn Manager serves the API.",
-                  "type": "any",
-                  "value": "{{longhornManagerPort}}",
-                  "key": "longhornManagerPort"
+                  "name": "Longhorn Update a node",
+                  "id": "375da7c0-f4e4-4b7c-a590-b2a942be67f7",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"allowScheduling\": \"<boolean>\",\n  \"evictionRequested\": \"<boolean>\",\n  \"disks\": {\n    \"nisi_9fb\": {\n      \"path\": \"<string>\",\n      \"allowScheduling\": \"<boolean>\",\n      \"evictionRequested\": \"<boolean>\",\n      \"storageReserved\": \"<integer>\",\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/nodes/:nodeId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "nodes",
+                        ":nodeId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "136db185-ef58-41af-a679-3720366ffb27",
+                          "key": "nodeId",
+                          "value": "<string>",
+                          "description": "(Required) Identifier of the Longhorn node (typically the Kubernetes node name)."
+                        }
+                      ]
+                    },
+                    "description": "Updates a node's configuration including scheduling eligibility, disk configurations, eviction status, and node tags for workload placement affinity."
+                  },
+                  "response": [
+                    {
+                      "id": "5191bde9-1ba4-497b-b24e-3d06185814a1",
+                      "name": "Node updated successfully.",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"allowScheduling\": \"<boolean>\",\n  \"evictionRequested\": \"<boolean>\",\n  \"disks\": {\n    \"nisi_9fb\": {\n      \"path\": \"<string>\",\n      \"allowScheduling\": \"<boolean>\",\n      \"evictionRequested\": \"<boolean>\",\n      \"storageReserved\": \"<integer>\",\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/nodes/:nodeId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "nodes",
+                            ":nodeId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "nodeId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"allowScheduling\": \"<boolean>\",\n  \"evictionRequested\": \"<boolean>\",\n  \"disks\": {\n    \"est_986\": {\n      \"path\": \"<string>\",\n      \"allowScheduling\": \"<boolean>\",\n      \"evictionRequested\": \"<boolean>\",\n      \"storageReserved\": \"<integer>\",\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"diskStatus\": {\n    \"ut5\": {\n      \"storageAvailable\": \"<integer>\",\n      \"storageMaximum\": \"<integer>\",\n      \"storageScheduled\": \"<integer>\",\n      \"conditions\": {\n        \"amet0\": {}\n      }\n    },\n    \"suntf\": {\n      \"storageAvailable\": \"<integer>\",\n      \"storageMaximum\": \"<integer>\",\n      \"storageScheduled\": \"<integer>\",\n      \"conditions\": {\n        \"culpa56f\": {},\n        \"elit_c1\": {}\n      }\n    },\n    \"deserunt03\": {\n      \"storageAvailable\": \"<integer>\",\n      \"storageMaximum\": \"<integer>\",\n      \"storageScheduled\": \"<integer>\",\n      \"conditions\": {\n        \"seda\": {}\n      }\n    },\n    \"esse_d\": {\n      \"storageAvailable\": \"<integer>\",\n      \"storageMaximum\": \"<integer>\",\n      \"storageScheduled\": \"<integer>\",\n      \"conditions\": {\n        \"velit_a35\": {}\n      }\n    }\n  },\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"conditions\": {\n    \"ameted\": {},\n    \"sunt_3\": {}\n  }\n}",
+                      "createdAt": "2026-10-22T01:38:46.000Z",
+                      "updatedAt": "2026-10-22T01:38:46.000Z",
+                      "uid": "35240-5191bde9-1ba4-497b-b24e-3d06185814a1"
+                    },
+                    {
+                      "id": "293cd1b5-baa0-41c5-b66c-b3dc92a85bcf",
+                      "name": "The request was malformed or contained invalid parameters.",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"allowScheduling\": \"<boolean>\",\n  \"evictionRequested\": \"<boolean>\",\n  \"disks\": {\n    \"nisi_9fb\": {\n      \"path\": \"<string>\",\n      \"allowScheduling\": \"<boolean>\",\n      \"evictionRequested\": \"<boolean>\",\n      \"storageReserved\": \"<integer>\",\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/nodes/:nodeId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "nodes",
+                            ":nodeId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "nodeId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T01:38:46.000Z",
+                      "updatedAt": "2026-10-22T01:38:46.000Z",
+                      "uid": "35240-293cd1b5-baa0-41c5-b66c-b3dc92a85bcf"
+                    },
+                    {
+                      "id": "e64e9431-a670-41e2-940c-98b27daabf17",
+                      "name": "Authentication credentials are missing or invalid.",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"allowScheduling\": \"<boolean>\",\n  \"evictionRequested\": \"<boolean>\",\n  \"disks\": {\n    \"nisi_9fb\": {\n      \"path\": \"<string>\",\n      \"allowScheduling\": \"<boolean>\",\n      \"evictionRequested\": \"<boolean>\",\n      \"storageReserved\": \"<integer>\",\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/nodes/:nodeId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "nodes",
+                            ":nodeId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "nodeId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T01:38:46.000Z",
+                      "updatedAt": "2026-10-22T01:38:46.000Z",
+                      "uid": "35240-e64e9431-a670-41e2-940c-98b27daabf17"
+                    },
+                    {
+                      "id": "a376db70-14a4-4b9a-95e7-b7aae530e0b6",
+                      "name": "The requested resource was not found.",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"allowScheduling\": \"<boolean>\",\n  \"evictionRequested\": \"<boolean>\",\n  \"disks\": {\n    \"nisi_9fb\": {\n      \"path\": \"<string>\",\n      \"allowScheduling\": \"<boolean>\",\n      \"evictionRequested\": \"<boolean>\",\n      \"storageReserved\": \"<integer>\",\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/nodes/:nodeId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "nodes",
+                            ":nodeId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "nodeId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T01:38:46.000Z",
+                      "updatedAt": "2026-10-22T01:38:46.000Z",
+                      "uid": "35240-a376db70-14a4-4b9a-95e7-b7aae530e0b6"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T01:38:46.000Z",
+                  "updatedAt": "2026-10-22T01:38:46.000Z",
+                  "uid": "35240-375da7c0-f4e4-4b7c-a590-b2a942be67f7"
                 }
-              ]
+              ],
+              "id": "6f9a4f3d-6647-49cb-94ea-729d0d9778f8",
+              "createdAt": "2026-10-22T01:38:46.000Z",
+              "updatedAt": "2026-10-22T01:38:46.000Z",
+              "uid": "35240-6f9a4f3d-6647-49cb-94ea-729d0d9778f8"
             },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
             {
-              "id": "7d3d120c-d146-4ef3-bf0c-29f87f6addf8",
-              "name": "Node list retrieved successfully.",
-              "originalRequest": {
+              "name": "Longhorn List nodes",
+              "id": "ddd61620-2f3a-495c-ab0c-7881fc614f29",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
                 "url": {
+                  "raw": "{{baseUrl}}/v1/nodes",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
                   "path": [
                     "v1",
                     "nodes"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
                   ]
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
+                "description": "Returns a list of all nodes in the Longhorn storage cluster. Each node entry includes its scheduling eligibility, disk configurations, conditions, tags, and current state."
               },
-              "status": "OK",
-              "code": 200,
-              "header": [
+              "response": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"allowScheduling\": false,\n      \"evictionRequested\": false,\n      \"disks\": {\n        \"key_0\": {\n          \"path\": \"string\",\n          \"allowScheduling\": false,\n          \"evictionRequested\": true,\n          \"storageReserved\": 4934,\n          \"tags\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      },\n      \"diskStatus\": {\n        \"key_0\": {\n          \"storageAvailable\": 6416,\n          \"storageMaximum\": 3977,\n          \"storageScheduled\": 2702,\n          \"conditions\": {\n            \"key_0\": {},\n            \"key_1\": {},\n            \"key_2\": {}\n          }\n        },\n        \"key_1\": {\n          \"storageAvailable\": 8347,\n          \"storageMaximum\": 6386,\n          \"storageScheduled\": 4735,\n          \"conditions\": {\n            \"key_0\": {}\n          }\n        },\n        \"key_2\": {\n          \"storageAvailable\": 4584,\n          \"storageMaximum\": 2407,\n          \"storageScheduled\": 9458,\n          \"conditions\": {\n            \"key_0\": {},\n            \"key_1\": {}\n          }\n        },\n        \"key_3\": {\n          \"storageAvailable\": 3787,\n          \"storageMaximum\": 1224,\n          \"storageScheduled\": 8273,\n          \"conditions\": {\n            \"key_0\": {}\n          }\n        }\n      },\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"conditions\": {\n        \"key_0\": {},\n        \"key_1\": {}\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"allowScheduling\": true,\n      \"evictionRequested\": true,\n      \"disks\": {\n        \"key_0\": {\n          \"path\": \"string\",\n          \"allowScheduling\": true,\n          \"evictionRequested\": true,\n          \"storageReserved\": 9656,\n          \"tags\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"key_1\": {\n          \"path\": \"string\",\n          \"allowScheduling\": true,\n          \"evictionRequested\": true,\n          \"storageReserved\": 6034,\n          \"tags\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      },\n      \"diskStatus\": {\n        \"key_0\": {\n          \"storageAvailable\": 1346,\n          \"storageMaximum\": 815,\n          \"storageScheduled\": 4022,\n          \"conditions\": {\n            \"key_0\": {},\n            \"key_1\": {}\n          }\n        },\n        \"key_1\": {\n          \"storageAvailable\": 500,\n          \"storageMaximum\": 2925,\n          \"storageScheduled\": 2927,\n          \"conditions\": {\n            \"key_0\": {}\n          }\n        }\n      },\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"conditions\": {\n        \"key_0\": {}\n      }\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "747d7943-666d-448f-93ed-849afac86901",
-              "name": "Authentication credentials are missing or invalid.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "nodes"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
+                  "id": "4b6d800e-27e8-48aa-b13e-9748e57c10e6",
+                  "name": "Node list retrieved successfully.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/nodes",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "nodes"
+                      ]
                     }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
                   },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"data\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"allowScheduling\": \"<boolean>\",\n      \"evictionRequested\": \"<boolean>\",\n      \"disks\": {\n        \"esse79\": {\n          \"path\": \"<string>\",\n          \"allowScheduling\": \"<boolean>\",\n          \"evictionRequested\": \"<boolean>\",\n          \"storageReserved\": \"<integer>\",\n          \"tags\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        \"in_\": {\n          \"path\": \"<string>\",\n          \"allowScheduling\": \"<boolean>\",\n          \"evictionRequested\": \"<boolean>\",\n          \"storageReserved\": \"<integer>\",\n          \"tags\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        \"irure24\": {\n          \"path\": \"<string>\",\n          \"allowScheduling\": \"<boolean>\",\n          \"evictionRequested\": \"<boolean>\",\n          \"storageReserved\": \"<integer>\",\n          \"tags\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        \"esseb_1\": {\n          \"path\": \"<string>\",\n          \"allowScheduling\": \"<boolean>\",\n          \"evictionRequested\": \"<boolean>\",\n          \"storageReserved\": \"<integer>\",\n          \"tags\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      },\n      \"diskStatus\": {\n        \"qui_a9e\": {\n          \"storageAvailable\": \"<integer>\",\n          \"storageMaximum\": \"<integer>\",\n          \"storageScheduled\": \"<integer>\",\n          \"conditions\": {\n            \"inc9\": {}\n          }\n        },\n        \"nostrudc96\": {\n          \"storageAvailable\": \"<integer>\",\n          \"storageMaximum\": \"<integer>\",\n          \"storageScheduled\": \"<integer>\",\n          \"conditions\": {\n            \"in_2_\": {}\n          }\n        }\n      },\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"conditions\": {\n        \"Excepteur5b0\": {},\n        \"enim_8\": {}\n      }\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"allowScheduling\": \"<boolean>\",\n      \"evictionRequested\": \"<boolean>\",\n      \"disks\": {\n        \"incididunte\": {\n          \"path\": \"<string>\",\n          \"allowScheduling\": \"<boolean>\",\n          \"evictionRequested\": \"<boolean>\",\n          \"storageReserved\": \"<integer>\",\n          \"tags\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      },\n      \"diskStatus\": {\n        \"in_c\": {\n          \"storageAvailable\": \"<integer>\",\n          \"storageMaximum\": \"<integer>\",\n          \"storageScheduled\": \"<integer>\",\n          \"conditions\": {\n            \"eiusmod499\": {}\n          }\n        },\n        \"irure1\": {\n          \"storageAvailable\": \"<integer>\",\n          \"storageMaximum\": \"<integer>\",\n          \"storageScheduled\": \"<integer>\",\n          \"conditions\": {\n            \"pariatur9\": {}\n          }\n        },\n        \"et_a_\": {\n          \"storageAvailable\": \"<integer>\",\n          \"storageMaximum\": \"<integer>\",\n          \"storageScheduled\": \"<integer>\",\n          \"conditions\": {\n            \"do3\": {}\n          }\n        }\n      },\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"conditions\": {\n        \"eiusmod_9d\": {},\n        \"occaecat61\": {},\n        \"aliqua25\": {}\n      }\n    }\n  ]\n}",
+                  "createdAt": "2026-10-22T01:38:46.000Z",
+                  "updatedAt": "2026-10-22T01:38:46.000Z",
+                  "uid": "35240-4b6d800e-27e8-48aa-b13e-9748e57c10e6"
+                },
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "id": "d8d2780a-3ec6-494d-b812-515c61a6b818",
+                  "name": "Authentication credentials are missing or invalid.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/nodes",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "nodes"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:38:46.000Z",
+                  "updatedAt": "2026-10-22T01:38:46.000Z",
+                  "uid": "35240-d8d2780a-3ec6-494d-b812-515c61a6b818"
                 }
               ],
-              "body": "{\n  \"type\": \"string\",\n  \"status\": 2781,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "createdAt": "2026-10-22T01:38:46.000Z",
+              "updatedAt": "2026-10-22T01:38:46.000Z",
+              "uid": "35240-ddd61620-2f3a-495c-ab0c-7881fc614f29"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "a990bc8f-52a5-455d-ae39-a3dedcdfe8c3",
-          "name": "Longhorn Get a node",
-          "request": {
-            "name": "Longhorn Get a node",
-            "description": {
-              "content": "Returns detailed information about a specific node including all configured disks, their storage capacity, scheduling status, tags, and health conditions.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v1",
-                "nodes",
-                ":nodeId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "nodeId",
-                  "description": "(Required) Identifier of the Longhorn node (typically the Kubernetes node name)."
-                },
-                {
-                  "description": "Hostname or service name for the Longhorn Manager.",
-                  "type": "any",
-                  "value": "{{longhornManagerHost}}",
-                  "key": "longhornManagerHost"
-                },
-                {
-                  "description": "Port on which Longhorn Manager serves the API.",
-                  "type": "any",
-                  "value": "{{longhornManagerPort}}",
-                  "key": "longhornManagerPort"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "5d67c219-6347-4055-b3fc-f3dfd65fe517",
-              "name": "Node details retrieved successfully.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "nodes",
-                    ":nodeId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "nodeId",
-                      "description": "(Required) Identifier of the Longhorn node (typically the Kubernetes node name)."
-                    },
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"allowScheduling\": true,\n  \"evictionRequested\": true,\n  \"disks\": {\n    \"key_0\": {\n      \"path\": \"string\",\n      \"allowScheduling\": true,\n      \"evictionRequested\": true,\n      \"storageReserved\": 9245,\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  },\n  \"diskStatus\": {\n    \"key_0\": {\n      \"storageAvailable\": 9396,\n      \"storageMaximum\": 1777,\n      \"storageScheduled\": 6688,\n      \"conditions\": {\n        \"key_0\": {}\n      }\n    },\n    \"key_1\": {\n      \"storageAvailable\": 9428,\n      \"storageMaximum\": 1753,\n      \"storageScheduled\": 3627,\n      \"conditions\": {\n        \"key_0\": {},\n        \"key_1\": {}\n      }\n    },\n    \"key_2\": {\n      \"storageAvailable\": 7830,\n      \"storageMaximum\": 2046,\n      \"storageScheduled\": 2120,\n      \"conditions\": {\n        \"key_0\": {}\n      }\n    }\n  },\n  \"tags\": [\n    \"string\",\n    \"string\"\n  ],\n  \"conditions\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "21b35642-75fd-4841-a0ba-2f1faec671d2",
-              "name": "Authentication credentials are missing or invalid.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "nodes",
-                    ":nodeId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "nodeId",
-                      "description": "(Required) Identifier of the Longhorn node (typically the Kubernetes node name)."
-                    },
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"type\": \"string\",\n  \"status\": 2781,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "540b1689-3392-47e3-a804-b4c144182bdd",
-              "name": "The requested resource was not found.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "nodes",
-                    ":nodeId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "nodeId",
-                      "description": "(Required) Identifier of the Longhorn node (typically the Kubernetes node name)."
-                    },
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"type\": \"string\",\n  \"status\": 2781,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "ebbe3e55-31a9-422c-8b48-7395aeb0a2ec",
-          "name": "Longhorn Update a node",
-          "request": {
-            "name": "Longhorn Update a node",
-            "description": {
-              "content": "Updates a node's configuration including scheduling eligibility, disk configurations, eviction status, and node tags for workload placement affinity.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v1",
-                "nodes",
-                ":nodeId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "nodeId",
-                  "description": "(Required) Identifier of the Longhorn node (typically the Kubernetes node name)."
-                },
-                {
-                  "description": "Hostname or service name for the Longhorn Manager.",
-                  "type": "any",
-                  "value": "{{longhornManagerHost}}",
-                  "key": "longhornManagerHost"
-                },
-                {
-                  "description": "Port on which Longhorn Manager serves the API.",
-                  "type": "any",
-                  "value": "{{longhornManagerPort}}",
-                  "key": "longhornManagerPort"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "PUT",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"allowScheduling\": \"<boolean>\",\n  \"evictionRequested\": \"<boolean>\",\n  \"disks\": {\n    \"key_0\": {\n      \"path\": \"<string>\",\n      \"allowScheduling\": \"<boolean>\",\n      \"evictionRequested\": \"<boolean>\",\n      \"storageReserved\": \"<integer>\",\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"key_1\": {\n      \"path\": \"<string>\",\n      \"allowScheduling\": \"<boolean>\",\n      \"evictionRequested\": \"<boolean>\",\n      \"storageReserved\": \"<integer>\",\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "9e894126-88e2-4d0f-991a-cc73898405b7",
-              "name": "Node updated successfully.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "nodes",
-                    ":nodeId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "nodeId",
-                      "description": "(Required) Identifier of the Longhorn node (typically the Kubernetes node name)."
-                    },
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PUT",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"allowScheduling\": \"<boolean>\",\n  \"evictionRequested\": \"<boolean>\",\n  \"disks\": {\n    \"key_0\": {\n      \"path\": \"string\",\n      \"allowScheduling\": true,\n      \"evictionRequested\": true,\n      \"storageReserved\": 2613,\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  },\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"allowScheduling\": true,\n  \"evictionRequested\": true,\n  \"disks\": {\n    \"key_0\": {\n      \"path\": \"string\",\n      \"allowScheduling\": true,\n      \"evictionRequested\": true,\n      \"storageReserved\": 9245,\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  },\n  \"diskStatus\": {\n    \"key_0\": {\n      \"storageAvailable\": 9396,\n      \"storageMaximum\": 1777,\n      \"storageScheduled\": 6688,\n      \"conditions\": {\n        \"key_0\": {}\n      }\n    },\n    \"key_1\": {\n      \"storageAvailable\": 9428,\n      \"storageMaximum\": 1753,\n      \"storageScheduled\": 3627,\n      \"conditions\": {\n        \"key_0\": {},\n        \"key_1\": {}\n      }\n    },\n    \"key_2\": {\n      \"storageAvailable\": 7830,\n      \"storageMaximum\": 2046,\n      \"storageScheduled\": 2120,\n      \"conditions\": {\n        \"key_0\": {}\n      }\n    }\n  },\n  \"tags\": [\n    \"string\",\n    \"string\"\n  ],\n  \"conditions\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "1760b075-2c5e-42f3-980a-dd2755fc4c88",
-              "name": "The request was malformed or contained invalid parameters.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "nodes",
-                    ":nodeId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "nodeId",
-                      "description": "(Required) Identifier of the Longhorn node (typically the Kubernetes node name)."
-                    },
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PUT",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"allowScheduling\": \"<boolean>\",\n  \"evictionRequested\": \"<boolean>\",\n  \"disks\": {\n    \"key_0\": {\n      \"path\": \"string\",\n      \"allowScheduling\": true,\n      \"evictionRequested\": true,\n      \"storageReserved\": 2613,\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  },\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"type\": \"string\",\n  \"status\": 2781,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "44807f02-4ca8-4fd5-8658-f4d53ecf36f7",
-              "name": "Authentication credentials are missing or invalid.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "nodes",
-                    ":nodeId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "nodeId",
-                      "description": "(Required) Identifier of the Longhorn node (typically the Kubernetes node name)."
-                    },
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PUT",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"allowScheduling\": \"<boolean>\",\n  \"evictionRequested\": \"<boolean>\",\n  \"disks\": {\n    \"key_0\": {\n      \"path\": \"string\",\n      \"allowScheduling\": true,\n      \"evictionRequested\": true,\n      \"storageReserved\": 2613,\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  },\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"type\": \"string\",\n  \"status\": 2781,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "7a01eb77-cc11-43fd-8b6e-1e16887313ae",
-              "name": "The requested resource was not found.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "nodes",
-                    ":nodeId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "nodeId",
-                      "description": "(Required) Identifier of the Longhorn node (typically the Kubernetes node name)."
-                    },
-                    {
-                      "description": "Hostname or service name for the Longhorn Manager.",
-                      "type": "any",
-                      "value": "{{longhornManagerHost}}",
-                      "key": "longhornManagerHost"
-                    },
-                    {
-                      "description": "Port on which Longhorn Manager serves the API.",
-                      "type": "any",
-                      "value": "{{longhornManagerPort}}",
-                      "key": "longhornManagerPort"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PUT",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"allowScheduling\": \"<boolean>\",\n  \"evictionRequested\": \"<boolean>\",\n  \"disks\": {\n    \"key_0\": {\n      \"path\": \"string\",\n      \"allowScheduling\": true,\n      \"evictionRequested\": true,\n      \"storageReserved\": 2613,\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  },\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"type\": \"string\",\n  \"status\": 2781,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "50df45e0-c17c-4833-9adf-bf6c5664f622",
+          "createdAt": "2026-10-22T01:38:46.000Z",
+          "updatedAt": "2026-10-22T01:38:46.000Z",
+          "uid": "35240-50df45e0-c17c-4833-9adf-bf6c5664f622"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "description": {
-        "content": "Hostname or service name for the Longhorn Manager.",
-        "type": "text/plain"
-      },
-      "type": "any",
-      "value": "longhorn-backend",
-      "key": "longhornManagerHost"
-    },
-    {
-      "description": {
-        "content": "Port on which Longhorn Manager serves the API.",
-        "type": "text/plain"
-      },
-      "type": "any",
-      "value": "9500",
-      "key": "longhornManagerPort"
-    },
-    {
-      "type": "string",
-      "value": "http://{{longhornManagerHost}}:{{longhornManagerPort}}",
-      "key": "baseUrl"
+      "id": "c1873327-1b32-49a1-a017-d52b4430e07d",
+      "createdAt": "2026-10-22T01:38:46.000Z",
+      "updatedAt": "2026-10-22T01:38:46.000Z",
+      "uid": "35240-c1873327-1b32-49a1-a017-d52b4430e07d"
     }
   ],
   "auth": {
@@ -820,17 +656,23 @@
     "bearer": [
       {
         "key": "token",
-        "value": "{{bearerToken}}"
+        "value": "{{bearerToken}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "2ac1bc79-9a16-4a3c-be49-c1ba9c58b778",
-    "name": "Longhorn Manager BackingImages Nodes API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "The Longhorn Manager REST API provides programmatic access to all Longhorn storage management operations. The API follows the Rancher REST API specification and is served by the Longhorn Manager service, typically accessible within a Kubernetes cluster at port 9500 or via the longhorn-backend service. It provides full lifecycle management for volumes, snapshots, backups, nodes, disks, engine images, recurring jobs, and system settings. The API is used by the Longhorn UI and can be accessed directly for automation and integration. The schema is discoverable at /v1/schemas.\n\nContact Support:\n Name: Longhorn Community",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "longhornManagerHost",
+      "value": "longhorn-backend"
+    },
+    {
+      "key": "longhornManagerPort",
+      "value": "9500"
+    },
+    {
+      "key": "baseUrl",
+      "value": "http://{{longhornManagerHost}}:{{longhornManagerPort}}"
     }
-  }
+  ]
 }
