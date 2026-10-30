@@ -1,4 +1,4 @@
-# Longhorn (longhorn)
+# Longhorn
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,63 +66,154 @@
 
 Longhorn is a CNCF incubating lightweight, reliable, and easy-to-use distributed block storage system for Kubernetes. It creates a dedicated storage controller for each volume and replicates data across multiple nodes for high availability. Longhorn supports snapshots, backups to S3-compatible storage, disaster recovery, and recurring backup schedules.
 
-**APIs.json:** [https://longhorn.io](https://longhorn.io)
+**Areas:** Backup · Block Storage · Cloud-Native · Incubating · Kubernetes · PersistentVolumes
 
-## Scope
+## Longhorn on APIs.io
 
-- **Type:** Index
+Everything profiled for Longhorn is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/longhorn/](https://apis.io/providers/longhorn/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (9)
 
-- Backup
-- Block Storage
-- Cloud Native
-- Incubating
-- Kubernetes
-- Persistent Volumes
+- [Longhorn BackingImages API](https://apis.io/apis/longhorn/longhorn-backingimages-api/) — Backing image management for volumes that use pre-populated disk images as their base data. Backing images are immutable and can be shared across multiple…
+- [Longhorn Backups API](https://apis.io/apis/longhorn/longhorn-backups-api/) — Backup operations for storing volume snapshots to external storage targets such as S3-compatible storage or NFS. Backups can be restored to new volumes for…
+- [Longhorn EngineImages API](https://apis.io/apis/longhorn/longhorn-engineimages-api/) — Engine image management for the Longhorn storage engine. Engine images are OCI images containing the Longhorn engine binary and are used to upgrade or…
+- [Longhorn Nodes API](https://apis.io/apis/longhorn/longhorn-nodes-api/) — Node management for the Longhorn storage cluster including listing nodes, updating disk configurations, enabling or disabling scheduling, and managing node…
+- [Longhorn RecurringJobs API](https://apis.io/apis/longhorn/longhorn-recurringjobs-api/) — Recurring job management for scheduling automated snapshot and backup operations on a cron-based schedule. Recurring jobs can be applied to individual…
+- [Longhorn Settings API](https://apis.io/apis/longhorn/longhorn-settings-api/) — System-wide Longhorn settings management including backup targets, replica counts, node scheduling policies, data locality settings, and storage…
+- [Longhorn Snapshots API](https://apis.io/apis/longhorn/longhorn-snapshots-api/) — Snapshot operations for volumes including creating, listing, deleting, reverting to, and purging snapshots. Snapshots capture the state of a volume at a…
+- [Longhorn SystemBackups API](https://apis.io/apis/longhorn/longhorn-systembackups-api/) — System-level backup and restore operations for the entire Longhorn configuration including all volumes, settings, and resource definitions.
+- [Longhorn Volumes API](https://apis.io/apis/longhorn/longhorn-volumes-api/) — Volume lifecycle management including creating, attaching, detaching, expanding, and deleting volumes. Also includes volume actions such as activating,…
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-03-16
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Agentic access (1)
 
-### Longhorn Manager API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-The Longhorn Manager exposes a REST API for volume lifecycle management including creating, attaching, detaching, and deleting volumes. It also provides endpoints for snapshot management, backup operations, node management, engine image management, and system settings configuration. The API is used by the Longhorn UI and can be accessed directly for automation.
+- [Longhorn Agentic Access](https://apis.io/agentic-access/longhorn/longhorn-agentic-access/)
 
-- **Human URL:** [https://longhorn.io/docs/](https://longhorn.io/docs/)
+#### JSON Schema (1)
 
-#### Tags
+The data models the API reads and writes.
 
-- REST API
-- Snapshots
-- Volume Management
+- [Longhorn Volume](https://apis.io/schemas/longhorn/longhorn-volume/)
 
-#### Properties
+#### JSON-LD (1)
 
-- [Documentation](https://longhorn.io/docs/)
-- [GitHub Repository](https://github.com/longhorn/longhorn)
-- [OpenAPI](openapi/longhorn-manager-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/longhorn-manager-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/longhorn-manager-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [JSON Schema](json-schema/longhorn-volume-schema.json) — [JSON Schema](https://json-schema.org/specification)
+Linked-data contexts for the provider's vocabulary.
 
-## Common Properties
+- [Longhorn Context](https://apis.io/jsonld/longhorn/longhorn-context/)
 
-- [JSON-LD](json-ld/longhorn-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [JSON Schema](json-schema/longhorn-volume-schema.json) — [JSON Schema](https://json-schema.org/specification)
+#### Collections (10)
+
+Postman and Open Collection request collections.
+
+- [Longhorn Manager BackingImages API](https://apis.io/collections/longhorn/open-longhorn-backingimages-api/)
+- [Longhorn Manager BackingImages Backups API](https://apis.io/collections/longhorn/open-longhorn-backups-api/)
+- [Longhorn Manager BackingImages EngineImages API](https://apis.io/collections/longhorn/open-longhorn-engineimages-api/)
+- [Longhorn Manager API](https://apis.io/collections/longhorn/open-longhorn-manager-api/)
+- [Longhorn Manager BackingImages Nodes API](https://apis.io/collections/longhorn/open-longhorn-nodes-api/)
+- [Longhorn Manager BackingImages RecurringJobs API](https://apis.io/collections/longhorn/open-longhorn-recurringjobs-api/)
+- [Longhorn Manager BackingImages Settings API](https://apis.io/collections/longhorn/open-longhorn-settings-api/)
+- [Longhorn Manager BackingImages Snapshots API](https://apis.io/collections/longhorn/open-longhorn-snapshots-api/)
+- [Longhorn Manager BackingImages SystemBackups API](https://apis.io/collections/longhorn/open-longhorn-systembackups-api/)
+- [Longhorn Manager BackingImages Volumes API](https://apis.io/collections/longhorn/open-longhorn-volumes-api/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [Longhorn — jsonschema rules](https://apis.io/rules/longhorn/longhorn-jsonschema-spectral-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Longhorn Authentication](https://apis.io/security/longhorn/longhorn-authentication/)
+- [Longhorn Domain Security](https://apis.io/security/longhorn/longhorn-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Longhorn Plans Pricing](https://apis.io/plans/longhorn/longhorn-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Longhorn Rate Limits](https://apis.io/rate-limits/longhorn/longhorn-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Longhorn Finops](https://apis.io/finops/longhorn/longhorn-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://longhorn.io/)
 - [Documentation](https://longhorn.io/docs/)
-- [Getting Started](https://longhorn.io/docs/1.11.1/deploy/install/)
-- [Blog](https://longhorn.io/blog/)
+- [Getting started](https://longhorn.io/docs/1.11.1/deploy/install/)
 - [Changelog](https://github.com/longhorn/longhorn/releases)
-- [GitHub Organization](https://github.com/longhorn)
-- [GitHub Repository](https://github.com/longhorn/longhorn)
-- [Community](https://longhorn.io/community/)
+- [Blog](https://longhorn.io/blog/)
+- [GitHub](https://github.com/longhorn)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 43.5** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 64.3 |
+| Contract quality | 60.2 |
+| Contract governance | 9.8 |
+| Operational transparency | 39.5 |
+| Developer ergonomics | 41.7 |
+| Access clarity | 7.9 |
+
+**Agent readiness 19.0** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 16.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/longhorn/](https://apis.io/providers/longhorn/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Longhorn: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/longhorn/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
